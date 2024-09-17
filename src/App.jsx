@@ -1,10 +1,7 @@
-import { Container } from "react-bootstrap";
-import { NavigationBar } from "./components/NavigationBar";
+import Home from "./pages/Home";
 
 export default function App() {
   return (
-    <Container fluid="xs">
-      <NavigationBar />
-    </Container>
+    <Home />
   )
 }

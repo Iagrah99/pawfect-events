@@ -2,7 +2,7 @@ import { Container, Navbar } from "react-bootstrap"
 import Nav from 'react-bootstrap/Nav';
 import navIcon from '../images/de-nav-icon-transparent.png'
 
-export const NavigationBar = () => {
+const NavigationBar = () => {
   return (
     <Navbar expand="lg" className="bg-zinc-900" sticky='top'>
       <Container>
@@ -23,4 +23,4 @@ export const NavigationBar = () => {
   )
 }
 
-
+export default NavigationBar
