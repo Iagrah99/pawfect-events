@@ -1,10 +1,16 @@
 import { format } from 'date-fns'
+import { useNavigate } from "react-router-dom"
 
 const EventCard = ({ event }) => {
+
+  const navigate = useNavigate()
+  const handleClick = (event_id) => {
+    navigate(`/events/${event_id}`)
+  }
+
   return (
-    <article
-      key={event.event_id}
-      className="bg-gray-700 rounded-lg shadow-md overflow-hidden cursor-pointer"
+    <article onClick={() => handleClick(event.event_id)}
+      className="bg-gray-700 rounded-lg shadow-md overflow-hidden cursor-pointer hover:bg-gray-800 transition duration-150"
     >
       <img
         src={event.image}

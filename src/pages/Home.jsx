@@ -19,6 +19,8 @@ const Home = () => {
     fetchData();
   }, [])
 
+
+
   return (
     <Container fluid="xs">
       <NavigationBar />
@@ -31,7 +33,7 @@ const Home = () => {
 
             {events.map((event) => {
               return (
-                <EventCard event={event} />
+                <EventCard key={event.event_id} event={event} />
               );
             })}
           </main>
