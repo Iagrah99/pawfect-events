@@ -15,3 +15,8 @@ export const fetchEventById = async (event_id) => {
   const res = await dogEventsApi.get(`/events/${event_id}`);
   return res.data.event;
 };
+
+export const fetchEventAttendees = async (event_id) => {
+  const res = await dogEventsApi.get(`/events/${event_id}/attendees`);
+  return res.data.attendees;
+};
