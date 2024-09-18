@@ -19,8 +19,6 @@ const Home = () => {
     fetchData();
   }, [])
 
-
-
   return (
     <Container fluid="xs">
       <NavigationBar />
@@ -39,7 +37,6 @@ const Home = () => {
           </main>
         </>)}
     </Container>
-
   )
 }
 

@@ -1,5 +1,6 @@
 import { format } from 'date-fns'
 import { useNavigate } from "react-router-dom"
+import formatCost from '../../utils/formatCost'
 
 const EventCard = ({ event }) => {
 
@@ -19,10 +20,9 @@ const EventCard = ({ event }) => {
       />
       <div className="p-4 flex flex-col gap-3 text-white">
         <h3 className="text-white text-3xl font-semibold">{event.title} - {event.location}</h3>
-        <p>Starts: {format(event.start_date, "EEEE, do MMMM yyyy 'at' h:mmaaa")}</p>
-        <p>Ends: {format(event.end_date, "EEEE, do MMMM yyyy 'at' h:mmaaa")}</p>
+        <p>{format(event.start_date, "EEEE, do MMMM yyyy 'from' h:mmaaa") + " - " + format(event.end_date, "h:mmaaa")}</p>
         <p className="text-sm">Event Type: {event.event_type}</p>
-        <p className="text-lg font-bold">Cost: £{(event.price_in_pence / 100).toFixed(2)}</p>
+        <p className="text-lg font-bold">Cost: £{formatCost(event.price_in_pence)}</p>
       </div>
     </article>
   )

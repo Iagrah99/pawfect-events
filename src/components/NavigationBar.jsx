@@ -27,8 +27,8 @@ const NavigationBar = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="flex-grow-1 justify-end">
-            <Nav.Link className=" text-cyan-50 hover:text-cyan-200" id='login'>Login</Nav.Link>
-            <Nav.Link className=" text-cyan-50 hover:text-cyan-200" id='register'>Register</Nav.Link>
+            <Nav.Link className="text-cyan-50 hover:text-cyan-200" id='login'>Login</Nav.Link>
+            <Nav.Link className="text-cyan-50 hover:text-cyan-200" id='register'>Register</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

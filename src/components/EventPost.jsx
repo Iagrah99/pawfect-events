@@ -1,4 +1,5 @@
 import { format } from 'date-fns';
+import formatCost from '../../utils/formatCost';
 
 const EventPost = ({ event }) => {
   const startDate = new Date(event.start_date);
@@ -23,13 +24,12 @@ const EventPost = ({ event }) => {
           <p className="text-white mb-4">{event.description}</p>
 
           <div className="mb-4">
-            <p><span className="font-bold">Starts:</span> {isValidDate(startDate) ? format(startDate, "EEEE, do MMMM yyyy 'at' h:mmaaa") : 'Invalid date'}</p>
-            <p><span className="font-bold">Ends:</span> {isValidDate(endDate) ? format(endDate, "EEEE, do MMMM yyyy 'at' h:mmaaa") : 'Invalid date'}</p>
+            <p><span className="font-bold"></span> {isValidDate(startDate) && isValidDate(endDate) ? format(startDate, "EEEE, do MMMM yyyy 'from' h:mmaaa") + " - " + format(endDate, "h:mmaaa") : 'Invalid date'}</p>
           </div>
 
           <div className="flex space-x-4 mb-4">
             <p className="text-sm text-white">Type: {event.event_type}</p>
-            <p className="text-sm text-white">Price: £{(event.price_in_pence / 100).toFixed(2)}</p>
+            <p className="text-sm text-white">Price: £{formatCost(event.price_in_pence)}</p>
           </div>
         </div>
       </div>
