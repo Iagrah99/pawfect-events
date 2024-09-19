@@ -20,3 +20,8 @@ export const fetchEventAttendees = async (event_id) => {
   const res = await dogEventsApi.get(`/events/${event_id}/attendees`);
   return res.data.attendees;
 };
+
+export const fetchUsers = async () => {
+  const res = await dogEventsApi.get(`/users`);
+  return res.data.users;
+};

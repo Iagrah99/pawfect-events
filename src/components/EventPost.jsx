@@ -1,16 +1,34 @@
 import { format } from 'date-fns';
 import formatCost from '../../utils/formatCost';
+import { useNavigate } from 'react-router-dom';
+import Breadcrumb from 'react-bootstrap/Breadcrumb';
 
-const EventPost = ({ event, attendees }) => {
+const EventPost = ({ event, attendees, users }) => {
   const startDate = new Date(event.start_date);
   const endDate = new Date(event.end_date);
+
+  const organiserDetails = users.filter((user) => user.username === event.organiser)[0]
+
+  const navigate = useNavigate();
+
+  const handleLink = (e) => {
+    e.preventDefault()
+    navigate(`/users/${organiserDetails.username}`, {
+      state: { organiserDetails }
+    })
+  }
 
   const isValidDate = (date) => !isNaN(date.getTime());
 
   return (
     <article className="max-w-4xl mx-auto mt-5 p-6 bg-gray-900 shadow-md rounded-lg">
+
+      <Breadcrumb>
+        <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
+        <Breadcrumb.Item active className='text-white'>{event.title}</Breadcrumb.Item>
+      </Breadcrumb>
+
       <div className="flex flex-col md:flex-row items-start">
-        {/* Event Image and Details */}
         <div className="w-full md:w-3/6">
           <img
             src={event.image}
@@ -21,7 +39,7 @@ const EventPost = ({ event, attendees }) => {
 
         <div className="w-full md:w-3/6 md:pl-6 mt-4 md:mt-0">
           <p className="text-2xl font-bold mb-2 text-white">{event.title} - {event.location}</p>
-          <p className="text-white mb-4">Organised by: {event.organiser}</p>
+          <p className="text-white mb-4">Organised by: <span className='cursor-pointer font-bold hover:text-cyan-200' onClick={handleLink}>{event.organiser}</span></p>
           <p>
             {isValidDate(startDate) && isValidDate(endDate)
               ? format(startDate, "EEEE, do MMMM yyyy 'from' h:mmaaa") + " - " + format(endDate, "h:mmaaa")
