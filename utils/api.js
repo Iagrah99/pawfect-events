@@ -25,3 +25,11 @@ export const fetchUsers = async () => {
   const res = await dogEventsApi.get(`/users`);
   return res.data.users;
 };
+
+export const loginUser = async (email, password) => {
+  const res = await dogEventsApi.post(`/users/login`, {
+    email: email,
+    password: password,
+  });
+  return res.data.user;
+};

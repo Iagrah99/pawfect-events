@@ -16,8 +16,9 @@ const EventCard = ({ event }) => {
       <img
         src={event.image}
         alt={event.title}
-        className="w-full max-h-64 object-cover"
+        className="w-full max-h-64 object-cover object-top"
       />
+
       <div className="p-4 flex flex-col gap-3 text-white">
         <h3 className="text-white text-3xl font-semibold">{event.title} - {event.location}</h3>
         <p>{format(event.start_date, "EEEE, do MMMM yyyy 'from' h:mmaaa") + " - " + format(event.end_date, "h:mmaaa")}</p>

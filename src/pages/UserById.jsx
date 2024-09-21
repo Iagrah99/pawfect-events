@@ -35,13 +35,11 @@ const UserById = () => {
         <article className="max-w-4xl mx-auto mt-5 p-6 bg-gray-900 shadow-md rounded-lg">
 
           <div className="flex justify-between items-center mb-4">
-            {/* Breadcrumb */}
             <Breadcrumb>
               <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
               <Breadcrumb.Item active className='text-white'>{organiserDetails?.username}</Breadcrumb.Item>
             </Breadcrumb>
 
-            {/* Back link */}
             <button
               onClick={() => navigate(-1)}
               className="text-white bg-cyan-600 hover:bg-cyan-700 px-4 py-2 rounded-lg shadow-md"
