@@ -18,8 +18,8 @@ const NavigationBar = () => {
   const handleLogout = () => {
     setLoggedInUser(null);
     localStorage.removeItem('loggedInUser');
-    navigate("/")
-  }
+    navigate("/");
+  };
 
   return (
     <Navbar expand="lg" className="bg-zinc-900" sticky="top">
@@ -32,14 +32,36 @@ const NavigationBar = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="flex-grow">
             {loggedInUser ? (
-              <div className="ml-auto flex items-center space-x-12">
+              <div className="ml-auto flex items-center space-x-4">
                 <Nav.Item className="text-cyan-50">
                   Hello, {loggedInUser.username}!
                 </Nav.Item>
-                <Nav.Item className="text-cyan-50 hover:text-cyan-200 cursor-pointer" id="logout" onClick={handleLogout}>
+
+                <img
+                  src={loggedInUser.avatar_url}
+                  alt="User Avatar"
+                  className="w-10 h-10 rounded-full border-2 border-gray-700 shadow-lg ml-2"
+                />
+
+                {loggedInUser.is_organiser && (
+                  <Nav.Item
+                    className="text-cyan-50 hover:text-cyan-200 cursor-pointer"
+                    id="create-event"
+                    onClick={() => navigate('/create-event')}
+                  >
+                    Create Event
+                  </Nav.Item>
+                )}
+
+                <Nav.Item
+                  className="text-cyan-50 hover:text-cyan-200 cursor-pointer ml-6"
+                  id="logout"
+                  onClick={handleLogout}
+                >
                   Logout
                 </Nav.Item>
               </div>
+
             ) : (
               <div className="ml-auto flex space-x-4">
                 <Nav.Item className="text-cyan-50 hover:text-cyan-200 cursor-pointer" id="login" onClick={handleLink}>
@@ -55,7 +77,6 @@ const NavigationBar = () => {
       </Container>
     </Navbar>
   );
-
 };
 
 export default NavigationBar;
