@@ -14,8 +14,6 @@ const ViewEvent = () => {
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-
-
   useEffect(() => {
     setIsLoading(true)
     const fetchData = async () => {

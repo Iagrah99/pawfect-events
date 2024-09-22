@@ -26,6 +26,16 @@ export const fetchUsers = async () => {
   return res.data.users;
 };
 
+export const fetchUserById = async (user_id) => {
+  const res = await dogEventsApi.get(`/users/${user_id}`);
+  return res.data.user;
+};
+
+export const fetchEventsAttending = async (user_id) => {
+  const res = await dogEventsApi.get(`/users/${user_id}/attending`);
+  return res.data.eventsAttending;
+};
+
 export const loginUser = async (email, password) => {
   const res = await dogEventsApi.post(`/users/login`, {
     email: email,

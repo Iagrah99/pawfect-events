@@ -9,17 +9,15 @@ const EventPost = ({ event, attendees, users }) => {
   const startDate = new Date(event.start_date);
   const endDate = new Date(event.end_date);
 
-  const organiserDetails = users.find((user) => user.username === event.organiser);
-
   const navigate = useNavigate();
 
   const { loggedInUser, setLoggedInUser } = useContext(UserContext);
 
+  const organiser = users.find((user) => user.username === event.organiser)
+
   const handleLink = (e) => {
     e.preventDefault()
-    navigate(`/users/${organiserDetails.username}`, {
-      state: { organiserDetails }
-    })
+    navigate(`/users/${organiser.user_id}`)
   }
 
   const isValidDate = (date) => !isNaN(date.getTime());
@@ -55,14 +53,14 @@ const EventPost = ({ event, attendees, users }) => {
             <p className="text-sm text-white">Price: £{formatCost(event.price_in_pence)}</p>
           </div>
 
-          {loggedInUser && organiserDetails && loggedInUser.username !== organiserDetails.username && (
+          {/* {loggedInUser && organiserDetails && loggedInUser.username !== organiserDetails.username && (
             <button
               onClick={() => console.log('Adding event to user’s list of events')}
               className="mt-2 px-6 py-2 bg-cyan-600 text-white font-semibold rounded-md hover:bg-cyan-700 transition-colors duration-200"
             >
               Add to My Events
             </button>
-          )}
+          )} */}
         </div>
       </div>
 

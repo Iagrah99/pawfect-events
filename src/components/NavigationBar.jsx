@@ -40,7 +40,8 @@ const NavigationBar = () => {
                 <img
                   src={loggedInUser.avatar_url}
                   alt="User Avatar"
-                  className="w-10 h-10 rounded-full border-2 border-gray-700 shadow-lg ml-2"
+                  className="w-10 h-10 rounded-full border-2 border-gray-700 shadow-lg ml-2 cursor-pointer"
+                  onClick={() => navigate(`/users/${loggedInUser.user_id}`)}
                 />
 
                 {loggedInUser.is_organiser && (
