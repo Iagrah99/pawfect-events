@@ -1,17 +1,18 @@
 import { format } from 'date-fns';
 import formatCost from '../../utils/formatCost';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { UserContext } from '../contexts/UserContext';
 import { useNavigate } from 'react-router-dom';
+import { postEventAttending, removeEventAttending } from "../../utils/api";
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 
-const EventPost = ({ event, attendees, users }) => {
+const EventPost = ({ event, attendees, setAttendees, users, setIsError, setError }) => {
   const startDate = new Date(event.start_date);
   const endDate = new Date(event.end_date);
 
   const navigate = useNavigate();
 
-  const { loggedInUser, setLoggedInUser } = useContext(UserContext);
+  const { loggedInUser } = useContext(UserContext);
 
   const organiser = users.find((user) => user.username === event.organiser)
 
@@ -19,6 +20,28 @@ const EventPost = ({ event, attendees, users }) => {
     e.preventDefault()
     navigate(`/users/${organiser.user_id}`)
   }
+
+  const isAttendee = attendees.some((attendee) => attendee === loggedInUser.username)
+
+  const handleAttendEvent = async (e) => {
+    e.preventDefault();
+
+    if (!isAttendee) {
+      try {
+        const eventsAttendingFromApi = await postEventAttending(loggedInUser.user_id, loggedInUser.username, event.title);
+        setAttendees((prevAttendees) => [...prevAttendees, loggedInUser.username]);
+      } catch (err) {
+      }
+    } else {
+      try {
+        const removeEventAttendingFromApi = await removeEventAttending(loggedInUser.user_id, event.title);
+        setAttendees((prevAttendees) => prevAttendees.filter((attendee) => attendee !== loggedInUser.username));
+      } catch (err) {
+        setIsError(true)
+        setError(err.response)
+      }
+    }
+  };
 
   const isValidDate = (date) => !isNaN(date.getTime());
 
@@ -53,14 +76,15 @@ const EventPost = ({ event, attendees, users }) => {
             <p className="text-sm text-white">Price: £{formatCost(event.price_in_pence)}</p>
           </div>
 
-          {/* {loggedInUser && organiserDetails && loggedInUser.username !== organiserDetails.username && (
+          {loggedInUser && organiser && loggedInUser.username !== organiser.username && (
             <button
-              onClick={() => console.log('Adding event to user’s list of events')}
+              onClick={handleAttendEvent}
               className="mt-2 px-6 py-2 bg-cyan-600 text-white font-semibold rounded-md hover:bg-cyan-700 transition-colors duration-200"
             >
-              Add to My Events
+              {isAttendee ? "Opt Out Of Event" : "Sign Up For Event"}
             </button>
-          )} */}
+
+          )}
         </div>
       </div>
 

@@ -13,6 +13,7 @@ const ViewEvent = () => {
   const [event, setEvent] = useState({});
   const [attendees, setAttendees] = useState([]);
   const [users, setUsers] = useState([]);
+
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false)
   const [error, setError] = useState(null);
@@ -39,7 +40,7 @@ const ViewEvent = () => {
     }
     fetchData();
 
-  }, [])
+  }, [setAttendees])
 
   if (isError) {
     return <Error error={error} />
@@ -48,7 +49,7 @@ const ViewEvent = () => {
   return (
     <>
       <NavigationBar />
-      {isLoading ? (<Loading content="Event Details" />) : (<EventPost event={event} attendees={attendees} users={users} />)}
+      {isLoading ? (<Loading content="Event Details" />) : (<EventPost event={event} attendees={attendees} setAttendees={setAttendees} users={users} setIsError={setIsError} setError={setError} />)}
     </>
   )
 }

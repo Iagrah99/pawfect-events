@@ -36,6 +36,23 @@ export const fetchEventsAttending = async (user_id) => {
   return res.data.eventsAttending;
 };
 
+export const postEventAttending = async (user_id, username, eventAttending) => {
+  const res = await dogEventsApi.post(`/users/${user_id}/attending`, {
+    username: username,
+    eventAttending: eventAttending,
+  });
+  return res.data.eventsAttending;
+};
+
+export const removeEventAttending = async (user_id, event_title) => {
+  const res = await dogEventsApi({
+    method: 'delete',
+    url: `/users/${user_id}/attending`,
+    data: { event_title: event_title },
+  });
+  return res.data;
+};
+
 export const loginUser = async (email, password) => {
   const res = await dogEventsApi.post(`/users/login`, {
     email: email,
