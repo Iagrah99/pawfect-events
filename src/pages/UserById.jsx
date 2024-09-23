@@ -38,7 +38,7 @@ const UserById = () => {
     <>
       <NavigationBar />
       {isLoading ? <Loading content={"User Details"} /> :
-        <article className="max-w-4xl mx-auto mt-5 p-6 bg-gray-900 shadow-md rounded-lg">
+        <article className="max-w-5xl mx-auto mt-5 p-6 bg-gray-900 shadow-md rounded-lg">
 
           <div className="flex justify-between items-center mb-4">
             <Breadcrumb>

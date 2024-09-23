@@ -5,6 +5,8 @@ import { UserContext } from '../contexts/UserContext';
 import { useNavigate } from 'react-router-dom';
 import { postEventAttending, removeEventAttending } from "../../utils/api";
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUserPlus, faUserMinus } from '@fortawesome/free-solid-svg-icons';
 
 const EventPost = ({ event, attendees, setAttendees, users, setIsError, isError, setError, error }) => {
   const startDate = new Date(event.start_date);
@@ -71,7 +73,7 @@ const EventPost = ({ event, attendees, setAttendees, users, setIsError, isError,
   const isValidDate = (date) => !isNaN(date.getTime());
 
   return (
-    <article className="max-w-4xl mx-auto mt-5 p-6 bg-gray-900 shadow-md rounded-lg">
+    <article className="max-w-5xl mx-auto mt-5 p-6 bg-gray-900 shadow-md rounded-lg">
 
       <Breadcrumb>
         <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
@@ -112,8 +114,19 @@ const EventPost = ({ event, attendees, setAttendees, users, setIsError, isError,
                 title={isAttendee ? "Opt Out Of Event" : "Sign Up For Event"}
                 disabled={isSigningUp || isOptingOut}
               >
-                {isAttendee ? (isOptingOut ? "Opting Out..." : "Opt Out Of Event") : (isSigningUp ? "Signing Up..." : "Sign Up For Event")}
+                {!isAttendee && (
+                  <FontAwesomeIcon icon={faUserPlus} className="mr-2" />
+                )}
+
+                {isAttendee && (
+                  <FontAwesomeIcon icon={faUserMinus} className="mr-2" />
+                )}
+
+                {isAttendee ? "Opt Out Of Event" : "Sign Up For Event"}
               </button>
+
+
+
 
             )}
 
