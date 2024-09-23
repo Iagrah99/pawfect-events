@@ -49,7 +49,7 @@ const ViewEvent = () => {
   return (
     <>
       <NavigationBar />
-      {isLoading ? (<Loading content="Event Details" />) : (<EventPost event={event} attendees={attendees} setAttendees={setAttendees} users={users} setIsError={setIsError} setError={setError} />)}
+      {isLoading ? (<Loading content="Event Details" />) : (<EventPost event={event} attendees={attendees} setAttendees={setAttendees} users={users} setIsError={setIsError} isError={isError} setError={setError} error={error} />)}
     </>
   )
 }

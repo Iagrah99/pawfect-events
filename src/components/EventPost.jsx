@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { postEventAttending, removeEventAttending } from "../../utils/api";
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 
-const EventPost = ({ event, attendees, setAttendees, users, setIsError, setError }) => {
+const EventPost = ({ event, attendees, setAttendees, users, setIsError, isError, setError, error }) => {
   const startDate = new Date(event.start_date);
   const endDate = new Date(event.end_date);
 
@@ -17,6 +17,9 @@ const EventPost = ({ event, attendees, setAttendees, users, setIsError, setError
   const organiser = users.find((user) => user.username === event.organiser)
 
   const [successMessage, setSuccessMessage] = useState('');
+
+  const [isSigningUp, setIsSigningUp] = useState(false);
+  const [isOptingOut, setIsOptingOut] = useState(false);
 
   const handleLink = (e) => {
     e.preventDefault()
@@ -30,23 +33,35 @@ const EventPost = ({ event, attendees, setAttendees, users, setIsError, setError
 
     if (!isAttendee) {
       try {
+        setSuccessMessage("")
+        setIsError(false)
+        setIsSigningUp(true)
         const eventsAttendingFromApi = await postEventAttending(loggedInUser.user_id, loggedInUser.username, event.title);
         setAttendees((prevAttendees) => [...prevAttendees, loggedInUser.username]);
+        setIsSigningUp(false)
         setSuccessMessage('Successfully signed up for the event!');
         setTimeout(() => {
           setSuccessMessage("")
         }, 3000);
       } catch (err) {
+        setIsSigningUp(false);
+        setIsError(true)
+        setError(err.response)
       }
     } else {
       try {
+        setSuccessMessage("")
+        setIsError(false)
+        setIsOptingOut(true)
         const removeEventAttendingFromApi = await removeEventAttending(loggedInUser.user_id, event.title);
         setAttendees((prevAttendees) => prevAttendees.filter((attendee) => attendee !== loggedInUser.username));
+        setIsOptingOut(false)
         setSuccessMessage('Successfully opted out of the event.');
         setTimeout(() => {
           setSuccessMessage("")
         }, 3000);
       } catch (err) {
+        setIsOptingOut(false);
         setIsError(true)
         setError(err.response)
       }
@@ -85,18 +100,53 @@ const EventPost = ({ event, attendees, setAttendees, users, setIsError, setError
             <p className="text-sm text-white">Type: {event.event_type}</p>
             <p className="text-sm text-white">Price: £{formatCost(event.price_in_pence)}</p>
           </div>
+          <div className="flex items-center mt-2">
+            {loggedInUser && organiser && loggedInUser.username !== organiser.username && (
 
-          {loggedInUser && organiser && loggedInUser.username !== organiser.username && (
+              <button
+                onClick={handleAttendEvent}
+                className={`mt-2 mr-2 px-6 py-2 text-white font-semibold rounded-md transition-colors duration-200 
+                ${isSigningUp || isOptingOut
+                    ? 'bg-gray-600 cursor-not-allowed opacity-50'
+                    : 'bg-gray-800 hover:bg-gray-700 cursor-pointer'}`}
+                title={isAttendee ? "Opt Out Of Event" : "Sign Up For Event"}
+                disabled={isSigningUp || isOptingOut}
+              >
+                {isAttendee ? (isOptingOut ? "Opting Out..." : "Opt Out Of Event") : (isSigningUp ? "Signing Up..." : "Sign Up For Event")}
+              </button>
+
+            )}
+
             <button
-              onClick={handleAttendEvent}
-              className="mt-2 px-6 py-2 bg-cyan-600 text-white font-semibold rounded-md hover:bg-cyan-700 transition-colors duration-200"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center space-x-2 bg-gray-800 px-3 py-2 mt-2 rounded-md hover:bg-gray-700 transition-colors duration-200"
+              title="Add to Google Calendar"
             >
-              {isAttendee ? "Opt Out Of Event" : "Sign Up For Event"}
+              <span className="text-white text-sm font-semibold">Add to Google Calendar</span>
+
+              <img
+                src="https://i.ibb.co/qDSRS1J/google-calendar-512x512.png"
+                alt="Add to Google Calendar"
+                className="w-6 h-6"
+              />
             </button>
+          </div>
+
+          {isSigningUp && (
+            <p className="mt-3 text-blue-500 font-semibold">Signing up for the event...</p>
+          )}
+
+          {isOptingOut && (
+            <p className="mt-3 text-blue-500 font-semibold">Opting out of the event...</p>
           )}
 
           {successMessage && (
-            <p className="mt-2 text-green-500 font-semibold">{successMessage}</p>
+            <p className="mt-3 text-green-500 font-semibold">{successMessage}</p>
+          )}
+
+          {isError && (
+            <p className="mt-3 text-red-500 font-semibold">{error.data.msg}</p>
           )}
         </div>
       </div>
@@ -114,7 +164,7 @@ const EventPost = ({ event, attendees, setAttendees, users, setIsError, setError
           ))}
         </ul>
       </div>
-    </article>
+    </article >
 
   );
 };

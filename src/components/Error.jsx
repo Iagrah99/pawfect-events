@@ -13,10 +13,10 @@ const Error = ({ error }) => {
           <h1 className="text-4xl font-bold mb-4 text-gray-300">Error {error.status}</h1>
           <p className="text-lg mb-4 text-gray-300">{error.data.msg}</p>
           <button
-            onClick={() => navigate("/")}
+            onClick={() => navigate(-1)}
             className="mt-4 bg-gray-700 text-gray-300 font-semibold py-2 px-4 rounded-lg hover:bg-gray-600 transition duration-300 ease-in-out shadow-md"
           >
-            Back to Home
+            Go Back
           </button>
         </div>
       </div>
