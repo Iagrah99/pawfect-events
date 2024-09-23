@@ -16,6 +16,8 @@ const EventPost = ({ event, attendees, setAttendees, users, setIsError, setError
 
   const organiser = users.find((user) => user.username === event.organiser)
 
+  const [successMessage, setSuccessMessage] = useState('');
+
   const handleLink = (e) => {
     e.preventDefault()
     navigate(`/users/${organiser.user_id}`)
@@ -30,12 +32,20 @@ const EventPost = ({ event, attendees, setAttendees, users, setIsError, setError
       try {
         const eventsAttendingFromApi = await postEventAttending(loggedInUser.user_id, loggedInUser.username, event.title);
         setAttendees((prevAttendees) => [...prevAttendees, loggedInUser.username]);
+        setSuccessMessage('Successfully signed up for the event!');
+        setTimeout(() => {
+          setSuccessMessage("")
+        }, 3000);
       } catch (err) {
       }
     } else {
       try {
         const removeEventAttendingFromApi = await removeEventAttending(loggedInUser.user_id, event.title);
         setAttendees((prevAttendees) => prevAttendees.filter((attendee) => attendee !== loggedInUser.username));
+        setSuccessMessage('Successfully opted out of the event.');
+        setTimeout(() => {
+          setSuccessMessage("")
+        }, 3000);
       } catch (err) {
         setIsError(true)
         setError(err.response)
@@ -83,7 +93,10 @@ const EventPost = ({ event, attendees, setAttendees, users, setIsError, setError
             >
               {isAttendee ? "Opt Out Of Event" : "Sign Up For Event"}
             </button>
+          )}
 
+          {successMessage && (
+            <p className="mt-2 text-green-500 font-semibold">{successMessage}</p>
           )}
         </div>
       </div>
