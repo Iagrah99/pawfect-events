@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import ViewEvent from "./pages/EventById.jsx"
 import UserById from "./pages/UserById.jsx"
 import Login from "./pages/Login.jsx"
+import Error from './components/Error.jsx';
 
 export default function App() {
   const { setLoggedInUser } = useContext(UserContext);
@@ -21,6 +22,7 @@ export default function App() {
       <Route path='/events/:event_id' element={<ViewEvent />} />
       <Route path='/users/:user_id' element={<UserById />} />
       <Route path='/login' element={<Login />} />
+      <Route path='/*' element={<Error />} />
     </Routes>
   )
 }

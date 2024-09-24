@@ -5,34 +5,48 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { fetchEvents, fetchEventsAttending, fetchUserById } from "../../utils/api";
 import Loading from "../components/Loading";
+import Error from "../components/Error";
 
 const UserById = () => {
   const navigate = useNavigate();
 
   const [events, setEvents] = useState([]);
-  const [user, setUser] = useState({})
-  const [eventsAttending, setEventsAttending] = useState([])
-  const [isLoading, setIsLoading] = useState(false)
+  const [user, setUser] = useState({});
+  const [eventsAttending, setEventsAttending] = useState([]);
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [error, setError] = useState(null);
 
   const { user_id } = useParams();
 
   useEffect(() => {
     setIsLoading(true)
     const fetchData = async () => {
-      const eventsFromApi = await fetchEvents();
-      const userFromApi = await fetchUserById(user_id)
-      const userEventsAttending = await fetchEventsAttending(user_id)
-      setEvents(eventsFromApi)
-      setUser(userFromApi)
-      setEventsAttending(userEventsAttending)
-      setIsLoading(false)
+      try {
+        setIsError(false)
+        setError(null)
+        const eventsFromApi = await fetchEvents();
+        const userFromApi = await fetchUserById(user_id)
+        const userEventsAttending = await fetchEventsAttending(user_id)
+        setEvents(eventsFromApi)
+        setUser(userFromApi)
+        setEventsAttending(userEventsAttending)
+        setIsLoading(false)
+      } catch (err) {
+        setIsLoading(false)
+        setIsError(true)
+        setError(err.response)
+      }
     }
     fetchData();
   }, [user_id])
 
-  const organiserEvents = events.filter((event) => event.organiser === user.username)
+  if (isError) {
+    return <Error error={error} />
+  }
 
-  const organiserEventsNumber = organiserEvents.length;
+  const organiserEvents = events.filter((event) => event.organiser === user.username)
 
   return (
     <>

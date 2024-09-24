@@ -36,10 +36,8 @@ const ViewEvent = () => {
         setIsError(true)
         setError(err.response)
       }
-
     }
     fetchData();
-
   }, [setAttendees])
 
   if (isError) {
