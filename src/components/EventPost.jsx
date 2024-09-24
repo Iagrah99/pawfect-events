@@ -39,7 +39,7 @@ const EventPost = ({ event, attendees, setAttendees, users, setIsError, isError,
     navigate(`/users/${organiser.user_id}`)
   }
 
-  const isAttendee = attendees.some((attendee) => attendee === loggedInUser.username)
+  const isAttendee = loggedInUser ? attendees.some((attendee) => attendee === loggedInUser.username) : false;
 
   const handleAttendEvent = async (e) => {
     e.preventDefault();
