@@ -105,9 +105,11 @@ const EventPost = ({ event, attendees, setAttendees, users, setIsError, isError,
               : 'Invalid date'}
           </p>
 
-          <div className="flex space-x-4 mb-2">
+          <div className="flex flex-col mb-2">
             <p className="text-sm text-white">Type: {event.event_type}</p>
-            <p className="text-sm text-white">Price: £{formatCost(event.price_in_pence)}</p>
+            <p className="text-lg font-bold">
+              Cost: {event.price_in_pence === 0 ? "FREE" : `£${formatCost(event.price_in_pence)}`}
+            </p>
           </div>
 
           <div className="flex items-center mt-2">

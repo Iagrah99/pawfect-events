@@ -32,21 +32,24 @@ const NavigationBar = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="flex-grow">
             {loggedInUser ? (
-              <div className="ml-auto flex items-center space-x-4">
-                <Nav.Item className="text-cyan-50">
-                  Hello, {loggedInUser.username}!
-                </Nav.Item>
+              <div className="ml-auto flex items-center space-x-10">
+                <div className="flex flex-row items-center space-x-3 mr-5">
+                  <Nav.Item className="text-cyan-50">
+                    Hello, {loggedInUser.username}!
+                  </Nav.Item>
 
-                <img
-                  src={loggedInUser.avatar_url}
-                  alt="User Avatar"
-                  className="w-10 h-10 rounded-full border-2 border-gray-700 shadow-lg ml-2 cursor-pointer"
-                  onClick={() => navigate(`/users/${loggedInUser.user_id}`)}
-                />
+                  <img
+                    src={loggedInUser.avatar_url}
+                    alt="User Avatar"
+                    className="w-10 h-10 rounded-full border-2 border-gray-700 shadow-lg ml-2 cursor-pointer"
+                    onClick={() => navigate(`/users/${loggedInUser.user_id}`)}
+                  />
+                </div>
+
 
                 {loggedInUser.is_organiser && (
                   <Nav.Item
-                    className="text-cyan-50 hover:text-cyan-200 cursor-pointer"
+                    className="text-cyan-50 hover:text-cyan-200 cursor-pointer mx-3"
                     id="create-event"
                     onClick={() => navigate('/create-event')}
                   >

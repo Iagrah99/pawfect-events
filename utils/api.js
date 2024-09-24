@@ -53,6 +53,31 @@ export const removeEventAttending = async (user_id, event_title) => {
   return res.data;
 };
 
+export const postEvent = async ({
+  title,
+  organiser,
+  description,
+  start_date,
+  end_date,
+  event_type,
+  price_in_pence,
+  location,
+  image,
+}) => {
+  const res = await dogEventsApi.post('/events', {
+    title,
+    organiser,
+    description,
+    start_date,
+    end_date,
+    event_type,
+    price_in_pence,
+    location,
+    image,
+  });
+  return res.data.event;
+};
+
 export const loginUser = async (email, password) => {
   const res = await dogEventsApi.post(`/users/login`, {
     email: email,

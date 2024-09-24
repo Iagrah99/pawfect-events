@@ -23,7 +23,9 @@ const EventCard = ({ event }) => {
         <h3 className="text-white text-3xl font-semibold">{event.title} - {event.location}</h3>
         <p>{format(event.start_date, "EEEE, do MMMM yyyy 'from' h:mmaaa") + " - " + format(event.end_date, "h:mmaaa")}</p>
         <p className="text-sm">Event Type: {event.event_type}</p>
-        <p className="text-lg font-bold">Cost: £{formatCost(event.price_in_pence)}</p>
+        <p className="text-lg font-bold">
+          Cost: {event.price_in_pence === 0 ? "FREE" : `£${formatCost(event.price_in_pence)}`}
+        </p>
       </div>
     </article>
   )
