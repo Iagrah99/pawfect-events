@@ -1,12 +1,13 @@
 import { format } from 'date-fns';
 import formatCost from '../../utils/formatCost';
-import { useContext, useState } from 'react';
+import { useContext, useState, useRef } from 'react';
 import { UserContext } from '../contexts/UserContext';
 import { useNavigate } from 'react-router-dom';
 import { postEventAttending, removeEventAttending } from "../../utils/api";
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserPlus, faUserMinus } from '@fortawesome/free-solid-svg-icons';
+import { Spinner } from "react-bootstrap"
 
 const EventPost = ({ event, attendees, setAttendees, users, setIsError, isError, setError, error }) => {
   const startDate = new Date(event.start_date);
@@ -19,9 +20,19 @@ const EventPost = ({ event, attendees, setAttendees, users, setIsError, isError,
   const organiser = users.find((user) => user.username === event.organiser)
 
   const [successMessage, setSuccessMessage] = useState('');
-
   const [isSigningUp, setIsSigningUp] = useState(false);
   const [isOptingOut, setIsOptingOut] = useState(false);
+
+  const timeoutRef = useRef(null);
+
+  const clearMessageAfterTimeout = () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+    timeoutRef.current = setTimeout(() => {
+      setSuccessMessage("");
+    }, 3000);
+  };
 
   const handleLink = (e) => {
     e.preventDefault()
@@ -38,13 +49,11 @@ const EventPost = ({ event, attendees, setAttendees, users, setIsError, isError,
         setSuccessMessage("")
         setIsError(false)
         setIsSigningUp(true)
-        const eventsAttendingFromApi = await postEventAttending(loggedInUser.user_id, loggedInUser.username, event.title);
+        await postEventAttending(loggedInUser.user_id, loggedInUser.username, event.title);
         setAttendees((prevAttendees) => [...prevAttendees, loggedInUser.username]);
         setIsSigningUp(false)
         setSuccessMessage('Successfully signed up for the event!');
-        setTimeout(() => {
-          setSuccessMessage("")
-        }, 3000);
+        clearMessageAfterTimeout();
       } catch (err) {
         setIsSigningUp(false);
         setIsError(true)
@@ -55,13 +64,11 @@ const EventPost = ({ event, attendees, setAttendees, users, setIsError, isError,
         setSuccessMessage("")
         setIsError(false)
         setIsOptingOut(true)
-        const removeEventAttendingFromApi = await removeEventAttending(loggedInUser.user_id, event.title);
+        await removeEventAttending(loggedInUser.user_id, event.title);
         setAttendees((prevAttendees) => prevAttendees.filter((attendee) => attendee !== loggedInUser.username));
         setIsOptingOut(false)
         setSuccessMessage('Successfully opted out of the event.');
-        setTimeout(() => {
-          setSuccessMessage("")
-        }, 3000);
+        clearMessageAfterTimeout();
       } catch (err) {
         setIsOptingOut(false);
         setIsError(true)
@@ -102,9 +109,9 @@ const EventPost = ({ event, attendees, setAttendees, users, setIsError, isError,
             <p className="text-sm text-white">Type: {event.event_type}</p>
             <p className="text-sm text-white">Price: £{formatCost(event.price_in_pence)}</p>
           </div>
+
           <div className="flex items-center mt-2">
             {loggedInUser && organiser && loggedInUser.username !== organiser.username && (
-
               <button
                 onClick={handleAttendEvent}
                 className={`mt-2 mr-2 px-6 py-2 text-white font-semibold rounded-md transition-colors duration-200 
@@ -117,17 +124,11 @@ const EventPost = ({ event, attendees, setAttendees, users, setIsError, isError,
                 {!isAttendee && (
                   <FontAwesomeIcon icon={faUserPlus} className="mr-2" />
                 )}
-
                 {isAttendee && (
                   <FontAwesomeIcon icon={faUserMinus} className="mr-2" />
                 )}
-
                 {isAttendee ? "Opt Out Of Event" : "Sign Up For Event"}
               </button>
-
-
-
-
             )}
 
             <button
@@ -137,7 +138,6 @@ const EventPost = ({ event, attendees, setAttendees, users, setIsError, isError,
               title="Add to Google Calendar"
             >
               <span className="text-white text-sm font-semibold">Add to Google Calendar</span>
-
               <img
                 src="https://i.ibb.co/qDSRS1J/google-calendar-512x512.png"
                 alt="Add to Google Calendar"
@@ -146,18 +146,34 @@ const EventPost = ({ event, attendees, setAttendees, users, setIsError, isError,
             </button>
           </div>
 
-          {isSigningUp && (
-            <p className="mt-3 text-blue-500 font-semibold">Signing up for the event...</p>
-          )}
-
-          {isOptingOut && (
-            <p className="mt-3 text-blue-500 font-semibold">Opting out of the event...</p>
-          )}
+          <div className="mt-3">
+            {isSigningUp && (
+              <div className="flex items-center space-x-2">
+                <Spinner
+                  animation="border"
+                  role="status"
+                  size="sm"
+                  className='mb-2'
+                />
+                <p className="text-blue-500 font-semibold">Signing up for the event...</p>
+              </div>
+            )}
+            {isOptingOut && (
+              <div className="flex items-center space-x-2">
+                <Spinner
+                  animation="border"
+                  role="status"
+                  size="sm"
+                  className='mb-2'
+                />
+                <p className="text-blue-500 font-semibold">Opting out of the event...</p>
+              </div>
+            )}
+          </div>
 
           {successMessage && (
             <p className="mt-3 text-green-500 font-semibold">{successMessage}</p>
           )}
-
           {isError && (
             <p className="mt-3 text-red-500 font-semibold">{error.data.msg}</p>
           )}
@@ -166,7 +182,6 @@ const EventPost = ({ event, attendees, setAttendees, users, setIsError, isError,
 
       <div className="my-4">
         <p className="text-white mb-4">{event.description}</p>
-
       </div>
 
       <div className="mt-8 p-4 bg-gray-800 rounded-lg">
@@ -177,8 +192,7 @@ const EventPost = ({ event, attendees, setAttendees, users, setIsError, isError,
           ))}
         </ul>
       </div>
-    </article >
-
+    </article>
   );
 };
 
