@@ -94,7 +94,11 @@ const UserById = () => {
                         <ul className="list-disc pl-5 text-white">
                           {eventsAttending.length ? (
                             eventsAttending.map((event) => (
-                              <li key={event} className="cursor-pointer">
+                              <li key={event} className="cursor-pointer hover:text-cyan-200"
+                                onClick={() => {
+                                  const matchedEvent = events.find(e => e.title === event)
+                                  navigate(`/events/${matchedEvent.event_id}`)
+                                }}>
                                 {event}
                               </li>
                             ))
@@ -112,7 +116,9 @@ const UserById = () => {
                               <li
                                 key={event.event_id}
                                 className="cursor-pointer hover:text-cyan-200"
-                                onClick={() => navigate(`/events/${event.event_id}`)}
+                                onClick={() => {
+                                  navigate(`/events/${event.event_id}`)
+                                }}
                               >
                                 {event.title}
                               </li>

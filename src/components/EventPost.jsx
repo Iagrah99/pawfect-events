@@ -190,10 +190,22 @@ const EventPost = ({ event, attendees, setAttendees, users, setIsError, isError,
         <h2 className="text-xl font-bold mb-4 text-white">Attendees</h2>
         <ul className="list-disc pl-5 text-white">
           {attendees.map((attendee) => (
-            <li key={attendee}>{attendee}</li>
+            <li
+              key={attendee}
+              className="cursor-pointer hover:text-cyan-200"
+              onClick={() => {
+                const matchedUser = users.find(user => user.username === attendee);
+                if (matchedUser) {
+                  navigate(`/users/${matchedUser.user_id}`);
+                }
+              }}
+            >
+              {attendee}
+            </li>
           ))}
         </ul>
       </div>
+
     </article>
   );
 };
