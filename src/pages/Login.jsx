@@ -1,5 +1,5 @@
 import NavigationBar from "../components/NavigationBar"
-import { useState, useContext } from "react"
+import { useState, useEffect, useContext } from "react"
 import { loginUser } from "../../utils/api";
 import { useNavigate } from "react-router-dom";
 import LoggingIn from "../components/LoggingIn";
@@ -9,6 +9,7 @@ const Login = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("")
+  const [rememberMe, setRememberMe] = useState(false)
   const [isLoggingIn, setIsLoggingIn] = useState(false)
   const [isError, setIsError] = useState(false)
   const [error, setError] = useState(null);
@@ -16,6 +17,14 @@ const Login = () => {
   const { setLoggedInUser } = useContext(UserContext);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const storedEmail = localStorage.getItem("email");
+    if (storedEmail) {
+      setEmail(storedEmail);
+      setRememberMe(true);
+    }
+  }, []);
 
   const updateLoginInfo = (e) => {
     if (e.target.id === 'email') {
@@ -26,12 +35,21 @@ const Login = () => {
     setIsError(false)
   }
 
+  const handleRememberMe = (e) => {
+    setRememberMe(e.target.checked)
+
+  }
+
   const loginRequest = async (e) => {
     try {
       e.preventDefault()
+      if (rememberMe) {
+        localStorage.setItem("email", email)
+      } else {
+        localStorage.removeItem("email")
+      }
       setIsLoggingIn(true)
       const userDetailsFromApi = await loginUser(email, password);
-      console.log(userDetailsFromApi)
       setIsLoggingIn(false)
       setLoggedInUser(userDetailsFromApi)
       localStorage.setItem('loggedInUser', JSON.stringify(userDetailsFromApi));
@@ -64,6 +82,7 @@ const Login = () => {
                 placeholder="Enter your email"
                 autoComplete="off"
                 required
+                value={email}
                 onChange={(e) => (updateLoginInfo(e))}
               />
             </div>
@@ -89,7 +108,9 @@ const Login = () => {
                   id="remember_me"
                   name="remember_me"
                   type="checkbox"
+                  checked={rememberMe}
                   className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-500 bg-gray-700 rounded"
+                  onChange={handleRememberMe}
                 />
                 <label htmlFor="remember_me" className="ml-2 block text-sm text-gray-300">
                   Remember me
