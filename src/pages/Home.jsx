@@ -4,20 +4,35 @@ import NavigationBar from "../components/NavigationBar";
 import Loading from "../components/Loading";
 import { fetchEvents } from "../../utils/api"
 import EventCard from "../components/EventCard";
+import Error from "../components/Error";
 
 const Home = () => {
   const [events, setEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(false)
+  const [isError, setIsError] = useState(false)
+  const [error, setError] = useState(null)
 
   useEffect(() => {
     setIsLoading(true)
-    const fetchData = async () => {
-      const eventsFromApi = await fetchEvents();
-      setEvents(eventsFromApi)
-      setIsLoading(false)
+    try {
+      setIsError(false)
+      setError(null)
+      const fetchData = async () => {
+        const eventsFromApi = await fetchEvents();
+        setEvents(eventsFromApi)
+        setIsLoading(false)
+      }
+      fetchData();
+    } catch (err) {
+      setIsError(true)
+      setError(err.response)
+      console.log(err.response)
     }
-    fetchData();
   }, [])
+
+  if (isError) {
+    return (<Error error={error} />)
+  }
 
   return (
     <Container fluid="xs">

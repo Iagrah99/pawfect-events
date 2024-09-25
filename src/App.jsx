@@ -7,6 +7,7 @@ import UserById from "./pages/UserById.jsx"
 import Login from "./pages/Login.jsx"
 import Error from './components/Error.jsx';
 import CreateArticle from "./components/CreateArticle.jsx"
+import Register from './pages/Register.jsx';
 
 export default function App() {
   const { setLoggedInUser } = useContext(UserContext);
@@ -23,6 +24,7 @@ export default function App() {
       <Route path='/events/:event_id' element={<ViewEvent />} />
       <Route path='/users/:user_id' element={<UserById />} />
       <Route path='/login' element={<Login />} />
+      <Route path='/register' element={<Register />} />
       <Route path='/create-event' element={<CreateArticle />} />
       <Route path='/*' element={<Error />} />
     </Routes>

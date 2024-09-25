@@ -85,3 +85,20 @@ export const loginUser = async (email, password) => {
   });
   return res.data.user;
 };
+
+export const RegisterUser = async ({
+  email,
+  username,
+  password,
+  isOrganiser,
+  avatarUrl,
+}) => {
+  const res = await dogEventsApi.post('/users', {
+    email,
+    username,
+    password,
+    isOrganiser,
+    avatarUrl,
+  });
+  return res.data.newUser;
+};

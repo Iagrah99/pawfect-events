@@ -91,7 +91,7 @@ const UserById = () => {
                     {!user.is_organiser ? (
                       <>
                         <h2 className="text-xl font-bold mb-4 text-white">Events Attending</h2>
-                        <ul className="list-disc pl-5 text-white">
+                        <ul className={`list-disc text-white ${eventsAttending.length ? 'pl-5' : 'pl-0'}`}>
                           {eventsAttending.length ? (
                             eventsAttending.map((event) => (
                               <li key={event} className="cursor-pointer hover:text-cyan-200"
@@ -103,14 +103,14 @@ const UserById = () => {
                               </li>
                             ))
                           ) : (
-                            <li>User is not attending any events</li>
+                            <p>User is not attending any events</p>
                           )}
                         </ul>
                       </>
                     ) : (
                       <>
                         <h2 className="text-xl font-bold mb-4 text-white">Events Organised</h2>
-                        <ul className="list-disc pl-5 text-white">
+                        <ul className={`list-disc text-white ${eventsAttending.length ? 'pl-5' : 'pl-0'}`}>
                           {organiserEvents.length ? (
                             organiserEvents.map((event) => (
                               <li
@@ -124,7 +124,7 @@ const UserById = () => {
                               </li>
                             ))
                           ) : (
-                            <li>User has not organised any events</li>
+                            <p>User has not organised any events</p>
                           )}
                         </ul>
                       </>
