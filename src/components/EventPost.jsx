@@ -78,17 +78,6 @@ const EventPost = ({ event, attendees, setAttendees, users, setIsError, isError,
     }
   };
 
-  const handleEventUpdate = async () => {
-
-    try {
-      setIsError(false)
-
-    } catch (err) {
-      setIsError(true)
-      setError(err.response)
-    }
-  }
-
   const isValidDate = (date) => !isNaN(date.getTime());
 
   return (
@@ -100,7 +89,7 @@ const EventPost = ({ event, attendees, setAttendees, users, setIsError, isError,
           <Breadcrumb.Item active className='text-white'>{event.title}</Breadcrumb.Item>
         </Breadcrumb>
 
-        {organiser ? organiser.username === loggedInUser.username && (<div className='space-x-3'>
+        {organiser && loggedInUser ? organiser.username === loggedInUser.username && (<div className='space-x-3'>
 
           <EditEvent event={event} setIsUpdated={setIsUpdated} error={error} setError={setError} setIsError={setIsError} />
 
