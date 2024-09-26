@@ -8,8 +8,9 @@ import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserPlus, faUserMinus } from '@fortawesome/free-solid-svg-icons';
 import { Spinner } from "react-bootstrap"
+import { EditEvent } from './EditEvent';
 
-const EventPost = ({ event, attendees, setAttendees, users, setIsError, isError, setError, error }) => {
+const EventPost = ({ event, attendees, setAttendees, users, setIsError, isError, setError, error, setIsUpdated }) => {
   const startDate = new Date(event.start_date);
   const endDate = new Date(event.end_date);
 
@@ -77,15 +78,42 @@ const EventPost = ({ event, attendees, setAttendees, users, setIsError, isError,
     }
   };
 
+  const handleEventUpdate = async () => {
+
+    try {
+      setIsError(false)
+
+    } catch (err) {
+      setIsError(true)
+      setError(err.response)
+    }
+  }
+
   const isValidDate = (date) => !isNaN(date.getTime());
 
   return (
     <article className="max-w-5xl mx-auto mt-5 p-6 bg-gray-900 shadow-md rounded-lg">
 
-      <Breadcrumb>
-        <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
-        <Breadcrumb.Item active className='text-white'>{event.title}</Breadcrumb.Item>
-      </Breadcrumb>
+      <div className="flex justify-between items-center mb-4">
+        <Breadcrumb>
+          <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
+          <Breadcrumb.Item active className='text-white'>{event.title}</Breadcrumb.Item>
+        </Breadcrumb>
+
+        {organiser ? organiser.username === loggedInUser.username && (<div className='space-x-3'>
+
+          <EditEvent event={event} setIsUpdated={setIsUpdated} error={error} setError={setError} setIsError={setIsError} />
+
+          <button
+            // onClick={() => navigate(-1)}
+            className="text-white bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg shadow-md"
+          >
+            Delete
+          </button>
+        </div>) : null}
+
+      </div>
+
 
       <div className="flex flex-col md:flex-row items-start">
         <div className="w-full md:w-3/6">

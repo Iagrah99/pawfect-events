@@ -17,6 +17,7 @@ const ViewEvent = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false)
   const [error, setError] = useState(null);
+  const [isUpdated, setIsUpdated] = useState(false)
 
   useEffect(() => {
     setIsLoading(true)
@@ -38,7 +39,7 @@ const ViewEvent = () => {
       }
     }
     fetchData();
-  }, [setAttendees])
+  }, [setAttendees, isUpdated])
 
   if (isError) {
     return <Error error={error} />
@@ -47,7 +48,7 @@ const ViewEvent = () => {
   return (
     <>
       <NavigationBar />
-      {isLoading ? (<Loading content="Event Details" />) : (<EventPost event={event} attendees={attendees} setAttendees={setAttendees} users={users} setIsError={setIsError} isError={isError} setError={setError} error={error} />)}
+      {isLoading ? (<Loading content="Event Details" />) : (<EventPost event={event} attendees={attendees} setAttendees={setAttendees} users={users} setIsError={setIsError} isError={isError} setError={setError} error={error} setIsUpdated={setIsUpdated} />)}
     </>
   )
 }

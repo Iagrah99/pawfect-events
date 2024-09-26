@@ -102,3 +102,29 @@ export const RegisterUser = async ({
   });
   return res.data.newUser;
 };
+
+export const UpdateEvent = async (
+  event_id,
+  {
+    title,
+    description,
+    start_date,
+    end_date,
+    event_type,
+    price_in_pence,
+    location,
+    image,
+  }
+) => {
+  const res = await dogEventsApi.patch(`/events/${event_id}`, {
+    title,
+    description,
+    start_date,
+    end_date,
+    event_type,
+    price_in_pence,
+    location,
+    image,
+  });
+  return res.data.event;
+};
