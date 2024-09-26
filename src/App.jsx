@@ -6,7 +6,7 @@ import ViewEvent from "./pages/EventById.jsx"
 import UserById from "./pages/UserById.jsx"
 import Login from "./pages/Login.jsx"
 import Error from './components/Error.jsx';
-import CreateArticle from "./components/CreateArticle.jsx"
+import CreateEvent from "./components/CreateEvent.jsx"
 import Register from './pages/Register.jsx';
 
 export default function App() {
@@ -25,7 +25,7 @@ export default function App() {
       <Route path='/users/:user_id' element={<UserById />} />
       <Route path='/login' element={<Login />} />
       <Route path='/register' element={<Register />} />
-      <Route path='/create-event' element={<CreateArticle />} />
+      <Route path='/create-event' element={<CreateEvent />} />
       <Route path='/*' element={<Error />} />
     </Routes>
   )

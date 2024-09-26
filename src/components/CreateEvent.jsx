@@ -1,14 +1,14 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import NavigationBar from './NavigationBar';
 import { UserContext } from '../contexts/UserContext';
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHomeAlt, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import { postEvent } from '../../utils/api';
+import { postEvent, generateImage } from '../../utils/api';
 import PostingEvent from './PostingEvent';
 import Error from './Error';
 
-const CreateArticle = () => {
+const CreateEvent = () => {
   const { loggedInUser } = useContext(UserContext);
 
   const navigate = useNavigate();
@@ -26,6 +26,15 @@ const CreateArticle = () => {
   const [isPostingEvent, setIsPostingEvent] = useState(false);
   const [isError, setIsError] = useState(false)
   const [error, setError] = useState(null)
+
+  useEffect(() => {
+    const fetchDogImage = async () => {
+      const imageFromApi = await generateImage();
+      setImageUrl(imageFromApi)
+    }
+    fetchDogImage();
+  }, [])
+
 
   const handleImageUpload = async (file) => {
     const apiKey = import.meta.env.VITE_IMGBB_API_KEY;
@@ -49,8 +58,8 @@ const CreateArticle = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log(e.target)
+    e.preventDefault();  // Move this to the top to prevent default behavior first
+
     const eventData = {
       title,
       organiser: loggedInUser.username,
@@ -60,23 +69,25 @@ const CreateArticle = () => {
       event_type: eventType,
       price_in_pence: priceInPence,
       location,
-      image: imageUrl,
+      image: imageUrl || "",
     };
 
     try {
-      setIsError(false)
-      setError(null)
-      setIsPostingEvent(true)
-      const postedEvent = await postEvent(eventData);
-      setIsPostingEvent(false)
-      navigate(`/events/${postedEvent.event_id}`)
+      setIsError(false);
+      setError(null);
+      setIsPostingEvent(true);
 
+      const postedEvent = await postEvent(eventData);
+
+      setIsPostingEvent(false);
+      navigate(`/events/${postedEvent.event_id}`);
     } catch (err) {
-      setIsError(true)
-      setError(err.response)
-      setIsPostingEvent(false)
+      setIsError(true);
+      setError(err.response);
+      setIsPostingEvent(false);
     }
   };
+
 
   if (isError) {
     return (<Error error={error} />)
@@ -273,4 +284,4 @@ const CreateArticle = () => {
   );
 };
 
-export default CreateArticle;
+export default CreateEvent;

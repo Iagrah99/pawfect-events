@@ -2,8 +2,7 @@ import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Registering from "../components/Registering";
 import NavigationBar from "../components/NavigationBar";
-import { RegisterUser } from "../../utils/api";
-import Error from "../components/Error";
+import { registerUser } from "../../utils/api";
 import { UserContext } from "../contexts/UserContext";
 
 const Register = () => {
@@ -62,7 +61,7 @@ const Register = () => {
         isOrganiser,
         avatarUrl
       }
-      const newUser = await RegisterUser(userData)
+      const newUser = await registerUser(userData)
       setIsRegistering(false)
       setLoggedInUser(newUser)
       localStorage.setItem('loggedInUser', JSON.stringify(newUser));

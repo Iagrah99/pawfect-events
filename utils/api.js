@@ -4,6 +4,11 @@ const dogEventsApi = axios.create({
   baseURL: 'https://dog-events-be.onrender.com/api',
 });
 
+const dogImageApi = axios.create({
+  baseURL: 'https://api.thedogapi.com/v1',
+  timeout: 10000,
+});
+
 export const fetchEvents = async (sort_by, order_by) => {
   const res = await dogEventsApi.get(`/events`, {
     params: { sort_by: sort_by, order_by: order_by },
@@ -86,7 +91,7 @@ export const loginUser = async (email, password) => {
   return res.data.user;
 };
 
-export const RegisterUser = async ({
+export const registerUser = async ({
   email,
   username,
   password,
@@ -132,4 +137,14 @@ export const UpdateEvent = async (
 export const deleteEvent = async (event_id) => {
   const res = await dogEventsApi.delete(`/events/${event_id}`);
   return res.status;
+};
+
+export const generateImage = async () => {
+  const apiKey = import.meta.env.VITE_DOGIMG_API_KEY;
+  const res = await dogImageApi.get('/images/search?size=full', {
+    headers: {
+      'x-api-key': apiKey,
+    },
+  });
+  return res.data[0].url;
 };
