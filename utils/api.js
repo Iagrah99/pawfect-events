@@ -128,3 +128,8 @@ export const UpdateEvent = async (
   });
   return res.data.event;
 };
+
+export const deleteEvent = async (event_id) => {
+  const res = await dogEventsApi.delete(`/events/${event_id}`);
+  return res.status;
+};

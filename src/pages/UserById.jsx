@@ -2,23 +2,43 @@ import { useNavigate } from "react-router-dom";
 import NavigationBar from "../components/NavigationBar";
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import { fetchEvents, fetchEventsAttending, fetchUserById } from "../../utils/api";
 import Loading from "../components/Loading";
 import Error from "../components/Error";
 
 const UserById = () => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [events, setEvents] = useState([]);
   const [user, setUser] = useState({});
   const [eventsAttending, setEventsAttending] = useState([]);
-
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [error, setError] = useState(null);
+  const [showDeletedMessage, setShowDeletedMessage] = useState(false);
 
   const { user_id } = useParams();
+  const deletedEvent = location.state?.deletedEvent;
+
+  useEffect(() => {
+    if (deletedEvent) {
+      // Show the message when the component first loads
+      setShowDeletedMessage(true);
+
+      // Hide the message after 3 seconds
+      const timeoutId = setTimeout(() => {
+        setShowDeletedMessage(false);
+
+        // Clear the deletedEvent from history state using navigate with replace: true
+        navigate(location.pathname, { replace: true }); // This clears the state but stays on the same page
+      }, 3000);
+
+      // Clear timeout when the component unmounts or re-renders
+      return () => clearTimeout(timeoutId);
+    }
+  }, [deletedEvent, location.pathname, navigate]);
 
   useEffect(() => {
     setIsLoading(true);
@@ -87,7 +107,14 @@ const UserById = () => {
                     {user.username} <span>({user.is_organiser ? "Event Organiser" : "Member"})</span>
                   </p>
 
-                  <div className="mt-8 p-4  bg-gray-800 rounded-lg">
+                  {/* Show the message if it's visible */}
+                  {showDeletedMessage && (
+                    <p className="mt-3 text-green-500 font-semibold">
+                      The event has been successfully deleted!
+                    </p>
+                  )}
+
+                  <div className="mt-8 p-4 bg-gray-800 rounded-lg">
                     {!user.is_organiser ? (
                       <>
                         <h2 className="text-xl font-bold mb-4 text-white">Events Attending</h2>

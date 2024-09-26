@@ -3,7 +3,7 @@ import formatCost from '../../utils/formatCost';
 import { useContext, useState, useRef } from 'react';
 import { UserContext } from '../contexts/UserContext';
 import { useNavigate } from 'react-router-dom';
-import { postEventAttending, removeEventAttending } from "../../utils/api";
+import { postEventAttending, removeEventAttending, deleteEvent } from "../../utils/api";
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserPlus, faUserMinus } from '@fortawesome/free-solid-svg-icons';
@@ -38,6 +38,17 @@ const EventPost = ({ event, attendees, setAttendees, users, setIsError, isError,
   const handleLink = (e) => {
     e.preventDefault()
     navigate(`/users/${organiser.user_id}`)
+  }
+
+  const handleDeleteEvent = async () => {
+    try {
+      const deletedEvent = await deleteEvent(event.event_id);
+      console.log(deletedEvent)
+      navigate(`/users/${organiser.user_id}`, { state: { deletedEvent } })
+    } catch (err) {
+      setIsError(true)
+      setError(err.response)
+    }
   }
 
   const isAttendee = loggedInUser ? attendees.some((attendee) => attendee === loggedInUser.username) : false;
@@ -94,7 +105,7 @@ const EventPost = ({ event, attendees, setAttendees, users, setIsError, isError,
           <EditEvent event={event} setIsUpdated={setIsUpdated} error={error} setError={setError} setIsError={setIsError} />
 
           <button
-            // onClick={() => navigate(-1)}
+            onClick={handleDeleteEvent}
             className="text-white bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg shadow-md"
           >
             Delete
