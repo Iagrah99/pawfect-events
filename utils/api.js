@@ -166,5 +166,7 @@ export const generateGoogleCalendarEvent = async ({
     .replace(/[-:]/g, '')
     .replace(/\.\d{3}Z$/, 'Z');
 
-  return `${baseURL}?action=TEMPLATE&text=${title}&dates=${formattedStartDate}/${formattedEndDate}&location=${location}&details=Event+details+here:+${url}`;
+  const eventDetails = `Event+details+here%3A+${encodeURIComponent(url)}`;
+
+  return `${baseURL}?action=TEMPLATE&text=${title}&dates=${formattedStartDate}/${formattedEndDate}&ctz=Europe/London&location=${location}&details=${eventDetails}`;
 };

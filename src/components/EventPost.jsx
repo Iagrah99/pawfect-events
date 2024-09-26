@@ -59,7 +59,7 @@ const EventPost = ({ event, attendees, setAttendees, users, setIsError, isError,
       start_date: event.start_date,
       end_date: event.end_date,
       location: event.location,
-      url: `${window.location.host}/events/${event.event_id}`
+      url: `${window.location.protocol}//${window.location.host}/events/${event.event_id}`
     }
     const calendarEvent = await generateGoogleCalendarEvent(eventDetails);
     setCalendarLink(calendarEvent)
