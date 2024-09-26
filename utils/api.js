@@ -148,3 +148,23 @@ export const generateImage = async () => {
   });
   return res.data[0].url;
 };
+
+export const generateGoogleCalendarEvent = async ({
+  title,
+  start_date,
+  end_date,
+  location,
+  url,
+}) => {
+  const baseURL = 'https://calendar.google.com/calendar/render';
+
+  // Convert dates to Google Calendar format (YYYYMMDDTHHMMSSZ)
+  const formattedStartDate = start_date
+    .replace(/[-:]/g, '')
+    .replace(/\.\d{3}Z$/, 'Z');
+  const formattedEndDate = end_date
+    .replace(/[-:]/g, '')
+    .replace(/\.\d{3}Z$/, 'Z');
+
+  return `${baseURL}?action=TEMPLATE&text=${title}&dates=${formattedStartDate}/${formattedEndDate}&location=${location}&details=Event+details+here:+${url}`;
+};

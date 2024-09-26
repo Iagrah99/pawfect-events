@@ -3,7 +3,7 @@ import formatCost from '../../utils/formatCost';
 import { useContext, useState, useRef } from 'react';
 import { UserContext } from '../contexts/UserContext';
 import { useNavigate } from 'react-router-dom';
-import { postEventAttending, removeEventAttending, deleteEvent } from "../../utils/api";
+import { postEventAttending, removeEventAttending, deleteEvent, generateGoogleCalendarEvent } from "../../utils/api";
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserPlus, faUserMinus } from '@fortawesome/free-solid-svg-icons';
@@ -24,6 +24,8 @@ const EventPost = ({ event, attendees, setAttendees, users, setIsError, isError,
   const [isSigningUp, setIsSigningUp] = useState(false);
   const [isOptingOut, setIsOptingOut] = useState(false);
 
+  const [calendarLink, setCalendarLink] = useState("")
+
   const timeoutRef = useRef(null);
 
   const clearMessageAfterTimeout = () => {
@@ -43,12 +45,24 @@ const EventPost = ({ event, attendees, setAttendees, users, setIsError, isError,
   const handleDeleteEvent = async () => {
     try {
       const deletedEvent = await deleteEvent(event.event_id);
-      console.log(deletedEvent)
       navigate(`/users/${organiser.user_id}`, { state: { deletedEvent } })
     } catch (err) {
       setIsError(true)
       setError(err.response)
     }
+  }
+
+  const handleAddToCalendar = async () => {
+    const formattedTitle = event.title.replaceAll(" ", "+")
+    const eventDetails = {
+      title: formattedTitle,
+      start_date: event.start_date,
+      end_date: event.end_date,
+      location: event.location,
+      url: `${window.location.host}/events/${event.event_id}`
+    }
+    const calendarEvent = await generateGoogleCalendarEvent(eventDetails);
+    setCalendarLink(calendarEvent)
   }
 
   const isAttendee = loggedInUser ? attendees.some((attendee) => attendee === loggedInUser.username) : false;
@@ -161,19 +175,22 @@ const EventPost = ({ event, attendees, setAttendees, users, setIsError, isError,
               </button>
             )}
 
-            <button
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center space-x-2 bg-gray-800 px-3 py-2 mt-2 rounded-md hover:bg-gray-700 transition-colors duration-200"
-              title="Add to Google Calendar"
-            >
-              <span className="text-white text-sm font-semibold">Add to Google Calendar</span>
-              <img
-                src="https://i.ibb.co/qDSRS1J/google-calendar-512x512.png"
-                alt="Add to Google Calendar"
-                className="w-6 h-6"
-              />
-            </button>
+            <a className='no-underline' href={calendarLink} target='_blank'>
+              <button
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center space-x-2 bg-gray-800 px-3 py-2 mt-2 rounded-md hover:bg-gray-700 transition-colors duration-200"
+                title="Add to Google Calendar"
+                onClick={handleAddToCalendar}
+              >
+                <span className="text-white text-sm font-semibold">Add to Google Calendar</span>
+                <img
+                  src="https://i.ibb.co/qDSRS1J/google-calendar-512x512.png"
+                  alt="Add to Google Calendar"
+                  className="w-6 h-6"
+                />
+              </button>
+            </a>
           </div>
 
           <div className="mt-3">
