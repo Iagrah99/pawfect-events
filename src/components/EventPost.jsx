@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { postEventAttending, removeEventAttending, deleteEvent, generateGoogleCalendarEvent } from "../../utils/api";
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserPlus, faUserMinus } from '@fortawesome/free-solid-svg-icons';
+import { faUserPlus, faUserMinus, faUserAlt, faClock, faTags, faPoundSign } from '@fortawesome/free-solid-svg-icons';
 import { Spinner } from "react-bootstrap"
 import { EditEvent } from './EditEvent';
 
@@ -106,7 +106,7 @@ const EventPost = ({ event, attendees, setAttendees, users, setIsError, isError,
   const isValidDate = (date) => !isNaN(date.getTime());
 
   return (
-    <article className="max-w-5xl mx-auto mt-5 p-6 bg-gray-900 shadow-md rounded-lg">
+    <article className="max-w-5xl mx-auto my-5 p-6 bg-gray-900 shadow-md rounded-lg">
 
       <div className="flex justify-between items-center mb-4">
         <Breadcrumb>
@@ -114,17 +114,25 @@ const EventPost = ({ event, attendees, setAttendees, users, setIsError, isError,
           <Breadcrumb.Item active className='text-white'>{event.title}</Breadcrumb.Item>
         </Breadcrumb>
 
-        {organiser && loggedInUser ? organiser.username === loggedInUser.username && (<div className='space-x-3'>
+        {organiser && loggedInUser ? organiser.username === loggedInUser.username && (
+          <div className='space-x-3 flex items-center'>
+            <EditEvent
+              event={event}
+              setIsUpdated={setIsUpdated}
+              error={error}
+              setError={setError}
+              setIsError={setIsError}
+            />
 
-          <EditEvent event={event} setIsUpdated={setIsUpdated} error={error} setError={setError} setIsError={setIsError} />
+            <button
+              onClick={handleDeleteEvent}
+              className="text-white bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg shadow-md"
+            >
+              Delete
+            </button>
+          </div>
+        ) : null}
 
-          <button
-            onClick={handleDeleteEvent}
-            className="text-white bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg shadow-md"
-          >
-            Delete
-          </button>
-        </div>) : null}
 
       </div>
 
@@ -139,18 +147,20 @@ const EventPost = ({ event, attendees, setAttendees, users, setIsError, isError,
         </div>
 
         <div className="w-full md:w-3/6 md:pl-6 mt-4 md:mt-0">
-          <p className="text-2xl font-bold mb-2 text-white">{event.title} - {event.location}</p>
-          <p className="text-white mb-4">Organised by: <span className='cursor-pointer font-bold hover:text-cyan-200' onClick={handleLink}>{event.organiser}</span></p>
+          <p className="text-2xl font-bold mb-3 text-white">{event.title} - {event.location}</p>
+          <p className="text-white mb-3"> <FontAwesomeIcon icon={faUserAlt} className="mr-1 align-middle" /> Organised by: <span className='cursor-pointer font-bold hover:text-cyan-200' onClick={handleLink}>{event.organiser}</span></p>
           <p>
+            <FontAwesomeIcon icon={faClock} className="mr-2 align-middle" />
             {isValidDate(startDate) && isValidDate(endDate)
               ? format(startDate, "EEEE, do MMMM yyyy 'from' h:mmaaa") + " - " + format(endDate, "h:mmaaa")
               : 'Invalid date'}
           </p>
 
           <div className="flex flex-col mb-2">
-            <p className="text-sm text-white">Type: {event.event_type}</p>
+
+            <p className="text-sm text-white"> <FontAwesomeIcon icon={faTags} className="mr-1 align-middle" /> Type: {event.event_type}</p>
             <p className="text-lg font-bold">
-              Cost: {event.price_in_pence === 0 ? "FREE" : `£${formatCost(event.price_in_pence)}`}
+              <FontAwesomeIcon icon={faPoundSign} className="mr-2 align-middle" /> Cost: {event.price_in_pence === 0 ? "FREE" : `£${formatCost(event.price_in_pence)}`}
             </p>
           </div>
 

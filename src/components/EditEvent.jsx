@@ -104,7 +104,7 @@ export const EditEvent = ({ event, setIsUpdated, error, setError, setIsError }) 
 
   return (
     <>
-      <Button variant="primary" className="py-2 px-3" onClick={() => setShow(true)}>
+      <Button variant="primary" className="px-4 py-2 text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-md" onClick={() => setShow(true)}>
         Edit
       </Button>
 

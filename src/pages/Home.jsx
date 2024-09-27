@@ -42,7 +42,7 @@ const Home = () => {
           <header className="text-5xl my-5 text-center">
             <h1>Available Events</h1>
           </header>
-          <main className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-3 sm:px-1">
+          <main className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-3 sm:px-1 pb-3">
 
             {events.map((event) => {
               return (
