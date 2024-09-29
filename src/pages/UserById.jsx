@@ -11,7 +11,7 @@ const UserById = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { loggedInUser, setLoggedInUser } = useContext(UserContext)
+  const { loggedInUser } = useContext(UserContext)
 
   const [events, setEvents] = useState([]);
   const [user, setUser] = useState({});
@@ -32,7 +32,7 @@ const UserById = () => {
       setShowDeletedMessage(true);
       const timeoutId = setTimeout(() => {
         setShowDeletedMessage(false);
-        navigate(location.pathname, { replace: true }); page
+        navigate(location.pathname, { replace: true });
       }, 3000);
       return () => clearTimeout(timeoutId);
     }

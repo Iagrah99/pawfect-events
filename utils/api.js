@@ -44,6 +44,11 @@ export const updateUser = async (user_id, { username, password }) => {
   return res.data.user;
 };
 
+export const deleteUser = async (user_id) => {
+  const res = await dogEventsApi.delete(`/users/${user_id}`);
+  return res.data;
+};
+
 export const fetchEventsAttending = async (user_id) => {
   const res = await dogEventsApi.get(`/users/${user_id}/attending`);
   return res.data.eventsAttending;

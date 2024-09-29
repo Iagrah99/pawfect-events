@@ -65,7 +65,6 @@ const Register = () => {
       setLoggedInUser(newUser)
       localStorage.setItem('loggedInUser', JSON.stringify(newUser));
       navigate(`/users/${newUser.user_id}`)
-      console.log(newUser)
 
     } catch (err) {
       setIsRegistering(false);

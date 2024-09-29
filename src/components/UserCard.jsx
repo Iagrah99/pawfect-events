@@ -1,10 +1,24 @@
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { UserContext } from '../contexts/UserContext';
 import EditUser from './EditUser';
+import { deleteUser } from '../../utils/api';
 
 const UserCard = ({ navigate, user, setIsUpdated, events, showDeletedMessage, organiserEvents, eventsAttending, error, setError, isError, setIsError, showSuccessMessage }) => {
-  const { loggedInUser } = useContext(UserContext);
+  const { loggedInUser, setLoggedInUser } = useContext(UserContext);
+
+  const handleDeleteUser = async () => {
+    try {
+      await deleteUser(user.user_id)
+      setLoggedInUser(null);
+      localStorage.removeItem("loggedInUser");
+      navigate(`/`, { state: { userDeleted: true } })
+    } catch (err) {
+      setIsError(true)
+      setError(err.response);
+    }
+  }
+
   return (
     <article className="max-w-5xl mx-auto mt-5 p-6 bg-gray-900 shadow-md rounded-lg">
       <div className="flex justify-between items-center mb-4">
@@ -19,8 +33,8 @@ const UserCard = ({ navigate, user, setIsUpdated, events, showDeletedMessage, or
           <div className='space-x-3 flex items-center '>
             <EditUser user={user} setIsUpdated={setIsUpdated} error={error} setError={setError} isError={isError} setIsError={setIsError} />
             <button
-
               className="text-white bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg shadow-md"
+              onClick={handleDeleteUser}
             >
               Delete
             </button>

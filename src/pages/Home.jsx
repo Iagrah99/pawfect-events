@@ -5,7 +5,7 @@ import Loading from "../components/Loading";
 import { fetchEvents } from "../../utils/api"
 import EventCard from "../components/EventCard";
 import Error from "../components/Error";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useLocation, useNavigate } from "react-router-dom";
 import EventControls from "../components/EventControls";
 
 const Home = () => {
@@ -14,11 +14,28 @@ const Home = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [isError, setIsError] = useState(false)
   const [error, setError] = useState(null)
+  const [showDeletedMessage, setShowDeletedMessage] = useState(false)
+
+
+  const location = useLocation();
+  const navigate = useNavigate();
+  const userDeleted = location.state?.userDeleted;
 
   const [searchParams, setSearchParams] = useSearchParams();
 
   const sortByQuery = searchParams.get("sort_by");
   const orderByQuery = searchParams.get("order_by") && searchParams.get("order_by").toUpperCase();
+
+  useEffect(() => {
+    if (userDeleted) {
+      setShowDeletedMessage(true);
+      const timeoutId = setTimeout(() => {
+        setShowDeletedMessage(false);
+        navigate(location.pathname, { replace: true });
+      }, 3000);
+      return () => clearTimeout(timeoutId);
+    }
+  }, [userDeleted, location.pathname, navigate]);
 
   useEffect(() => {
     setIsLoading(true)
@@ -75,6 +92,10 @@ const Home = () => {
           <header className="text-5xl my-5 text-center">
             <h1>Available Events</h1>
           </header>
+
+          {showDeletedMessage && (<p className="mt-3 text-center text-green-500 font-semibold">
+            user account was successfully deleted.
+          </p>)}
 
           <EventControls handleFilterBy={handleFilterBy} handleSortBy={handleSortBy} handleOrderBy={handleOrderBy} />
 
