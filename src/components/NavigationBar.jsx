@@ -35,7 +35,7 @@ const NavigationBar = () => {
               <div className="ml-auto flex items-center space-x-10">
                 <div className="flex flex-row items-center space-x-3 mr-5">
                   <Nav.Item className="text-cyan-50">
-                    Hello, {loggedInUser.username}!
+                    Hello, {loggedInUser.username}
                   </Nav.Item>
 
                   <img

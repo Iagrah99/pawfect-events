@@ -1,6 +1,10 @@
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import { useContext } from 'react';
+import { UserContext } from '../contexts/UserContext';
+import EditUser from './EditUser';
 
-const UserCard = ({ navigate, user, showDeletedMessage, organiserEvents, eventsAttending }) => {
+const UserCard = ({ navigate, user, setIsUpdated, events, showDeletedMessage, organiserEvents, eventsAttending, error, setError, isError, setIsError, showSuccessMessage }) => {
+  const { loggedInUser } = useContext(UserContext);
   return (
     <article className="max-w-5xl mx-auto mt-5 p-6 bg-gray-900 shadow-md rounded-lg">
       <div className="flex justify-between items-center mb-4">
@@ -11,12 +15,17 @@ const UserCard = ({ navigate, user, showDeletedMessage, organiserEvents, eventsA
           </Breadcrumb.Item>
         </Breadcrumb>
 
-        <button
-          onClick={() => navigate(-1)}
-          className="text-white bg-cyan-600 hover:bg-cyan-700 px-4 py-2 rounded-lg shadow-md"
-        >
-          Back
-        </button>
+        {loggedInUser ? user.username === loggedInUser.username && (
+          <div className='space-x-3 flex items-center '>
+            <EditUser user={user} setIsUpdated={setIsUpdated} error={error} setError={setError} isError={isError} setIsError={setIsError} />
+            <button
+
+              className="text-white bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg shadow-md"
+            >
+              Delete
+            </button>
+          </div>
+        ) : null}
       </div>
 
       {user ? (
@@ -39,6 +48,12 @@ const UserCard = ({ navigate, user, showDeletedMessage, organiserEvents, eventsA
               {showDeletedMessage && (
                 <p className="mt-3 text-green-500 font-semibold">
                   The event has been successfully deleted!
+                </p>
+              )}
+
+              {showSuccessMessage && (
+                <p className="mt-3 text-green-500 font-semibold">
+                  User information updated successfully!
                 </p>
               )}
 

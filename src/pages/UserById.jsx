@@ -1,14 +1,17 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { fetchEvents, fetchEventsAttending, fetchUserById } from "../../utils/api";
 import NavigationBar from "../components/NavigationBar";
 import Loading from "../components/Loading";
 import Error from "../components/Error";
 import UserCard from "../components/UserCard";
+import { UserContext } from "../contexts/UserContext";
 
 const UserById = () => {
   const navigate = useNavigate();
   const location = useLocation();
+
+  const { loggedInUser, setLoggedInUser } = useContext(UserContext)
 
   const [events, setEvents] = useState([]);
   const [user, setUser] = useState({});
@@ -17,24 +20,20 @@ const UserById = () => {
   const [isError, setIsError] = useState(false);
   const [error, setError] = useState(null);
   const [showDeletedMessage, setShowDeletedMessage] = useState(false);
+  // State to control whether a user's information has been updated or not.
+  const [isUpdated, setIsUpdated] = useState(false)
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false); // New state for success message
 
   const { user_id } = useParams();
   const deletedEvent = location.state?.deletedEvent;
 
   useEffect(() => {
     if (deletedEvent) {
-      // Show the message when the component first loads
       setShowDeletedMessage(true);
-
-      // Hide the message after 3 seconds
       const timeoutId = setTimeout(() => {
         setShowDeletedMessage(false);
-
-        // Clear the deletedEvent from history state using navigate with replace: true
-        navigate(location.pathname, { replace: true }); // This clears the state but stays on the same page
+        navigate(location.pathname, { replace: true }); page
       }, 3000);
-
-      // Clear timeout when the component unmounts or re-renders
       return () => clearTimeout(timeoutId);
     }
   }, [deletedEvent, location.pathname, navigate]);
@@ -59,7 +58,18 @@ const UserById = () => {
       }
     };
     fetchData();
-  }, [user_id]);
+  }, [user_id, loggedInUser]);
+
+  useEffect(() => {
+    if (isUpdated) {
+      setShowSuccessMessage(true);
+      const timeoutId = setTimeout(() => {
+        setShowSuccessMessage(false);
+        setIsUpdated(false);
+      }, 3000);
+      return () => clearTimeout(timeoutId);
+    }
+  }, [isUpdated]);
 
   if (isError) {
     return <Error error={error} />;
@@ -73,7 +83,7 @@ const UserById = () => {
       {isLoading ? (
         <Loading content={"User Details"} />
       ) : (
-        <UserCard navigate={navigate} user={user} showDeletedMessage={showDeletedMessage} organiserEvents={organiserEvents} eventsAttending={eventsAttending} />
+        <UserCard navigate={navigate} user={user} setIsUpdated={setIsUpdated} events={events} showDeletedMessage={showDeletedMessage} organiserEvents={organiserEvents} eventsAttending={eventsAttending} error={error} setError={setError} setIsError={setIsError} showSuccessMessage={showSuccessMessage} />
       )}
     </>
   );

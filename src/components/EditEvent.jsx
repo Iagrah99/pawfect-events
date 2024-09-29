@@ -110,7 +110,7 @@ export const EditEvent = ({ event, setIsUpdated, error, setError, setIsError }) 
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Edit Todo</Modal.Title>
+          <Modal.Title>Edit Event</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>

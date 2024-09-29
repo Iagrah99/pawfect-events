@@ -36,6 +36,14 @@ export const fetchUserById = async (user_id) => {
   return res.data.user;
 };
 
+export const updateUser = async (user_id, { username, password }) => {
+  const res = await dogEventsApi.patch(`/users/${user_id}`, {
+    username,
+    password,
+  });
+  return res.data.user;
+};
+
 export const fetchEventsAttending = async (user_id) => {
   const res = await dogEventsApi.get(`/users/${user_id}/attending`);
   return res.data.eventsAttending;

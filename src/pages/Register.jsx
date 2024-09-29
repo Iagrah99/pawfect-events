@@ -18,7 +18,6 @@ const Register = () => {
 
   const { setLoggedInUser } = useContext(UserContext);
 
-
   const [isError, setIsError] = useState(false)
   const [error, setError] = useState(null);
   const [isRegistering, setIsRegistering] = useState(false)
