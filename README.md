@@ -8,7 +8,6 @@ Welcome to **Pawfect Events**, a fullstack web application designed for individu
 3. [Tech Stack](#tech-stack)
 4. [API Integrations](#api-integrations)
 5. [Installation & Setup](#installation--setup)
-6. [Testing](#testing)
 
 ## Project Overview
 
