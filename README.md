@@ -66,7 +66,7 @@ Whether it's a dog-walking meetup, a dog agility competition, or a dog training 
 - **Supertest**: For testing HTTP requests and API endpoints.
 
 ## API Integrations
-- **The Dog API**: Provides random dog images for event pages or user profiles to give the app a fun and personalized touch.
+- **The Dog API**: Provides random dog images for event pages to give the app a fun and personalised touch.
 - **ImgBB API**: Allows users and event organisers to upload and store their images for their events or profiles via a permanent web address.
 
 ## Installation & Setup
