@@ -91,8 +91,13 @@ Whether it's a dog-walking meetup, a dog agility competition, or a dog training 
    ```
 
    1C. Open up the folder in VS Code
+
+   ```bash
+   code .
+   ```
   
-2. Now let's get the project setup in order to get it running properly on your local machine. Inside VSCode open a terminal window <kbd>CTRL/CMD SHIFT `</kbd>. Then do the following steps:
+3. Now let's get the project setup in order to get it running properly on your local machine.
+   Inside VSCode open a terminal window <kbd>CTRL/CMD SHIFT `</kbd>. Then do the following steps:
 
    2a.  Install the dependencies by running the following Node Package Manager (NPM) command: 
 
