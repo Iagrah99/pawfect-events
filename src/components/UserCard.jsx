@@ -26,8 +26,8 @@ const UserCard = ({ navigate, user, setIsUpdated, events, showDeletedMessage, or
   return (
     <>
       {isDeletingUser ? (<DeletingContent content="User" />) :
-        <article className="max-w-5xl mx-auto mt-5 p-6 bg-gray-900 shadow-md rounded-lg">
-          <div className="flex justify-between items-center mb-4">
+        <article className="max-w-5xl mx-auto md:mt-5 md:min-h-60 min-h-screen p-6 bg-gray-900 shadow-md rounded-lg">
+          <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-4">
             <Breadcrumb>
               <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
               <Breadcrumb.Item active className="text-white">
@@ -36,7 +36,7 @@ const UserCard = ({ navigate, user, setIsUpdated, events, showDeletedMessage, or
             </Breadcrumb>
 
             {loggedInUser ? user.username === loggedInUser.username && (
-              <div className='space-x-3 flex items-center '>
+              <div className='space-x-3 flex items-center self-center md:self-auto'>
                 <EditUser user={user} setIsUpdated={setIsUpdated} error={error} setError={setError} isError={isError} setIsError={setIsError} />
                 <button
                   className="text-white bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg shadow-md"
@@ -54,13 +54,13 @@ const UserCard = ({ navigate, user, setIsUpdated, events, showDeletedMessage, or
                 <div className="w-full md:w-1/3">
                   <img
                     src={user.avatar_url}
-                    alt={`${user.username}'s profile`}
+                    alt={`${user.username}'s profile avatar`}
                     className="w-full h-auto rounded-lg border-2 border-gray-900"
                   />
                 </div>
 
                 <div className="w-full md:w-2/3 md:pl-6 mt-0 md:mt-0">
-                  <p className="text-2xl font-bold mb-2 text-white">
+                  <p className="text-2xl mt-2 md:mt-0 font-bold mb-2 text-white">
                     {user.username} <span>({user.is_organiser ? "Event Organiser" : "Member"})</span>
                   </p>
 

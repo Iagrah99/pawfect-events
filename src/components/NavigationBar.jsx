@@ -24,32 +24,34 @@ const NavigationBar = () => {
   return (
     <Navbar expand="lg" className="bg-zinc-900" sticky="top">
       <Container>
-        <Navbar.Brand id="home" className="flex items-center cursor-pointer" onClick={handleLink}>
-          <img src={navIcon} className="w-10 h-10 mr-1" alt="Logo" />
-          <span>Pawfect Events</span>
+        <Navbar.Brand
+          id="home"
+          className="flex items-center cursor-pointer text-white"
+          onClick={handleLink}
+        >
+          <img src={navIcon} className="w-8 h-8 md:w-10 md:h-10 mr-2" alt="Logo" />
+          <span className="text-lg md:text-xl font-semibold">Pawfect Events</span>
         </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Toggle aria-controls="basic-navbar-nav" className="text-white" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="flex-grow">
+          <Nav className="flex-grow items-center">
             {loggedInUser ? (
-              <div className="ml-auto flex items-center space-x-10">
-                <div className="flex flex-row items-center space-x-3 mr-5">
-                  <Nav.Item className="text-cyan-50">
+              <div className="ml-auto flex items-center space-x-4 md:space-x-10">
+                <div className="flex items-center space-x-2 md:space-x-3">
+                  <Nav.Item className="text-cyan-50 text-sm md:text-base">
                     Hello, {loggedInUser.username}
                   </Nav.Item>
-
                   <img
                     src={loggedInUser.avatar_url}
                     alt="User Avatar"
-                    className="w-10 h-10 rounded-full border-2 border-gray-700 shadow-lg ml-2 cursor-pointer"
+                    className="w-8 h-8 md:w-10 md:h-10 rounded-full border-2 border-gray-700 shadow-lg cursor-pointer"
                     onClick={() => navigate(`/users/${loggedInUser.user_id}`)}
                   />
                 </div>
 
-
                 {loggedInUser.is_organiser && (
                   <Nav.Item
-                    className="text-cyan-50 hover:text-cyan-200 cursor-pointer mx-3"
+                    className="text-cyan-50 text-sm md:text-base hover:text-cyan-200 cursor-pointer"
                     id="create-event"
                     onClick={() => navigate('/create-event')}
                   >
@@ -58,20 +60,27 @@ const NavigationBar = () => {
                 )}
 
                 <Nav.Item
-                  className="text-cyan-50 hover:text-cyan-200 cursor-pointer ml-6"
+                  className="text-cyan-50 text-sm md:text-base hover:text-cyan-200 cursor-pointer"
                   id="logout"
                   onClick={handleLogout}
                 >
                   Logout
                 </Nav.Item>
               </div>
-
             ) : (
-              <div className="ml-auto flex space-x-4">
-                <Nav.Item className="text-cyan-50 hover:text-cyan-200 cursor-pointer" id="login" onClick={handleLink}>
+              <div className="ml-auto flex space-x-3 md:space-x-4">
+                <Nav.Item
+                  className="text-cyan-50 text-sm md:text-base hover:text-cyan-200 cursor-pointer"
+                  id="login"
+                  onClick={handleLink}
+                >
                   Login
                 </Nav.Item>
-                <Nav.Item className="text-cyan-50 hover:text-cyan-200 cursor-pointer" id="register" onClick={handleLink}>
+                <Nav.Item
+                  className="text-cyan-50 text-sm md:text-base hover:text-cyan-200 cursor-pointer"
+                  id="register"
+                  onClick={handleLink}
+                >
                   Sign Up
                 </Nav.Item>
               </div>
@@ -80,6 +89,7 @@ const NavigationBar = () => {
         </Navbar.Collapse>
       </Container>
     </Navbar>
+
   );
 };
 

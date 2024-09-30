@@ -77,7 +77,7 @@ const Register = () => {
     <>
       <NavigationBar />
       {isRegistering ? <Registering /> : <div className="flex justify-center items-center h-[calc(100vh-70px)] bg-gray-900">
-        <div className="w-full max-w-lg bg-gray-800 rounded-lg shadow-md p-8">
+        <div className="w-full max-w-lg md:bg-gray-800 rounded-lg shadow-md p-8">
           <h2 className="text-2xl font-semibold text-center text-gray-100 mb-6">Sign Up</h2>
 
           <form className="space-y-6" onSubmit={(e) => handleUserRegistration(e)}>

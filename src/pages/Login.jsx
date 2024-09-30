@@ -66,8 +66,8 @@ const Login = () => {
   return (
     <>
       <NavigationBar />
-      {isLoggingIn ? <LoggingIn /> : <div className="flex justify-center items-center h-[calc(100vh-70px)] bg-gray-900">
-        <div className="w-full max-w-md bg-gray-800 rounded-lg shadow-md p-8">
+      {isLoggingIn ? <LoggingIn /> : <div className="flex justify-center items-center md:h-[calc(100vh-70px)] h-screen  bg-gray-900">
+        <div className="w-full max-w-md md:bg-gray-800 rounded-lg md:shadow-md p-8">
           <h2 className="text-2xl font-semibold text-center text-gray-100 mb-6">Login</h2>
 
           <form className="space-y-6" onSubmit={(e) => loginRequest(e)}>

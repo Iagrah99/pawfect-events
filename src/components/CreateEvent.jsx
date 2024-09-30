@@ -127,7 +127,7 @@ const CreateEvent = () => {
       <NavigationBar />
       {isPostingEvent ? <PostingEvent /> :
         <div className="flex justify-center items-center py-8 bg-gray-900 min-h-screen">
-          <div className="w-full max-w-lg bg-gray-800 rounded-lg shadow-md p-8">
+          <div className="w-full max-w-lg md:bg-gray-800 rounded-lg shadow-md p-8">
             <h2 className="text-2xl font-semibold text-center text-gray-100 mb-6">Create Your <em>Pawfect</em> Event!</h2>
             <form className="space-y-6" onSubmit={handleSubmit}>
               <p className='text-center'>Input fields marked with an <span className="text-indigo-400">*</span> indicate a required field.</p>

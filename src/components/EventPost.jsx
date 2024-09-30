@@ -113,16 +113,16 @@ const EventPost = ({ event, attendees, setAttendees, users, setIsError, isError,
   return (
     <>
       {isDeletingEvent ? (<DeletingContent content="Event" />) :
-        <article className="max-w-5xl mx-auto my-5 p-6 bg-gray-900 shadow-md rounded-lg">
+        <article className="max-w-5xl mx-auto md:my-10 p-6 bg-gray-900 shadow-md rounded-lg">
 
-          <div className="flex justify-between items-center mb-4">
+          <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-4">
             <Breadcrumb>
               <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
               <Breadcrumb.Item active className='text-white'>{event.title}</Breadcrumb.Item>
             </Breadcrumb>
 
             {organiser && loggedInUser ? organiser.username === loggedInUser.username && (
-              <div className='space-x-3 flex items-center'>
+              <div className='space-x-3 flex items-center self-center md:self-auto'>
                 <EditEvent
                   event={event}
                   setIsUpdated={setIsUpdated}
