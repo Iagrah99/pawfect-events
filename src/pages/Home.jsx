@@ -16,7 +16,6 @@ const Home = () => {
   const [error, setError] = useState(null)
   const [showDeletedMessage, setShowDeletedMessage] = useState(false)
 
-
   const location = useLocation();
   const navigate = useNavigate();
   const userDeleted = location.state?.userDeleted;
@@ -54,7 +53,7 @@ const Home = () => {
       setError(err.response)
       console.log(err.response)
     }
-  }, [sortByQuery, orderByQuery])
+  }, [sortByQuery, orderByQuery, filteredEvents])
 
   const handleFilterBy = (e) => {
     if (e.target.value == "All") {
