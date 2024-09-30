@@ -15,6 +15,8 @@ Welcome to **Pawfect Events**, a fullstack web application designed for individu
 
 Whether it's a dog-walking meetup, a dog agility competition, or a dog training workshop, Pawfect Events allows users to explore different types of events tailored to their interests.
 
+**Please note that this Web App is hosted using Render as a free instance type which will spin-down after 15 minutes of inactivity, and then will spin back up when the next request is made. This process of spinning back up may take a couple of minutes to complete, so please be patient.**
+
 ### Core Functionality
 - Event organisers can create, update, and delete events.
 - Users can sign up for events, opt out of events, and view their registered events on their homepage.
@@ -70,6 +72,8 @@ Whether it's a dog-walking meetup, a dog agility competition, or a dog training 
 - **ImgBB API**: Allows users and event organisers to upload and store their images for their events or profiles via a permanent web address.
 
 ## Installation & Setup
+
+**Note**: If you wish to setup the backend API on your local machine in addtiion to the frontend, visit <a href="https://github.com/Iagrah99/pawfect-events-api">this</a> repository and follow the installation & setup steps.
 
 ### Prerequisites
 - Node.js (v21.2.0^)
