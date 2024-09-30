@@ -34,9 +34,9 @@ const NavigationBar = () => {
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" className="text-white" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="flex-grow items-center">
+          <Nav className="flex flex-col md:flex-row items-start flex-grow">
             {loggedInUser ? (
-              <div className="ml-auto flex items-center space-x-4 md:space-x-10">
+              <div className="flex md:ml-auto flex-col md:flex-row md:items-center items-start space-y-3 md:space-y-0 md:space-x-10">
                 <div className="flex items-center space-x-2 md:space-x-3">
                   <Nav.Item className="text-cyan-50 text-sm md:text-base">
                     Hello, {loggedInUser.username}
@@ -68,7 +68,7 @@ const NavigationBar = () => {
                 </Nav.Item>
               </div>
             ) : (
-              <div className="ml-auto flex space-x-3 md:space-x-4">
+              <div className="flex flex-col md:flex-row items-start space-y-3 md:space-y-0 md:space-x-4">
                 <Nav.Item
                   className="text-cyan-50 text-sm md:text-base hover:text-cyan-200 cursor-pointer"
                   id="login"
@@ -89,6 +89,9 @@ const NavigationBar = () => {
         </Navbar.Collapse>
       </Container>
     </Navbar>
+
+
+
 
   );
 };
