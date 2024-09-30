@@ -15,6 +15,8 @@ Welcome to **Pawfect Events**, a fullstack web application designed for individu
 
 Whether it's a dog-walking meetup, a dog agility competition, or a dog training workshop, Pawfect Events allows users to explore different types of events tailored to their interests.
 
+**Please note that this Web App is hosting using Render as a Free instance type which will spin-down after 15 minutes of inactivity, then will spin back up when the next request is made. This process may take a couple of minutes, so please be patient.**
+
 ### Core Functionality
 - Event organisers can create, update, and delete events.
 - Users can sign up for events, opt out of events, and view their registered events on their homepage.
