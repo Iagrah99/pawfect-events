@@ -84,13 +84,13 @@ Whether it's a dog-walking meetup, a dog agility competition, or a dog training 
    git clone https://github.com/Iagrah99/pawfect-events.git
    ```
    
-  1B. Change from the current directory into the project folder
+   1B. Change from the current directory into the project folder
+   
+   ```bash
+   cd pawfect-events
+   ```
 
-  ```bash
-  cd pawfect-events
-  ```
-
-  1C. Open up the folder in VS Code
+   1C. Open up the folder in VS Code
   
 2. Now let's get the project setup in order to get it running properly on your local machine. Inside VSCode open a terminal window <kbd>CTRL/CMD SHIFT `</kbd>. Then do the following steps:
 
