@@ -1,6 +1,6 @@
 # Pawfect Events
 
-Welcome to **Pawfect Events**, a fullstack web application designed for individuals and Individuals acting on behalf of companies who specialise in hosting dog-related events. Whether you're an event organiser or a dog enthusiast, this platform enables users to create, share, and join dog-centered events with ease.
+Welcome to **Pawfect Events**, a fullstack web application designed for individuals and Individuals acting on behalf of organisations who specialise in hosting dog-related events. Whether you're an event organiser or a dog enthusiast, this platform enables users to create, share, and join dog-centered events with ease.
 
 ## Table of Contents
 1. [Project Overview](#project-overview)
@@ -74,5 +74,36 @@ Whether it's a dog-walking meetup, a dog agility competition, or a dog training 
 
 ### Prerequisites
 - Node.js (v21.2.0^)
+- Sign Up for a free account on <a href="https://api.imgbb.com/">IMBB</a> and <a href="https://www.thedogapi.com/">The Dog API</a> in order to get an API Key.
 
+1. Start by forking the project repository, and open up a terminal. Then do the following steps:
 
+   1A. Clone the repository to your local machine
+
+   ```bash
+   git clone https://github.com/Iagrah99/pawfect-events.git
+   ```
+   
+  1B. Change from the current directory into the project folder
+
+  ```bash
+  cd pawfect-events
+  ```
+
+  1C. Open up the folder in VS Code
+  
+2. Now let's get the project setup in order to get it running properly on your local machine. Inside VSCode open a terminal window <kbd>CTRL/CMD SHIFT `</kbd>. Then do the following steps:
+
+   2a.  Install the dependencies by running the following Node Package Manager (NPM) command: 
+
+   ```
+   npm install
+   ```
+
+   2b. Create a .env file and inside store the API keys for both IMGBB and The Dog API that you signed up for earlier.
+
+   ```
+   VITE_IMGBB_API_KEY="Your key here"
+   VITE_DOGIMG_API_KEY="Your key here"
+   ```
+   2c. Now you should be good to go by running `npm run dev` into the terminal.
