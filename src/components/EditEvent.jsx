@@ -166,11 +166,18 @@ export const EditEvent = ({ event, setIsUpdated, error, setError, setIsError }) 
 
             <Form.Group className="mb-3" controlId="formEventType">
               <Form.Label>Event Type</Form.Label>
-              <Form.Control
-                value={editedEventType || ""}
-                aria-label="event type"
+
+              <Form.Select
                 onChange={(e) => setEditedEventType(e.target.value)}
-              />
+                className="p-2 w-full md:w-52 bg-gray-700 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 cursor-pointer"
+              >
+                <option value="Dog Training">Dog Training</option>
+                <option value="Dog Walking">Dog Walking</option>
+                <option value="Dog Show">Dog Show</option>
+                <option value="Dog Competition">Dog Competition</option>
+                <option value="Agility Trials">Agility Trials</option>
+                <option value="Herding Trials">Herding Trials</option>
+              </Form.Select>
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formPriceInPence">

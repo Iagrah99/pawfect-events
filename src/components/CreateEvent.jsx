@@ -17,7 +17,7 @@ const CreateEvent = () => {
   const [description, setDescription] = useState('');
   const [eventStart, setEventStart] = useState('');
   const [eventEnd, setEventEnd] = useState('');
-  const [eventType, setEventType] = useState('');
+  const [eventType, setEventType] = useState('Dog Training');
   const [priceInPence, setPriceInPence] = useState(0);
   const [location, setLocation] = useState('');
   const [imageFile, setImageFile] = useState(null);
@@ -59,6 +59,8 @@ const CreateEvent = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();  // Move this to the top to prevent default behavior first
+
+    console.log(eventType)
 
     const eventData = {
       title,
@@ -207,14 +209,15 @@ const CreateEvent = () => {
                   <label htmlFor="eventType" className="block text-sm font-medium mb-1 text-gray-300">
                     Event Type <span className="text-indigo-400">*</span>
                   </label>
-                  <input
-                    type="text"
-                    id="eventType"
-                    className="mt-1 block w-full p-2 bg-gray-700 border border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-gray-100 placeholder-gray-400"
-                    placeholder="Enter event type"
-                    required
-                    onChange={(e) => setEventType(e.target.value)}
-                  />
+                  <select className="mt-1 p-2 block w-full md:w-52 bg-gray-700 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 cursor-pointer"
+                    onChange={(e) => setEventType(e.target.value)}>
+                    <option value="Dog Training">Dog Training</option>
+                    <option value="Dog Walking">Dog Walking</option>
+                    <option value="Dog Show">Dog Show</option>
+                    <option value="Dog Competition">Dog Competition</option>
+                    <option value="Agility Trials">Agility Trials</option>
+                    <option value="Herding Trials">Herding Trials</option>
+                  </select>
                 </div>
                 <div>
                   <label htmlFor="priceInPence" className="block text-sm font-medium mb-1 text-gray-300">

@@ -4,7 +4,7 @@ const EventControls = ({ handleFilterBy, handleSortBy, handleOrderBy }) => {
 
       <div className="flex flex-col">
 
-        <select id="filterBy" className="mt-1 p-2 block w-full md:w-52 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 cursor-pointer"
+        <select id="filterBy" className="mt-1 p-2 block w-full md:w-52 bg-zinc-900 md:bg-zinc-800  border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 cursor-pointer"
           defaultValue=""
           onChange={(e) => handleFilterBy(e)}>
           <option value="" disabled>
@@ -21,7 +21,7 @@ const EventControls = ({ handleFilterBy, handleSortBy, handleOrderBy }) => {
       </div>
 
       <div className="flex flex-col">
-        <select id="sortBy" className="mt-1 p-2 block w-full md:w-52 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 cursor-pointer"
+        <select id="sortBy" className="mt-1 p-2 block w-full md:w-52 bg-zinc-900 md:bg-zinc-800 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 cursor-pointer"
           defaultValue=""
           onChange={(e) => handleSortBy(e)}>
           <option value="" disabled>
@@ -34,7 +34,7 @@ const EventControls = ({ handleFilterBy, handleSortBy, handleOrderBy }) => {
       </div>
 
       <div className="flex flex-col">
-        <select id="orderBy" className="mt-1 p-2 block w-full md:w-52 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 cursor-pointer"
+        <select id="orderBy" className="mt-1 p-2 block w-full md:w-52 bg-zinc-900 md:bg-zinc-800 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 cursor-pointer"
           defaultValue=""
           onChange={(e) => handleOrderBy(e)}>
           <option value="" disabled>
