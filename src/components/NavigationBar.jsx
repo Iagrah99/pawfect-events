@@ -24,6 +24,7 @@ const NavigationBar = () => {
   return (
     <Navbar expand="lg" className="bg-zinc-900" sticky="top">
       <Container>
+        {/* Brand and Logo */}
         <Navbar.Brand
           id="home"
           className="flex items-center cursor-pointer text-white"
@@ -32,11 +33,13 @@ const NavigationBar = () => {
           <img src={navIcon} className="w-8 h-8 md:w-10 md:h-10 mr-2" alt="Logo" />
           <span className="text-lg md:text-xl font-semibold">Pawfect Events</span>
         </Navbar.Brand>
+        {/* Navbar Toggle for mobile */}
         <Navbar.Toggle aria-controls="basic-navbar-nav" className="text-white" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="flex flex-col md:flex-row items-start flex-grow">
+          {/* Navigation Links */}
+          <Nav className="ms-auto flex-grow-1 justify-end">
             {loggedInUser ? (
-              <div className="flex md:ml-auto flex-col md:flex-row md:items-center items-start space-y-3 md:space-y-0 md:space-x-10">
+              <div className="flex flex-col md:flex-row md:items-center items-start space-y-3 md:space-y-0 md:space-x-10">
                 <div className="flex items-center space-x-2 md:space-x-3">
                   <Nav.Item className="text-cyan-50 text-sm md:text-base">
                     Hello, {loggedInUser.username}
@@ -68,7 +71,7 @@ const NavigationBar = () => {
                 </Nav.Item>
               </div>
             ) : (
-              <div className="flex flex-col md:flex-row items-start space-y-3 md:space-y-0 md:space-x-4">
+              <div className="flex flex-col md:flex-row items-start md:items-center space-y-3 md:space-y-0 md:space-x-4">
                 <Nav.Item
                   className="text-cyan-50 text-sm md:text-base hover:text-cyan-200 cursor-pointer"
                   id="login"
@@ -89,10 +92,6 @@ const NavigationBar = () => {
         </Navbar.Collapse>
       </Container>
     </Navbar>
-
-
-
-
   );
 };
 
