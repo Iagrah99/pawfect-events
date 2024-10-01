@@ -73,7 +73,7 @@ Whether it's a dog-walking meetup, a dog agility competition, or a dog training 
 
 ## Installation & Setup
 
-**Note**: If you wish to setup the backend API on your local machine in addtiion to the frontend, visit <a href="https://github.com/Iagrah99/pawfect-events-api">this</a> repository and follow the installation & setup steps.
+**Note**: If you wish to setup the backend API on your local machine in addition to the frontend, visit <a href="https://github.com/Iagrah99/pawfect-events-api">this</a> repository and follow the installation & setup steps.
 
 ### Prerequisites
 - Node.js (v21.2.0^)
