@@ -8,6 +8,7 @@ Welcome to **Pawfect Events**, a fullstack web application designed for individu
 3. [Tech Stack](#tech-stack)
 4. [API Integrations](#api-integrations)
 5. [Installation & Setup](#installation--setup)
+6. [Test User Accounts](#test-user-accounts)
 
 ## Project Overview
 
@@ -115,3 +116,17 @@ Whether it's a dog-walking meetup, a dog agility competition, or a dog training 
    VITE_DOGIMG_API_KEY="Your key here"
    ```
    2c. Now you should be good to go by running `npm run dev` into the terminal.
+
+## Usage & Demonstrations
+
+To begin using the website, you may sign up for an account yourself or see the below section for information on using pre-existing accounts for test purposes.
+
+## Test User Accounts
+
+This Web app provides some test user accounts for both regular users and event organisers that you can use if you don't wish to sign up for an account yourself. These are as follows:
+
+| Email                      | Password           | Is Organiser |
+|-----------------------------|--------------------|--------------|
+| pawsandplay@example.com      | BarkLover123!       | true         |
+| woofwanderer@example.com     | DoggoTrail4Ever!    | false        |
+| fetchmaster@example.com      | BallChaser2024!     | true         |
