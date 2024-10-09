@@ -16,6 +16,8 @@ Welcome to **Pawfect Events**, a fullstack web application designed for individu
 
 Whether it's a dog-walking meetup, a dog agility competition, or a dog training workshop, Pawfect Events allows users to explore different types of events tailored to their interests.
 
+The hosted version can be found <a href="https://pawfect-events.vercel.app/">here</a>.
+
 **Please note that this Web App is hosted using Render as a free instance type which will spin-down after 15 minutes of inactivity, and then will spin back up when the next request is made. This process of spinning back up may take a couple of minutes to complete, so please be patient.**
 
 ### Core Functionality
