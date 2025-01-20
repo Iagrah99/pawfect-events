@@ -8,12 +8,15 @@ Welcome to **Pawfect Events**, a fullstack web application designed for individu
 3. [Tech Stack](#tech-stack)
 4. [API Integrations](#api-integrations)
 5. [Installation & Setup](#installation--setup)
+6. [Test User Accounts](#test-user-accounts)
 
 ## Project Overview
 
 **Pawfect Events** serves as a centralised platform for users to discover, organise, and participate in various dog-related events. The app provides organisers with the tools to create and manage events, while users can browse available events, sign up, and keep track of their upcoming events.
 
 Whether it's a dog-walking meetup, a dog agility competition, or a dog training workshop, Pawfect Events allows users to explore different types of events tailored to their interests.
+
+The hosted version can be found <a href="https://pawfect-events.vercel.app/">here</a>.
 
 **Please note that this Web App is hosted using Render as a free instance type which will spin-down after 15 minutes of inactivity, and then will spin back up when the next request is made. This process of spinning back up may take a couple of minutes to complete, so please be patient.**
 
@@ -73,11 +76,11 @@ Whether it's a dog-walking meetup, a dog agility competition, or a dog training 
 
 ## Installation & Setup
 
-**Note**: If you wish to setup the backend API on your local machine in addtiion to the frontend, visit <a href="https://github.com/Iagrah99/pawfect-events-api">this</a> repository and follow the installation & setup steps.
+**Note**: If you wish to setup the backend API on your local machine in addition to the frontend, visit <a href="https://github.com/Iagrah99/pawfect-events-api">this</a> repository and follow the installation & setup steps.
 
 ### Prerequisites
 - Node.js (v21.2.0^)
-- Sign Up for a free account on <a href="https://api.imgbb.com/">IMBB</a> and <a href="https://www.thedogapi.com/">The Dog API</a> in order to get an API Key.
+- Sign Up for a free account on <a href="https://api.imgbb.com/">IMGBB</a> and <a href="https://www.thedogapi.com/">The Dog API</a> in order to get an API Key.
 
 1. Start by forking the project repository, and open up a terminal. Then do the following steps:
 
@@ -115,3 +118,17 @@ Whether it's a dog-walking meetup, a dog agility competition, or a dog training 
    VITE_DOGIMG_API_KEY="Your key here"
    ```
    2c. Now you should be good to go by running `npm run dev` into the terminal.
+
+## Usage & Demonstrations
+
+To begin using the website, you may sign up for an account yourself or see the below section for information on using pre-existing accounts for test purposes.
+
+## Test User Accounts
+
+This Web app provides some test user accounts for both regular users and event organisers that you can use if you don't wish to sign up for an account yourself. These are as follows:
+
+| Email                      | Password           | Is Organiser |
+|-----------------------------|--------------------|--------------|
+| pawsandplay@example.com      | BarkLover123!       | true         |
+| woofwanderer@example.com     | DoggoTrail4Ever!    | false        |
+| fetchmaster@example.com      | BallChaser2024!     | true         |
