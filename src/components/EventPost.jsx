@@ -1,4 +1,4 @@
-import { format } from 'date-fns';
+import { format, isSameDay } from 'date-fns';
 import formatCost from '../../utils/formatCost';
 import { useContext, useState, useRef } from 'react';
 import { UserContext } from '../contexts/UserContext';
@@ -158,10 +158,17 @@ const EventPost = ({ event, attendees, setAttendees, users, setIsError, isError,
               <p className="text-white mb-3"> <FontAwesomeIcon icon={faUserAlt} className="mr-1 align-middle" /> Organised by: <span className='cursor-pointer font-bold hover:text-cyan-200' onClick={handleLink}>{event.organiser}</span></p>
               <p>
                 <FontAwesomeIcon icon={faClock} className="mr-2 align-middle" />
-                {isValidDate(startDate) && isValidDate(endDate)
-                  ? format(startDate, "EEEE, do MMMM yyyy 'from' h:mmaaa") + " - " + format(endDate, "h:mmaaa")
-                  : 'Invalid date'}
+                {isValidDate(startDate) && isValidDate(endDate) ? (
+                  format(startDate, "EEEE, do MMMM yyyy 'from' h:mmaaa") +
+                  " - " +
+                  (isSameDay(startDate, endDate)
+                    ? format(endDate, "h:mmaaa")
+                    : format(endDate, "EEEE, do MMMM yyyy h:mmaaa"))
+                ) : (
+                  'Invalid date'
+                )}
               </p>
+
 
               <div className="flex flex-col mb-2">
 
