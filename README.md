@@ -80,7 +80,7 @@ The hosted version can be found <a href="https://pawfect-events.vercel.app/">her
 
 ### Prerequisites
 - Node.js (v21.2.0^)
-- Sign Up for a free account on <a href="https://api.imgbb.com/">IMGBB</a> and <a href="https://www.thedogapi.com/">The Dog API</a> in order to get an API Key.
+- Sign Up for a free account on <a href="https://api.imgbb.com/" target="_blank">IMGBB</a> and <a href="https://www.thedogapi.com/" target="_blank">The Dog API</a> in order to get an API Key.
 
 1. Start by forking the project repository, and open up a terminal. Then do the following steps:
 
