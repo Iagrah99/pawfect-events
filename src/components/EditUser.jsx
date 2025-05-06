@@ -1,36 +1,38 @@
-import { useState, useContext } from 'react';
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
-import Form from 'react-bootstrap/Form';
-import { updateUser } from '../../utils/api';
-import { UserContext } from '../contexts/UserContext';
+import { useState, useContext } from "react";
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
+import Form from "react-bootstrap/Form";
+import { updateUser } from "../../utils/api";
+import { UserContext } from "../contexts/UserContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPencil } from "@fortawesome/free-solid-svg-icons";
 
 const EditUser = ({ user, setIsUpdated, setError, setIsError }) => {
   const [show, setShow] = useState(false);
   const [newUsername, setNewUsername] = useState(user.username);
-  const [newPassword, setNewPassword] = useState("")
-  const [isUsernameBlank, setIsUsernameBlank] = useState(false)
+  const [newPassword, setNewPassword] = useState("");
+  const [isUsernameBlank, setIsUsernameBlank] = useState(false);
 
-  const { setLoggedInUser } = useContext(UserContext)
+  const { setLoggedInUser } = useContext(UserContext);
 
   const handleClose = () => {
     setShow(false);
     // Revert back to original values
     setNewUsername(user.username);
-    setNewPassword("")
-    setIsUsernameBlank(false)
+    setNewPassword("");
+    setIsUsernameBlank(false);
   };
 
   const editUser = async () => {
     try {
       const editedUser = {
         username: newUsername,
-        password: newPassword
+        password: newPassword,
       };
       const updatedUser = await updateUser(user.user_id, editedUser);
       setLoggedInUser(updatedUser);
-      localStorage.setItem("loggedInUser", JSON.stringify(updatedUser))
-      setIsUpdated(true)
+      localStorage.setItem("loggedInUser", JSON.stringify(updatedUser));
+      setIsUpdated(true);
 
       setIsUpdated(true);
     } catch (err) {
@@ -41,9 +43,12 @@ const EditUser = ({ user, setIsUpdated, setError, setIsError }) => {
 
   return (
     <>
-      <Button variant="primary" className="px-4 py-2 text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-md" onClick={() => setShow(true)}>
-        Edit
-      </Button>
+      <button
+        className="text-blue-500 hover:text-blue-600 transition text-xl scale-75 sm:scale-110 cursor-pointer shadow-md p-4"
+        onClick={() => setShow(true)}
+      >
+        <FontAwesomeIcon icon={faPencil} />
+      </button>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
@@ -58,16 +63,18 @@ const EditUser = ({ user, setIsUpdated, setError, setIsError }) => {
                 aria-label="username"
                 value={newUsername || ""}
                 onChange={(e) => {
-                  setNewUsername(e.target.value)
-                  const containsOnlySpaces = /^\s$/.test(e.target.value)
+                  setNewUsername(e.target.value);
+                  const containsOnlySpaces = /^\s$/.test(e.target.value);
                   const isBlank = !e.target.value.trim();
-                  containsOnlySpaces || isBlank ? setIsUsernameBlank(true) : setIsUsernameBlank(false)
+                  containsOnlySpaces || isBlank
+                    ? setIsUsernameBlank(true)
+                    : setIsUsernameBlank(false);
 
-                  const disableButton = containsOnlySpaces || !e.target.value.trim();
-                  document.querySelector("#save-changes").disabled = disableButton;
+                  const disableButton =
+                    containsOnlySpaces || !e.target.value.trim();
+                  document.querySelector("#save-changes").disabled =
+                    disableButton;
                 }}
-
-
               />
             </Form.Group>
 
@@ -82,29 +89,28 @@ const EditUser = ({ user, setIsUpdated, setError, setIsError }) => {
               <Form.Control
                 aria-label="password"
                 value={newPassword || ""}
-                type='password'
+                type="password"
                 onChange={(e) => setNewPassword(e.target.value)}
               />
             </Form.Group>
-
           </Form>
         </Modal.Body>
 
         <Modal.Footer>
-          <Button variant="secondary"
-            onClick={handleClose}>
+          <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary"
-            id='save-changes'
-            onClick={() => editUser(user)}>
+          <Button
+            variant="primary"
+            id="save-changes"
+            onClick={() => editUser(user)}
+          >
             Save Changes
           </Button>
         </Modal.Footer>
       </Modal>
     </>
+  );
+};
 
-  )
-}
-
-export default EditUser
+export default EditUser;
