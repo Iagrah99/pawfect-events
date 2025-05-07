@@ -1,7 +1,4 @@
 import { useState, useContext } from "react";
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
-import Form from "react-bootstrap/Form";
 import { updateUser } from "../../utils/api";
 import { UserContext } from "../contexts/UserContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -50,65 +47,79 @@ const EditUser = ({ user, setIsUpdated, setError, setIsError }) => {
         <FontAwesomeIcon icon={faPencil} />
       </button>
 
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Edit User</Modal.Title>
-        </Modal.Header>
+      {show && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-slate-900 text-white w-full max-w-lg mx-auto rounded-lg shadow-lg overflow-hidden">
+            <div className="flex justify-between items-center px-6 py-4 border-b border-slate-700 relative">
+              <h2 className="text-xl font-semibold">Edit User</h2>
+              <button
+                onClick={handleClose}
+                className="text-white text-3xl absolute top-5 right-5"
+              >
+                &times;
+              </button>
+            </div>
 
-        <Modal.Body>
-          <Form>
-            <Form.Group className="mb-3" controlId="formUsername">
-              <Form.Label>New Username</Form.Label>
-              <Form.Control
-                aria-label="username"
-                value={newUsername || ""}
-                onChange={(e) => {
-                  setNewUsername(e.target.value);
-                  const containsOnlySpaces = /^\s$/.test(e.target.value);
-                  const isBlank = !e.target.value.trim();
-                  containsOnlySpaces || isBlank
-                    ? setIsUsernameBlank(true)
-                    : setIsUsernameBlank(false);
+            <div className="p-6 space-y-5">
+              <div>
+                <label className="block mb-1">New Username</label>
+                <input
+                  aria-label="username"
+                  type="text"
+                  value={newUsername || ""}
+                  onChange={(e) => {
+                    setNewUsername(e.target.value);
+                    const containsOnlySpaces = /^\s$/.test(e.target.value);
+                    const isBlank = !e.target.value.trim();
+                    containsOnlySpaces || isBlank
+                      ? setIsUsernameBlank(true)
+                      : setIsUsernameBlank(false);
 
-                  const disableButton =
-                    containsOnlySpaces || !e.target.value.trim();
-                  document.querySelector("#save-changes").disabled =
-                    disableButton;
-                }}
-              />
-            </Form.Group>
+                    const disableButton =
+                      containsOnlySpaces || !e.target.value.trim();
+                    document.querySelector("#save-changes").disabled =
+                      disableButton;
+                  }}
+                  className="w-full p-2 bg-slate-700 border-slate-600 rounded-md text-white"
+                />
+              </div>
 
-            {isUsernameBlank && (
-              <p className="mt-3 text-red-500 font-semibold">
-                Username cannot be left blank.
-              </p>
-            )}
+              {isUsernameBlank && (
+                <p className="text-red-500 font-semibold text-sm">
+                  Username cannot be left blank.
+                </p>
+              )}
 
-            <Form.Group className="mb-3" controlId="formPassword">
-              <Form.Label>New Password</Form.Label>
-              <Form.Control
-                aria-label="password"
-                value={newPassword || ""}
-                type="password"
-                onChange={(e) => setNewPassword(e.target.value)}
-              />
-            </Form.Group>
-          </Form>
-        </Modal.Body>
+              <div>
+                <label className="block mb-1">New Password</label>
+                <input
+                  aria-label="password"
+                  type="password"
+                  value={newPassword || ""}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  className="w-full p-2 bg-slate-700 border-slate-600 rounded-md text-white"
+                />
+              </div>
+            </div>
 
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button
-            variant="primary"
-            id="save-changes"
-            onClick={() => editUser(user)}
-          >
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Modal>
+            <div className="flex justify-start gap-2 px-6 py-4 bg-slate-900 border-t border-slate-700">
+              {/* <button
+                onClick={handleClose}
+                className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-500"
+              >
+                Close
+              </button> */}
+              <button
+                id="save-changes"
+                onClick={() => editUser(user)}
+                className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
+              >
+                Save Changes
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };

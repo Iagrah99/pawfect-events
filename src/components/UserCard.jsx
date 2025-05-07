@@ -44,13 +44,22 @@ const UserCard = ({
         <DeletingContent content="User" />
       ) : (
         <>
-          <div className="max-w-3xl mx-auto bg-slate-900 min-h-screen sm:min-h-fit shadow-lg sm:rounded-xl p-4 relative">
-            <Breadcrumb>
-              <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
-              <Breadcrumb.Item active className="text-white">
-                {user?.username}
-              </Breadcrumb.Item>
-            </Breadcrumb>
+          <div className="max-w-3xl mx-auto bg-slate-900 min-h-screen sm:min-h-fit shadow-lg sm:rounded-xl p-4 relative text-white">
+            <nav className="text-md text-slate-400" aria-label="Breadcrumb">
+              <ol className="list-none p-0 inline-flex space-x-1 sm:space-x-3">
+                <li className="flex items-center">
+                  <a href="/" className="hover:text-white transition-colors">
+                    Home
+                  </a>
+                </li>
+                <li>/</li>
+                <li>
+                  <div className="flex items-center text-white">
+                    <span>{user?.username}</span>
+                  </div>
+                </li>
+              </ol>
+            </nav>
 
             {user.username === loggedInUser?.username && (
               <div className="absolute flex sm:gap-3 top-0 right-0 sm:top-1 sm:right-2">
@@ -103,7 +112,7 @@ const UserCard = ({
                         {organiserEvents.map((event) => (
                           <div
                             key={event.event_id}
-                            className="bg-slate-800 rounded-lg p-4 text-center shadow-inner border border-slate-700 cursor-pointer hover:bg-slate-700 transition"
+                            className="bg-slate-800 rounded-lg p-4 text-center shadow-inner border-1 border-slate-700 cursor-pointer hover:bg-slate-700 transition"
                             onClick={() =>
                               navigate(`/events/${event.event_id}`)
                             }
@@ -128,7 +137,7 @@ const UserCard = ({
                         return (
                           <div
                             key={eventTitle}
-                            className="bg-slate-800 rounded-lg p-4 text-center shadow-inner border border-slate-700 cursor-pointer hover:bg-slate-700 transition"
+                            className="bg-slate-800 rounded-lg p-4 text-center shadow-inner border-1 border-slate-700 cursor-pointer hover:bg-slate-700 transition"
                             onClick={() =>
                               matchedEvent &&
                               navigate(`/events/${matchedEvent.event_id}`)

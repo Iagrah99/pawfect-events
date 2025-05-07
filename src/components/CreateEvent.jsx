@@ -1,10 +1,10 @@
-import React, { useState, useContext, useEffect } from 'react';
+import { useState, useContext } from 'react';
 import NavigationBar from './NavigationBar';
 import { UserContext } from '../contexts/UserContext';
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHomeAlt, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import { postEvent, generateImage } from '../../utils/api';
+import { postEvent } from '../../utils/api';
 import PostingEvent from './PostingEvent';
 import Error from './Error';
 
@@ -21,20 +21,11 @@ const CreateEvent = () => {
   const [priceInPence, setPriceInPence] = useState(0);
   const [location, setLocation] = useState('');
   const [imageFile, setImageFile] = useState(null);
-  const [imageUrl, setImageUrl] = useState('');
+  const [imageUrl, setImageUrl] = useState(null);
 
   const [isPostingEvent, setIsPostingEvent] = useState(false);
   const [isError, setIsError] = useState(false)
   const [error, setError] = useState(null)
-
-  useEffect(() => {
-    const fetchDogImage = async () => {
-      const imageFromApi = await generateImage();
-      setImageUrl(imageFromApi)
-    }
-    fetchDogImage();
-  }, [])
-
 
   const handleImageUpload = async (file) => {
     const apiKey = import.meta.env.VITE_IMGBB_API_KEY;
@@ -60,8 +51,6 @@ const CreateEvent = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();  // Move this to the top to prevent default behavior first
 
-    console.log(eventType)
-
     const eventData = {
       title,
       organiser: loggedInUser.username,
@@ -71,7 +60,7 @@ const CreateEvent = () => {
       event_type: eventType,
       price_in_pence: priceInPence,
       location,
-      image: imageUrl || "",
+      image: imageUrl,
     };
 
     try {
@@ -99,7 +88,7 @@ const CreateEvent = () => {
     return (
       <>
         <NavigationBar />
-        <div className="flex flex-col items-center justify-center h-[calc(100vh-70px)] bg-gray-900 text-white">
+        <div className="flex flex-col items-center justify-center h-[calc(100vh-70px)] bg-slate-900">
           <div className="bg-gray-800 p-6 space-x-4 rounded-lg shadow-lg text-center">
             <h2 className="text-lg text-gray-100">{!loggedInUser ? "You must be logged in to create an event." : "You lack sufficient privileges"}</h2>
 
@@ -128,11 +117,11 @@ const CreateEvent = () => {
     <>
       <NavigationBar />
       {isPostingEvent ? <PostingEvent /> :
-        <div className="flex justify-center items-center py-8 bg-gray-900 min-h-screen">
+        <div className="flex justify-center items-center py-8 bg-gray-900 min-h-screen md:pb-96">
           <div className="w-full max-w-lg md:bg-gray-800 rounded-lg shadow-md p-8">
             <h2 className="text-2xl font-semibold text-center text-gray-100 mb-6">Create Your <em>Pawfect</em> Event!</h2>
             <form className="space-y-6" onSubmit={handleSubmit}>
-              <p className='text-center'>Input fields marked with an <span className="text-indigo-400">*</span> indicate a required field.</p>
+              <p className='text-center text-gray-300'>Input fields marked with an <span className="text-indigo-400">*</span> indicate a required field.</p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label htmlFor="title" className="block text-sm font-medium mb-1 text-gray-300">
@@ -141,7 +130,7 @@ const CreateEvent = () => {
                   <input
                     type="text"
                     id="title"
-                    className="mt-1 block w-full p-2 bg-gray-700 border border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-gray-100 placeholder-gray-400"
+                    className="mt-1 block w-full p-2 bg-gray-700 border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-gray-100 placeholder-gray-400"
                     placeholder="Enter event title"
                     required
                     onChange={(e) => setTitle(e.target.value)}
@@ -155,7 +144,7 @@ const CreateEvent = () => {
                   <input
                     type="text"
                     id="organiser"
-                    className="mt-1 block w-full p-2 bg-gray-700 border border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-gray-100 placeholder-gray-400 hover:cursor-not-allowed"
+                    className="mt-1 block w-full p-2 bg-gray-700 border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-gray-100 placeholder-gray-400 hover:cursor-not-allowed"
                     placeholder="Enter organiser name"
                     required
                     value={loggedInUser.username}
@@ -170,7 +159,7 @@ const CreateEvent = () => {
                 </label>
                 <textarea
                   id="description"
-                  className="resize-none mt-1 block w-full p-2 bg-gray-700 border border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-gray-100 placeholder-gray-400"
+                  className="resize-none mt-1 block w-full p-2 bg-gray-700 border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-gray-100 placeholder-gray-400"
                   placeholder="Describe the event"
                   required
                   onChange={(e) => setDescription(e.target.value)}
@@ -185,7 +174,7 @@ const CreateEvent = () => {
                   <input
                     type='datetime-local'
                     id="startDate"
-                    className="mt-1 block w-full p-2 bg-gray-700 border border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-gray-100 placeholder-gray-400"
+                    className="mt-1 block w-full p-2 bg-gray-700 border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-gray-100 placeholder-gray-400"
                     required
                     onChange={(e) => setEventStart(e.target.value)}
                   />
@@ -197,7 +186,7 @@ const CreateEvent = () => {
                   <input
                     type="datetime-local"
                     id="endDate"
-                    className="mt-1 block w-full p-2 bg-gray-700 border border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-gray-100 placeholder-gray-400"
+                    className="mt-1 block w-full p-2 bg-gray-700 border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-gray-100 placeholder-gray-400"
                     required
                     onChange={(e) => setEventEnd(e.target.value)}
                   />
@@ -209,7 +198,7 @@ const CreateEvent = () => {
                   <label htmlFor="eventType" className="block text-sm font-medium mb-1 text-gray-300">
                     Event Type <span className="text-indigo-400">*</span>
                   </label>
-                  <select className="mt-1 p-2 block w-full md:w-52 bg-gray-700 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 cursor-pointer"
+                  <select className="mt-1 p-2 block w-full md:w-52 bg-gray-700 border-gray-300 text-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 cursor-pointer"
                     onChange={(e) => setEventType(e.target.value)}>
                     <option value="Dog Training">Dog Training</option>
                     <option value="Dog Walking">Dog Walking</option>
@@ -229,7 +218,7 @@ const CreateEvent = () => {
                     step="0.01"
                     min="0"
                     id="priceInPence"
-                    className="pl-14 w-full p-2 bg-gray-700 border border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-gray-100 placeholder-gray-400"
+                    className="pl-14 w-full p-2 bg-gray-700 border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-gray-100 placeholder-gray-400"
                     placeholder="Enter price"
                     required
                     onChange={(e) => setPriceInPence(Math.round(e.target.value * 100))}
@@ -246,7 +235,7 @@ const CreateEvent = () => {
                   <input
                     type="text"
                     id="location"
-                    className="mt-1 block w-full p-2 bg-gray-700 border border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-gray-100 placeholder-gray-400"
+                    className="mt-1 block w-full p-2 bg-gray-700 border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-gray-100 placeholder-gray-400"
                     placeholder="Enter location"
                     required
                     onChange={(e) => setLocation(e.target.value)}
@@ -262,7 +251,7 @@ const CreateEvent = () => {
                   type="file"
                   accept="image/*"
                   id="image"
-                  className="mt-1 block w-full p-2 bg-gray-700 border border-gray-600 rounded-md shadow-sm text-gray-100 placeholder-gray-400 hover:cursor-pointer"
+                  className="mt-1 block w-full p-2 bg-gray-700 border-gray-600 rounded-md shadow-sm text-gray-100 placeholder-gray-400 hover:cursor-pointer"
                   onChange={(e) => {
                     const file = e.target.files[0];
                     setImageFile(file);
@@ -275,7 +264,7 @@ const CreateEvent = () => {
 
               <button
                 type="submit"
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                className="w-full flex justify-center py-2 px-4 border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
                 Create Event
               </button>

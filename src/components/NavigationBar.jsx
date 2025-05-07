@@ -22,7 +22,7 @@ const NavigationBar = () => {
   };
 
   return (
-    <Navbar expand="lg" className="bg-zinc-900" sticky="top">
+    <Navbar expand="lg" className="bg-slate-800" sticky="top">
       <Container>
         {/* Brand and Logo */}
         <Navbar.Brand
@@ -34,7 +34,7 @@ const NavigationBar = () => {
           <span className="text-lg md:text-xl font-semibold">Pawfect Events</span>
         </Navbar.Brand>
         {/* Navbar Toggle for mobile */}
-        <Navbar.Toggle aria-controls="basic-navbar-nav" className="text-white" />
+        <Navbar.Toggle aria-controls="basic-navbar-nav"/>
         <Navbar.Collapse id="basic-navbar-nav">
           {/* Navigation Links */}
           <Nav className="ms-auto flex-grow-1 justify-end">

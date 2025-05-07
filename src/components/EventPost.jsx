@@ -113,7 +113,7 @@ const EventPost = ({ event, attendees, setAttendees, users, setIsError, isError,
   return (
     <>
       {isDeletingEvent ? (<DeletingContent content="Event" />) :
-        <article className="max-w-5xl mx-auto md:my-10 p-6 bg-gray-900 shadow-md rounded-lg">
+        <article className="max-w-5xl mx-auto md:my-10 p-6 bg-slate-900 shadow-md rounded-lg">
 
           <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-4">
             <Breadcrumb>
@@ -156,7 +156,7 @@ const EventPost = ({ event, attendees, setAttendees, users, setIsError, isError,
             <div className="w-full md:w-3/6 md:pl-6 mt-4 md:mt-0">
               <p className="text-2xl font-bold mb-3 text-white">{event.title} - {event.location}</p>
               <p className="text-white mb-3"> <FontAwesomeIcon icon={faUserAlt} className="mr-1 align-middle" /> Organised by: <span className='cursor-pointer font-bold hover:text-cyan-200' onClick={handleLink}>{event.organiser}</span></p>
-              <p>
+              <p className='text-white'>
                 <FontAwesomeIcon icon={faClock} className="mr-2 align-middle" />
                 {isValidDate(startDate) && isValidDate(endDate) ? (
                   format(startDate, "EEEE, do MMMM yyyy 'from' h:mmaaa") +
@@ -173,7 +173,7 @@ const EventPost = ({ event, attendees, setAttendees, users, setIsError, isError,
               <div className="flex flex-col mb-2">
 
                 <p className="text-sm text-white"> <FontAwesomeIcon icon={faTags} className="mr-1 align-middle" /> Type: {event.event_type}</p>
-                <p className="text-lg font-bold">
+                <p className="text-lg font-bold text-white">
                   <FontAwesomeIcon icon={faPoundSign} className="mr-2 align-middle" /> Cost: {event.price_in_pence === 0 ? "FREE" : `£${formatCost(event.price_in_pence)}`}
                 </p>
               </div>

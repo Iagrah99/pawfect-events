@@ -18,7 +18,7 @@ const Error = ({ error }) => {
   return (
     <>
       <NavigationBar />
-      <div className="flex flex-col items-center justify-center h-[calc(100vh-70px)] bg-gray-900 text-white">
+      <div className="flex flex-col items-center justify-center h-[calc(100vh-66px)] bg-slate-900 text-white">
         <div className="bg-gray-800 p-6 space-x-4 rounded-lg shadow-lg text-center">
           <h1 className="text-4xl font-bold mb-4 text-gray-300">Error {currentError.status}</h1>
           <p className="text-lg mb-4 text-gray-300">{currentError.data.msg}</p>

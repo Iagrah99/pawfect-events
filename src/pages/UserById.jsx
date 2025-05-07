@@ -89,7 +89,7 @@ const UserById = () => {
       {isLoading ? (
         <Loading content={"User Details"} />
       ) : (
-        <article className="min-h-screen bg-slate-950 text-white sm:py-12 sm:px-4 lg:px-8">
+        <article className="min-h-screen w-full bg-slate-950 text-white sm:py-12 sm:px-4 lg:px-8">
           <UserCard
             navigate={navigate}
             user={user}

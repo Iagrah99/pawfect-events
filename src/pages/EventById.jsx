@@ -46,10 +46,10 @@ const ViewEvent = () => {
   }
 
   return (
-    <>
+    <div className="bg-slate-950 min-h-screen">
       <NavigationBar />
       {isLoading ? (<Loading content="Event Details" />) : (<EventPost event={event} attendees={attendees} setAttendees={setAttendees} users={users} setIsError={setIsError} isError={isError} setError={setError} error={error} setIsUpdated={setIsUpdated} />)}
-    </>
+    </div>
   )
 }
 

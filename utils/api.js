@@ -1,12 +1,7 @@
-import axios from 'axios';
+import axios from "axios";
 
 const dogEventsApi = axios.create({
-  baseURL: 'https://dog-events-be.onrender.com/api',
-});
-
-const dogImageApi = axios.create({
-  baseURL: 'https://api.thedogapi.com/v1',
-  timeout: 10000,
+  baseURL: "https://pawfect-events-api.fly.dev/api",
 });
 
 export const fetchEvents = async (sort_by, order_by) => {
@@ -64,7 +59,7 @@ export const postEventAttending = async (user_id, username, eventAttending) => {
 
 export const removeEventAttending = async (user_id, event_title) => {
   const res = await dogEventsApi({
-    method: 'delete',
+    method: "delete",
     url: `/users/${user_id}/attending`,
     data: { event_title: event_title },
   });
@@ -80,9 +75,9 @@ export const postEvent = async ({
   event_type,
   price_in_pence,
   location,
-  image,
+  image = "",
 }) => {
-  const res = await dogEventsApi.post('/events', {
+  const res = await dogEventsApi.post("/events", {
     title,
     organiser,
     description,
@@ -111,7 +106,7 @@ export const registerUser = async ({
   isOrganiser,
   avatarUrl,
 }) => {
-  const res = await dogEventsApi.post('/users', {
+  const res = await dogEventsApi.post("/users", {
     email,
     username,
     password,
@@ -152,16 +147,6 @@ export const deleteEvent = async (event_id) => {
   return res.status;
 };
 
-export const generateImage = async () => {
-  const apiKey = import.meta.env.VITE_DOGIMG_API_KEY;
-  const res = await dogImageApi.get('/images/search?size=full', {
-    headers: {
-      'x-api-key': apiKey,
-    },
-  });
-  return res.data[0].url;
-};
-
 export const generateGoogleCalendarEvent = async ({
   title,
   start_date,
@@ -169,15 +154,15 @@ export const generateGoogleCalendarEvent = async ({
   location,
   url,
 }) => {
-  const baseURL = 'https://calendar.google.com/calendar/render';
+  const baseURL = "https://calendar.google.com/calendar/render";
 
   // Convert dates to Google Calendar format (YYYYMMDDTHHMMSSZ)
   const formattedStartDate = start_date
-    .replace(/[-:]/g, '')
-    .replace(/\.\d{3}Z$/, 'Z');
+    .replace(/[-:]/g, "")
+    .replace(/\.\d{3}Z$/, "Z");
   const formattedEndDate = end_date
-    .replace(/[-:]/g, '')
-    .replace(/\.\d{3}Z$/, 'Z');
+    .replace(/[-:]/g, "")
+    .replace(/\.\d{3}Z$/, "Z");
 
   const eventDetails = `Event+details+here%3A+${encodeURIComponent(url)}`;
 
