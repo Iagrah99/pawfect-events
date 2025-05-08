@@ -24,23 +24,20 @@ const EventCard = ({ event }) => {
 
   return (
     <article className="bg-slate-900 border-1 border-slate-800 rounded-lg shadow-md overflow-hidden">
-      <img
-        src={event.image}
-        alt={event.title}
-        className="h-64 w-full object-cover transition-transform duration-300 hover:scale-105 hover:opacity-75 cursor-pointer"
-        onClick={() => handleClick(event.event_id)}
-      />
+      <div className="overflow-hidden">
+        <img
+          src={event.image}
+          alt={event.title}
+          className="h-64 w-full object-cover transition-transform duration-300 hover:scale-105 hover:opacity-75 cursor-pointer"
+          onClick={() => handleClick(event.event_id)}
+        />
+      </div>
 
       <div className="p-3 flex flex-col text-white">
         <div className="flex gap-1 items-center">
           <h2 className="text-lg sm:text-xl font-semibold mb-3 leading-snug line-clamp-2">
-            {event.title} -
+            {event.title}
           </h2>
-
-          <p className="flex items-center gap-2 text-lg font-semibold sm:text-xl">
-            {/* <FontAwesomeIcon icon={faLocationDot} className="text-blue-500" />{" "} */}
-            {event.location}
-          </p>
         </div>
 
         <div className="flex gap-3 items-center">
@@ -50,7 +47,12 @@ const EventCard = ({ event }) => {
           </p>
         </div>
 
-        <div className="flex gap-3">
+        <p className="flex items-center gap-2 text-sm">
+          <FontAwesomeIcon icon={faLocationDot} className="text-blue-500" />{" "}
+          {event.location}
+        </p>
+
+        <div className="flex flex-col md:flex-row md:gap-3">
           <p className="flex items-center gap-2 text-sm">
             <FontAwesomeIcon icon={faPlayCircle} className="text-green-500" />
             {format(startDate, "dd/MM/yyyy 'at' HH:mm")}
