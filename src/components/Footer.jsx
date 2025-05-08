@@ -12,7 +12,7 @@ const Footer = () => {
 
   return (
     <footer
-      className="bg-slate-900 text-white py-6 mt-10"
+      className="bg-slate-900 text-white py-6 md:mt-10"
       style={{ boxShadow: "0 0 3px rgba(0, 0, 0, 0.5)" }}
     >
       <div className="container mx-auto px-4 h-10 flex flex-row justify-between items-center">

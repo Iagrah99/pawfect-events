@@ -23,7 +23,7 @@ const EventCard = ({ event }) => {
   const endDate = new Date(event.end_date);
 
   return (
-    <article className="bg-slate-800 rounded-lg shadow-md overflow-hidden">
+    <article className="bg-slate-900 border-1 border-slate-800 rounded-lg shadow-md overflow-hidden">
       <img
         src={event.image}
         alt={event.title}

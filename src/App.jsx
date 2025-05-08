@@ -1,7 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
 import { useEffect, useContext } from 'react';
 import { UserContext } from './contexts/UserContext';
-import Home from "./pages/Home";
+import Events from "./pages/Events";
 import ViewEvent from "./pages/EventById.jsx"
 import UserById from "./pages/UserById.jsx"
 import Login from "./pages/Login.jsx"
@@ -19,8 +19,8 @@ export default function App() {
   }, [setLoggedInUser]);
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path='/home' element={<Home />} />
+      <Route path="/" element={<Events />} />
+      <Route path="/events" element={<Events />} />
       <Route path='/events/:event_id' element={<ViewEvent />} />
       <Route path='/users/:user_id' element={<UserById />} />
       <Route path='/login' element={<Login />} />

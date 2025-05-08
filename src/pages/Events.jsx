@@ -8,7 +8,7 @@ import { useSearchParams, useLocation, useNavigate } from "react-router-dom";
 import EventControls from "../components/EventControls";
 import Footer from "../components/Footer";
 
-const Home = () => {
+const Events = () => {
   const [events, setEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
@@ -90,17 +90,19 @@ const Home = () => {
             handleOrderBy={handleOrderBy}
           />
 
-          <main className="bg-slate-900 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 sm:gap-6 sm:px-3 md:pb-3">
-            {!events ? (
-              <p className="text-center col-span-full text-white">
-                No events found for the selected event type.
-              </p>
-            ) : (
-              events.map((event) => (
-                <EventCard key={event.event_id} event={event} />
-              ))
-            )}
-          </main>
+          <div className="max-w-[1700px] mx-auto">
+            <main className="bg-slate-900 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 sm:gap-6 sm:px-3 md:pb-3">
+              {!events ? (
+                <p className="text-center col-span-full text-white">
+                  No events found for the selected event type.
+                </p>
+              ) : (
+                events.map((event) => (
+                  <EventCard key={event.event_id} event={event} />
+                ))
+              )}
+            </main>
+          </div>
         </>
       )}
 
@@ -109,4 +111,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Events;
