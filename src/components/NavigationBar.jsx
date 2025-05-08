@@ -1,13 +1,14 @@
-import { Container, Navbar } from "react-bootstrap";
-import { useContext } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../contexts/UserContext";
-import Nav from "react-bootstrap/Nav";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faB, faBars } from "@fortawesome/free-solid-svg-icons";
 import navIcon from "../images/de-nav-icon-transparent.png";
 
 const NavigationBar = () => {
   const navigate = useNavigate();
   const { loggedInUser, setLoggedInUser } = useContext(UserContext);
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
 
   const handleLink = (e) => {
     e.preventDefault();
@@ -17,81 +18,144 @@ const NavigationBar = () => {
 
   const handleLogout = () => {
     setLoggedInUser(null);
-    localStorage.removeItem('loggedInUser');
+    localStorage.removeItem("loggedInUser");
     navigate("/");
   };
 
   return (
-    <Navbar expand="lg" className="bg-slate-800" sticky="top">
-      <Container>
-        {/* Brand and Logo */}
-        <Navbar.Brand
-          id="home"
-          className="flex items-center cursor-pointer text-white"
-          onClick={handleLink}
-        >
-          <img src={navIcon} className="w-8 h-8 md:w-10 md:h-10 mr-2" alt="Logo" />
-          <span className="text-lg md:text-xl font-semibold">Pawfect Events</span>
-        </Navbar.Brand>
-        {/* Navbar Toggle for mobile */}
-        <Navbar.Toggle aria-controls="basic-navbar-nav"/>
-        <Navbar.Collapse id="basic-navbar-nav">
-          {/* Navigation Links */}
-          <Nav className="ms-auto flex-grow-1 justify-end">
-            {loggedInUser ? (
-              <div className="flex flex-col md:flex-row md:items-center items-start space-y-3 md:space-y-0 md:space-x-10">
-                <div className="flex items-center space-x-2 md:space-x-3">
-                  <Nav.Item className="text-cyan-50 text-sm md:text-base">
-                    Hello, {loggedInUser.username}
-                  </Nav.Item>
-                  <img
-                    src={loggedInUser.avatar_url}
-                    alt="User Avatar"
-                    className="w-8 h-8 md:w-10 md:h-10 rounded-full border-2 border-gray-700 shadow-lg cursor-pointer"
-                    onClick={() => navigate(`/users/${loggedInUser.user_id}`)}
-                  />
-                </div>
+    <nav className="bg-slate-800 sticky top-0 z-50 shadow-md">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="relative flex items-center justify-between h-16">
+          {/* Brand */}
+          <div
+            id="/"
+            onClick={handleLink}
+            className="flex items-center cursor-pointer select-none text-white"
+          >
+            <img
+              src={navIcon}
+              alt="Logo"
+              className="w-8 h-8 md:w-10 md:h-10 mr-2"
+            />
+            <span className="text-lg md:text-xl font-semibold">
+              Pawfect Events
+            </span>
+          </div>
 
+          {/* Desktop Navigation */}
+          <div className="absolute left-1/2 transform -translate-x-1/2 hidden lg:flex lg:gap-0 space-x-6">
+            {loggedInUser ? (
+              <>
                 {loggedInUser.is_organiser && (
-                  <Nav.Item
+                  <span
                     className="text-cyan-50 text-sm md:text-base hover:text-cyan-200 cursor-pointer"
-                    id="create-event"
-                    onClick={() => navigate('/create-event')}
+                    onClick={() => navigate("/create-event")}
                   >
                     Create Event
-                  </Nav.Item>
+                  </span>
                 )}
 
-                <Nav.Item
+                <span
                   className="text-cyan-50 text-sm md:text-base hover:text-cyan-200 cursor-pointer"
-                  id="logout"
                   onClick={handleLogout}
                 >
                   Logout
-                </Nav.Item>
-              </div>
+                </span>
+              </>
             ) : (
-              <div className="flex flex-col md:flex-row items-start md:items-center space-y-3 md:space-y-0 md:space-x-4">
-                <Nav.Item
+              <>
+                <span
                   className="text-cyan-50 text-sm md:text-base hover:text-cyan-200 cursor-pointer"
+                  onClick={handleLink}
                   id="login"
+                >
+                  Login
+                </span>
+                <span
+                  className="text-cyan-50 text-sm md:text-base hover:text-cyan-200 cursor-pointer"
+                  onClick={handleLink}
+                  id="register"
+                >
+                  Sign Up
+                </span>
+              </>
+            )}
+          </div>
+
+          <div className="hidden md:flex items-center gap-2">
+            <img
+              src={loggedInUser.avatar_url}
+              alt="User Avatar"
+              className="w-11 h-11 rounded-full shadow cursor-pointer"
+              onClick={() => navigate(`/users/${loggedInUser.user_id}`)}
+            />
+          </div>
+
+          {/* Mobile menu button */}
+          <div className="md:hidden">
+            <button
+              onClick={() => setShowMobileMenu(!showMobileMenu)}
+              className="text-white focus:outline-none"
+            >
+              <FontAwesomeIcon icon={faBars} className="text-xl" />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Menu */}
+      {showMobileMenu && (
+        <div className="md:hidden bg-slate-700 px-3 py-1">
+          {loggedInUser ? (
+            <div className="flex justify-between items-center">
+              {/* Left side: Links */}
+              <div className="flex flex-row items-center gap-3">
+                {loggedInUser.is_organiser && (
+                  <span
+                    className="text-cyan-50 hover:text-cyan-200 cursor-pointer"
+                    onClick={() => navigate("/create-event")}
+                  >
+                    Create Event
+                  </span>
+                )}
+                <span
+                  className="text-cyan-50 hover:text-cyan-200 cursor-pointer"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </span>
+              </div>
+
+              {/* Right side: Avatar */}
+              <img
+                src={loggedInUser.avatar_url}
+                alt="User Avatar"
+                className="w-10 h-10 rounded-full border-2 border-gray-700 shadow-md cursor-pointer"
+                onClick={() => navigate(`/users/${loggedInUser.user_id}`)}
+              />
+            </div>
+          ) : (
+            <div className="flex justify-between items-center">
+              {/* Left side: Guest links */}
+              <div className="flex flex-col space-y-2">
+                <span
+                  className="text-cyan-50 hover:text-cyan-200 cursor-pointer"
                   onClick={handleLink}
                 >
                   Login
-                </Nav.Item>
-                <Nav.Item
-                  className="text-cyan-50 text-sm md:text-base hover:text-cyan-200 cursor-pointer"
-                  id="register"
+                </span>
+                <span
+                  className="text-cyan-50 hover:text-cyan-200 cursor-pointer"
                   onClick={handleLink}
                 >
                   Sign Up
-                </Nav.Item>
+                </span>
               </div>
-            )}
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+            </div>
+          )}
+        </div>
+      )}
+    </nav>
   );
 };
 

@@ -89,7 +89,7 @@ const Home = () => {
             handleOrderBy={handleOrderBy}
           />
 
-          <main className="bg-slate-900 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 sm:gap-6 sm:px-1 md:pb-3">
+          <main className="bg-slate-900 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 sm:gap-6 sm:px-3 md:pb-3">
             {!events ? (
               <p className="text-center col-span-full text-white">
                 No events found for the selected event type.
