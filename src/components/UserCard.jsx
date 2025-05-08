@@ -1,11 +1,10 @@
-import Breadcrumb from "react-bootstrap/Breadcrumb";
 import { useContext, useState } from "react";
 import { UserContext } from "../contexts/UserContext";
 import EditUser from "./EditUser";
 import { deleteUser } from "../../utils/api";
 import DeletingContent from "./DeletingContent";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faTrash, faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
 
 const UserCard = ({
   navigate,
@@ -44,7 +43,7 @@ const UserCard = ({
         <DeletingContent content="User" />
       ) : (
         <>
-          <div className="max-w-3xl mx-auto bg-slate-900 min-h-screen sm:min-h-fit shadow-lg sm:rounded-xl p-4 relative text-white">
+          <div className="max-w-3xl mx-auto bg-slate-800 min-h-screen sm:min-h-fit shadow-lg sm:rounded-xl p-4 relative text-white">
             <nav className="text-md text-slate-400" aria-label="Breadcrumb">
               <ol className="list-none p-0 inline-flex space-x-1 sm:space-x-3">
                 <li className="flex items-center">
@@ -100,10 +99,10 @@ const UserCard = ({
                 </div>
 
                 <section>
-                  <h2 className="text-lg font-semibold text-slate-300 mb-3">
+                  <h2 className="text-lg font-semibold text-slate-300 my-3">
                     {user.is_organiser
-                      ? "🗂 Events Organised"
-                      : "📅 Events Attending"}
+                      ? <span><FontAwesomeIcon icon={faCalendarAlt} className="mr-2" />Events Organising</span>
+                      : <span><FontAwesomeIcon icon={faCalendarAlt} className="mr-2" />Events Attending</span>}
                   </h2>
 
                   {user.is_organiser ? (
@@ -112,7 +111,7 @@ const UserCard = ({
                         {organiserEvents.map((event) => (
                           <div
                             key={event.event_id}
-                            className="bg-slate-800 rounded-lg p-4 text-center shadow-inner border-1 border-slate-700 cursor-pointer hover:bg-slate-700 transition"
+                            className="bg-slate-700 rounded-lg p-4 text-center shadow-inner border-1 border-slate-600 cursor-pointer hover:bg-slate-600 transition"
                             onClick={() =>
                               navigate(`/events/${event.event_id}`)
                             }
@@ -137,7 +136,7 @@ const UserCard = ({
                         return (
                           <div
                             key={eventTitle}
-                            className="bg-slate-800 rounded-lg p-4 text-center shadow-inner border-1 border-slate-700 cursor-pointer hover:bg-slate-700 transition"
+                            className="bg-slate-800 rounded-lg p-4 text-center shadow-inner border-1 border-slate-600 cursor-pointer hover:bg-slate-600 transition"
                             onClick={() =>
                               matchedEvent &&
                               navigate(`/events/${matchedEvent.event_id}`)

@@ -5,7 +5,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPlayCircle,
   faStopCircle,
-  faPoundSign,
+  faUser,
+  faLocationDot,
+  faCrown,
+  faCreditCard,
 } from "@fortawesome/free-solid-svg-icons";
 
 const EventCard = ({ event }) => {
@@ -13,6 +16,8 @@ const EventCard = ({ event }) => {
   const handleClick = (event_id) => {
     navigate(`/events/${event_id}`);
   };
+
+  console.log(event);
 
   const startDate = new Date(event.start_date);
   const endDate = new Date(event.end_date);
@@ -27,23 +32,37 @@ const EventCard = ({ event }) => {
       />
 
       <div className="p-3 flex flex-col text-white">
-        <h2 className="text-lg sm:text-xl font-semibold mb-3 leading-snug line-clamp-2">
-          {event.title} - {event.location}
-        </h2>
+        <div className="flex gap-1 items-center">
+          <h2 className="text-lg sm:text-xl font-semibold mb-3 leading-snug line-clamp-2">
+            {event.title} -
+          </h2>
 
-        <div>
-          <p className="flex items-center gap-2">
-            <FontAwesomeIcon icon={faPlayCircle} />
+          <p className="flex items-center gap-2 text-lg font-semibold sm:text-xl">
+            {/* <FontAwesomeIcon icon={faLocationDot} className="text-blue-500" />{" "} */}
+            {event.location}
+          </p>
+        </div>
+
+        <div className="flex gap-3 items-center">
+          <p className="flex items-center gap-2 text-sm">
+            <FontAwesomeIcon icon={faCrown} className="text-yellow-500" />{" "}
+            {event.organiser}
+          </p>
+        </div>
+
+        <div className="flex gap-3">
+          <p className="flex items-center gap-2 text-sm">
+            <FontAwesomeIcon icon={faPlayCircle} className="text-green-500" />
             {format(startDate, "dd/MM/yyyy 'at' HH:mm")}
           </p>
-          <p className="flex items-center gap-2">
-            <FontAwesomeIcon icon={faStopCircle} />
+          <p className="flex items-center gap-2 text-sm">
+            <FontAwesomeIcon icon={faStopCircle} className="text-red-500" />
             {format(endDate, "dd/MM/yyyy 'at' HH:mm")}
           </p>
         </div>
 
-        <p className="flex items-center gap-2 text-lg font-bold">
-          <FontAwesomeIcon icon={faPoundSign} />{" "}
+        <p className="flex items-center gap-2 text-sm font-bold">
+          <FontAwesomeIcon icon={faCreditCard} className="text-blue-500" />{" "}
           {event.price_in_pence === 0
             ? "FREE"
             : `£${formatCost(event.price_in_pence)}`}

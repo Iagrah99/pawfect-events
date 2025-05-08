@@ -1,9 +1,12 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+
 const EventControls = ({ handleSortBy, handleOrderBy }) => {
   return (
-    <div className=" p-4 rounded-lg mb-6 flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-6">
-      <div className="flex flex-col">
+    <div className=" p-4 rounded-lg mb-6 flex flex-row justify-center items-center gap-3 md:gap-0 md:space-y-0 md:space-x-3">
+      <div className="flex flex-col items-center relative w-fit">
         <select
-          className=" mt-1 p-2 block w-full md:w-52 bg-slate-900 md:bg-slate-800 text-white border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 cursor-pointer"
+          className="appearance-none bg-slate-800 text-white lg:px-3 py-2 sm:py-2 pl-3 pr-8 lg:w-60 sm:w-32 w-full border-transparent text-sm cursor-pointer rounded shadow focus:outline-none focus:ring-2 focus:ring-white"
           defaultValue="sort_by"
           onChange={handleSortBy}
         >
@@ -20,11 +23,14 @@ const EventControls = ({ handleSortBy, handleOrderBy }) => {
             Start Date
           </option>
         </select>
+        <div className="pointer-events-none absolute inset-y-0 right-2 flex items-center text-white">
+          <FontAwesomeIcon icon={faChevronDown} className="text-xs" />
+        </div>
       </div>
 
-      <div className="flex flex-col">
+      <div className="flex flex-col items-center relative w-fit">
         <select
-          className="mt-1 p-2 block w-full md:w-52 bg-slate-900 md:bg-slate-800 text-white border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 cursor-pointer"
+          className="appearance-none bg-slate-800 text-white lg:px-3 py-2 sm:py-2 pl-3 pr-8 lg:w-60 sm:w-32 w-full border-transparent text-sm cursor-pointer rounded shadow focus:outline-none focus:ring-2 focus:ring-white"
           defaultValue="order_by"
           onChange={handleOrderBy}
         >
@@ -34,6 +40,9 @@ const EventControls = ({ handleSortBy, handleOrderBy }) => {
           <option value="asc">Ascending</option>
           <option value="desc">Descending</option>
         </select>
+        <div className="pointer-events-none absolute inset-y-0 right-2 flex items-center text-white">
+          <FontAwesomeIcon icon={faChevronDown} className="text-xs" />
+        </div>
       </div>
     </div>
   );
