@@ -201,7 +201,7 @@ const EventPost = ({
                   icon={faTags}
                   className="mr-1 align-middle"
                 />{" "}
-                Type: {event.event_type}
+                Category: {event.category?.split("-").join(" ")}
               </p>
               <p className="text-lg font-bold text-white">
                 <FontAwesomeIcon

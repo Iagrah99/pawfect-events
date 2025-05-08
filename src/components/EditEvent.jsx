@@ -13,9 +13,15 @@ export const EditEvent = ({
   const [show, setShow] = useState(false);
   const [editedTitle, setEditedTitle] = useState(event.title);
   const [editedDescription, setEditedDescription] = useState(event.description);
-  const [editedStartDate, setEditedStartDate] = useState(event.start_date);
-  const [editedEndDate, setEditedEndDate] = useState(event.end_Date);
-  const [editedEventType, setEditedEventType] = useState(event.event_type);
+  const [editedStartDate, setEditedStartDate] = useState(
+    formatDateForInput(event.start_date)
+  );
+  const [editedEndDate, setEditedEndDate] = useState(
+    formatDateForInput(event.end_date)
+  );
+  const [editedEventCategory, setEditedEventCategory] = useState(
+    event.category
+  );
   const [editedPriceInPence, setEditedPriceInPence] = useState(
     event.price_in_pence
   );
@@ -27,9 +33,9 @@ export const EditEvent = ({
     if (show) {
       setEditedTitle(event.title);
       setEditedDescription(event.description);
-      setEditedStartDate(event.start_date);
-      setEditedEndDate(event.end_date);
-      setEditedEventType(event.event_type);
+      setEditedStartDate(formatDateForInput(event.start_date));
+      setEditedEndDate(formatDateForInput(event.end_date));
+      setEditedEventCategory(event.category);
       setEditedPriceInPence(event.price_in_pence);
       setEditedLocation(event.location);
       setEditedImageUrl(event.image);
@@ -60,7 +66,7 @@ export const EditEvent = ({
     }
   };
 
-  const formatDateForInput = (date) => {
+  function formatDateForInput(date) {
     if (!date) return "";
     const d = new Date(date);
     const year = d.getFullYear();
@@ -69,7 +75,7 @@ export const EditEvent = ({
     const hours = String(d.getHours()).padStart(2, "0");
     const minutes = String(d.getMinutes()).padStart(2, "0");
     return `${year}-${month}-${day}T${hours}:${minutes}`;
-  };
+  }
 
   const handleClose = () => {
     setShow(false);
@@ -78,7 +84,7 @@ export const EditEvent = ({
     setEditedDescription(event.description);
     setEditedStartDate(event.start_date);
     setEditedEndDate(event.end_date);
-    setEditedEventType(event.event_type);
+    setEditedEventCategory(event.category);
     setEditedPriceInPence(event.price_in_pence);
     setEditedLocation(event.location);
     setEditedImageUrl(event.image);
@@ -92,7 +98,7 @@ export const EditEvent = ({
         description: editedDescription,
         start_date: new Date(editedStartDate).toISOString(),
         end_date: new Date(editedEndDate).toISOString(),
-        event_type: editedEventType,
+        category: editedEventCategory,
         price_in_pence: editedPriceInPence,
         location: editedLocation,
         image: editedImageUrl,
@@ -122,7 +128,10 @@ export const EditEvent = ({
           <div className="bg-slate-900 text-white w-full max-w-2xl mx-auto rounded-lg shadow-lg overflow-hidden">
             <div className="flex justify-between items-center px-6 py-4 border-b border-slate-700 relative">
               <h2 className="text-xl font-semibold">Edit Event</h2>
-              <button onClick={handleClose} className="text-white text-3xl absolute top-5 right-5">
+              <button
+                onClick={handleClose}
+                className="text-white text-3xl absolute top-5 right-5"
+              >
                 &times;
               </button>
             </div>
@@ -195,18 +204,18 @@ export const EditEvent = ({
 
               <div className="flex gap-3 items-center">
                 <div className="relative w-full">
-                  <label className="block mb-1">Event Type</label>
+                  <label className="block mb-1">Event Category</label>
                   <select
-                    value={editedEventType}
-                    onChange={(e) => setEditedEventType(e.target.value)}
+                    value={editedEventCategory}
+                    onChange={(e) => setEditedEventCategory(e.target.value)}
                     className="w-full p-2 bg-slate-700 border-slate-600 rounded-md text-white cursor-pointer"
                   >
-                    <option value="Dog Training">Dog Training</option>
-                    <option value="Dog Walking">Dog Walking</option>
-                    <option value="Dog Show">Dog Show</option>
-                    <option value="Dog Competition">Dog Competition</option>
-                    <option value="Agility Trials">Agility Trials</option>
-                    <option value="Herding Trials">Herding Trials</option>
+                    <option value="Dog-Training">Dog Training</option>
+                    <option value="Dog-Walking">Dog Walking</option>
+                    <option value="Dog-Show">Dog Show</option>
+                    <option value="Dog-Competition">Dog Competition</option>
+                    <option value="Agility-Trials">Agility Trials</option>
+                    <option value="Herding-Trials">Herding Trials</option>
                   </select>
                 </div>
 
@@ -234,7 +243,7 @@ export const EditEvent = ({
                   />
                 </div>
 
-                <div  className="relative w-full">
+                <div className="relative w-full">
                   <label className="block mb-1">Image</label>
                   <input
                     type="file"

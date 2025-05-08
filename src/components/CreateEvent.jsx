@@ -16,7 +16,7 @@ const CreateEvent = () => {
   const [description, setDescription] = useState("");
   const [eventStart, setEventStart] = useState("");
   const [eventEnd, setEventEnd] = useState("");
-  const [eventType, setEventType] = useState("Dog Training");
+  const [eventCategory, setEventCategory] = useState("Dog-Training");
   const [priceInPence, setPriceInPence] = useState(0);
   const [location, setLocation] = useState("");
   const [imageFile, setImageFile] = useState(null);
@@ -59,7 +59,7 @@ const CreateEvent = () => {
       description,
       start_date: new Date(eventStart).toISOString(),
       end_date: new Date(eventEnd).toISOString(),
-      event_type: eventType,
+      category: eventCategory,
       price_in_pence: priceInPence,
       location,
       image: imageUrl,
@@ -222,21 +222,21 @@ const CreateEvent = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label
-                  htmlFor="eventType"
+                  htmlFor="eventCategory"
                   className="block text-sm font-medium mb-1 text-gray-300"
                 >
-                  Event Type <span className="text-indigo-400">*</span>
+                  Event Category <span className="text-indigo-400">*</span>
                 </label>
                 <select
                   className="mt-1 p-2 block w-full md:w-52 bg-gray-700 border-gray-300 text-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 cursor-pointer"
-                  onChange={(e) => setEventType(e.target.value)}
+                  onChange={(e) => setEventCategory(e.target.value)}
                 >
-                  <option value="Dog Training">Dog Training</option>
-                  <option value="Dog Walking">Dog Walking</option>
-                  <option value="Dog Show">Dog Show</option>
-                  <option value="Dog Competition">Dog Competition</option>
-                  <option value="Agility Trials">Agility Trials</option>
-                  <option value="Herding Trials">Herding Trials</option>
+                  <option value="Dog-Training">Dog Training</option>
+                  <option value="Dog-Walking">Dog Walking</option>
+                  <option value="Dog-Show">Dog Show</option>
+                  <option value="Dog-Competition">Dog Competition</option>
+                  <option value="Agility-Trials">Agility Trials</option>
+                  <option value="Herding-Trials">Herding Trials</option>
                 </select>
               </div>
               <div>
