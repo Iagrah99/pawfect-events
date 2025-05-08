@@ -2,7 +2,7 @@ import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../contexts/UserContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faB, faBars } from "@fortawesome/free-solid-svg-icons";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 import navIcon from "../images/de-nav-icon-transparent.png";
 
 const NavigationBar = () => {
@@ -23,9 +23,12 @@ const NavigationBar = () => {
   };
 
   return (
-    <nav className="bg-slate-800 sticky top-0 z-50 shadow-md">
+    <nav
+      className="bg-slate-900 sticky top-0 z-50"
+      style={{ boxShadow: "0 0 3px rgba(0, 0, 0, 0.5)" }}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative flex items-center justify-between h-16">
+        <div className="relative flex items-center justify-between h-24">
           {/* Brand */}
           <div
             id="/"
@@ -84,7 +87,7 @@ const NavigationBar = () => {
 
           <div className="hidden md:flex items-center gap-2">
             <img
-              src={loggedInUser.avatar_url}
+              src={loggedInUser?.avatar_url}
               alt="User Avatar"
               className="w-11 h-11 rounded-full shadow cursor-pointer"
               onClick={() => navigate(`/users/${loggedInUser.user_id}`)}

@@ -6,6 +6,7 @@ import EventCard from "../components/EventCard";
 import Error from "../components/Error";
 import { useSearchParams, useLocation, useNavigate } from "react-router-dom";
 import EventControls from "../components/EventControls";
+import Footer from "../components/Footer";
 
 const Home = () => {
   const [events, setEvents] = useState([]);
@@ -102,6 +103,8 @@ const Home = () => {
           </main>
         </>
       )}
+
+      <Footer />
     </div>
   );
 };
