@@ -99,7 +99,7 @@ const Home = () => {
                 Discover Experiences That Get Tails Wagging
               </h1>
               <p className="text-base sm:text-lg text-white mt-4">
-                Discover local dog events, connect with like-minded people, and
+                Explore local dog events, connect with like-minded people, and
                 create memories that last a lifetime.
               </p>
             </div>

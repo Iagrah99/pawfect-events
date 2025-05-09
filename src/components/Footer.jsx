@@ -1,13 +1,23 @@
 import { useNavigate } from "react-router-dom";
 import navIcon from "../images/pe-nav-logo.png";
+import { useContext } from "react";
+import { UserContext } from "../contexts/UserContext";
 
 const Footer = ({ page }) => {
   const navigate = useNavigate();
+
+  const { loggedInUser, setLoggedInUser } = useContext(UserContext);
 
   const handleLink = (e) => {
     e.preventDefault();
     const target = e.target.id === "home" ? "/" : `/${e.target.id}`;
     navigate(target);
+  };
+
+  const handleLogout = () => {
+    setLoggedInUser(null);
+    localStorage.removeItem("loggedInUser");
+    navigate("/");
   };
 
   return (
@@ -29,7 +39,7 @@ const Footer = ({ page }) => {
           &copy; {new Date().getFullYear()} Pawfect Events.
         </p>
 
-        <ul className="flex pl-0 space-x-3 md:space-x-6 text-base mb-0">
+        <ul className="flex pl-0 space-x-3 md:space-x-6 text-sm md:text-base mb-0">
           <li
             className="md:hover:text-orange-500 cursor-pointer"
             onClick={() => navigate("/")}
@@ -43,20 +53,40 @@ const Footer = ({ page }) => {
             Events
           </li>
           <li
-            className="md:hover:text-orange-500 cursor-pointer"
+            className={`md:hover:text-orange-500 ${
+              loggedInUser?.is_organiser ? "block" : "hidden"
+            } cursor-pointer`}
+            onClick={() => navigate("/create-event")}
+          >
+            Create Event
+          </li>
+          <li
+            className={`md:hover:text-orange-500 ${
+              loggedInUser ? "block" : "hidden"
+            } cursor-pointer`}
+            onClick={handleLogout}
+          >
+            Logout
+          </li>
+          <li
+            className={`md:hover:text-orange-500 ${
+              loggedInUser && "hidden"
+            } cursor-pointer`}
             onClick={() => navigate("/login")}
           >
             Login
           </li>
           <li
-            className="md:hover:text-orange-500 cursor-pointer"
+            className={`md:hover:text-orange-500 ${
+              loggedInUser && "hidden"
+            } cursor-pointer`}
             onClick={() => navigate("/register")}
           >
             Sign up
           </li>
         </ul>
 
-        <p className="text-base mb-0">
+        <p className="text-sm md:text-base mb-0">
           &copy; {new Date().getFullYear()} Pawfect Events.
         </p>
       </div>
