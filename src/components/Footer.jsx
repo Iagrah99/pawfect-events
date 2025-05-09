@@ -22,14 +22,14 @@ const Footer = ({ page }) => {
           onClick={handleLink}
           className="flex items-center cursor-pointer select-none text-white"
         >
-          <img src={navIcon} alt="Logo" className="w-40 mr-2" />
+          <img src={navIcon} alt="Logo" className="w-40 md:w-52 mr-2" />
         </div>
 
         <p className="hidden text-base mb-0">
           &copy; {new Date().getFullYear()} Pawfect Events.
         </p>
 
-        <ul className="flex space-x-6 text-base mb-0">
+        <ul className="flex pl-0 space-x-3 md:space-x-6 text-base mb-0">
           <li
             className="hover:text-orange-500 cursor-pointer"
             onClick={() => navigate("/")}

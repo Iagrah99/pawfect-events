@@ -12,7 +12,8 @@ const NavigationBar = () => {
 
   const handleLink = (e) => {
     e.preventDefault();
-    const target = e.target.id === "home" ? "/" : `/${e.target.id}`;
+    const target =
+      e.target.id === "home" ? "/" : `/${e.target.id}`.toLowerCase();
     navigate(target);
   };
 
@@ -35,11 +36,29 @@ const NavigationBar = () => {
             onClick={handleLink}
             className="flex items-center cursor-pointer select-none text-white"
           >
-            <img src={navIcon} alt="Logo" className="w-32 md:w-48" onContextMenu={(e) => e.preventDefault()} />
+            <img
+              src={navIcon}
+              alt="Logo"
+              className="w-40 md:w-60"
+              onContextMenu={(e) => e.preventDefault()}
+            />
           </div>
 
           {/* Desktop Navigation */}
           <div className="absolute left-1/2 transform -translate-x-1/2 hidden lg:flex lg:gap-0 space-x-6">
+            <span
+              className="text-cyan-50 text-sm md:text-base hover:text-orange-500 cursor-pointer"
+              onClick={() => navigate("/")}
+            >
+              Home
+            </span>
+
+            <span
+              className="text-cyan-50 text-sm md:text-base hover:text-orange-500 cursor-pointer"
+              onClick={() => navigate("/events")}
+            >
+              Events
+            </span>
             {loggedInUser ? (
               <>
                 {loggedInUser.is_organiser && (
@@ -78,14 +97,16 @@ const NavigationBar = () => {
             )}
           </div>
 
-          <div className="hidden md:flex items-center gap-2">
-            <img
-              src={loggedInUser?.avatar_url}
-              alt="User Avatar"
-              className="w-11 h-11 rounded-full shadow cursor-pointer"
-              onClick={() => navigate(`/users/${loggedInUser.user_id}`)}
-            />
-          </div>
+          {loggedInUser && (
+            <div className="hidden md:flex justify-start items-center pr-12">
+              <img
+                src={loggedInUser?.avatar_url}
+                alt="User Avatar"
+                className="w-11 h-11 rounded-full shadow cursor-pointer"
+                onClick={() => navigate(`/users/${loggedInUser.user_id}`)}
+              />
+            </div>
+          )}
 
           {/* Mobile menu button */}
           <div className="md:hidden">
@@ -101,54 +122,68 @@ const NavigationBar = () => {
 
       {/* Mobile Menu */}
       {showMobileMenu && (
-        <div className="md:hidden bg-slate-700 px-3 py-1">
-          {loggedInUser ? (
-            <div className="flex justify-between items-center">
-              {/* Left side: Links */}
-              <div className="flex flex-row items-center gap-3">
-                {loggedInUser.is_organiser && (
-                  <span
-                    className="text-cyan-50 cursor-pointer"
-                    onClick={() => navigate("/create-event")}
-                  >
-                    Create Event
-                  </span>
-                )}
-                <span
-                  className="text-cyan-50 hover:text-cyan-200 cursor-pointer"
-                  onClick={handleLogout}
-                >
-                  Logout
-                </span>
-              </div>
+        <div className="md:hidden bg-slate-900 px-3">
+          <div className={`flex ${loggedInUser ? 'justify-between pb-2' : 'justify-center pb-3'}   items-center`}>
+            {/* Left side: Always-visible links */}
+            <div className='flex flex-row items-center gap-3'>
+              <span
+                className="text-cyan-50 text-sm md:text-base cursor-pointer"
+                onClick={() => navigate("/")}
+              >
+                Home
+              </span>
+              <span
+                className="text-cyan-50 text-sm md:text-base cursor-pointer"
+                onClick={() => navigate("/events")}
+              >
+                Events
+              </span>
 
-              {/* Right side: Avatar */}
+              {loggedInUser ? (
+                <>
+                  {loggedInUser.is_organiser && (
+                    <span
+                      className="text-cyan-50 text-sm md:text-base cursor-pointer"
+                      onClick={() => navigate("/create-event")}
+                    >
+                      Create Event
+                    </span>
+                  )}
+                  <span
+                    className="text-cyan-50 text-sm md:text-base cursor-pointer"
+                    onClick={handleLogout}
+                  >
+                    Logout
+                  </span>
+                </>
+              ) : (
+                <>
+                  <span
+                    className="text-cyan-50 text-sm md:text-base cursor-pointer"
+                    onClick={() => navigate('/login')}
+                  >
+                    Login
+                  </span>
+                  <span
+                    className="text-cyan-50 text-sm md:text-base cursor-pointer"
+                    onClick={() => navigate('/register')}
+                  >
+                    Sign Up
+                  </span>
+                </>
+              )}
+            </div>
+
+            {/* Right side: Avatar (if logged in) */}
+            {loggedInUser && (
               <img
                 src={loggedInUser.avatar_url}
                 alt="User Avatar"
-                className="w-10 h-10 rounded-full border-2 border-gray-700 shadow-md cursor-pointer"
+                className="w-9 h-9 rounded-full border-2 mb-2 border-gray-700 shadow-md cursor-pointer"
                 onClick={() => navigate(`/users/${loggedInUser.user_id}`)}
               />
-            </div>
-          ) : (
-            <div className="flex justify-between items-center">
-              {/* Left side: Guest links */}
-              <div className="flex flex-col space-y-2">
-                <span
-                  className="text-cyan-50 hover:text-cyan-200 cursor-pointer"
-                  onClick={handleLink}
-                >
-                  Login
-                </span>
-                <span
-                  className="text-cyan-50 hover:text-cyan-200 cursor-pointer"
-                  onClick={handleLink}
-                >
-                  Sign Up
-                </span>
-              </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       )}
     </nav>
