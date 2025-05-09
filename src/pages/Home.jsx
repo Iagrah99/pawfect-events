@@ -110,14 +110,14 @@ const Home = () => {
             <div className="space-x-2 md:space-x-4">
               <a
                 href="/events"
-                className="inline-block px-6 py-3 border-1 mb-2 md:mb-0 border-slate-800 hover:border-gray-400 text-white text-sm md:text-base font-semibold no-underline rounded-full transition duration-200"
+                className="inline-block px-6 py-3 border-1 mb-2 md:mb-0 border-slate-800 md:hover:border-gray-400 text-white text-sm md:text-base font-semibold no-underline rounded-full transition duration-200"
               >
                 Explore Events
               </a>
               {loggedInUser && (
                 <a
                   href="/create-event"
-                  className="inline-block px-6 py-3 border-1 mt-2 md:mt-0 border-slate-800 hover:border-gray-400 text-white text-sm md:text-base font-semibold no-underline rounded-full transition duration-200"
+                  className="inline-block px-6 py-3 border-1 mt-2 md:mt-0 border-slate-800 md:hover:border-gray-400 text-white text-sm md:text-base font-semibold no-underline rounded-full transition duration-200"
                 >
                   Create Event
                 </a>
@@ -135,7 +135,7 @@ const Home = () => {
             : categories.map((category, index) => (
                 <div
                   key={index}
-                  className="flex flex-col items-center justify-center w-full w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full bg-slate-900 text-sm sm:text-xs md:text-lg shadow-md hover:shadow-lg border-1 border-slate-800 transition-all hover:bg-slate-800 hover:border-slate-700 hover:scale-105 cursor-pointer"
+                  className="flex flex-col items-center justify-center w-full w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full bg-slate-900 text-sm sm:text-xs md:text-lg shadow-md md:hover:shadow-lg border-1 border-slate-800 transition-all md:hover:bg-slate-800 md:hover:border-slate-700 md:hover:scale-105 cursor-pointer"
                 >
                   <FontAwesomeIcon
                     icon={categoryIconMap[category.slug] || faStar}

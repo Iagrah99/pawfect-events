@@ -31,25 +31,25 @@ const Footer = ({ page }) => {
 
         <ul className="flex pl-0 space-x-3 md:space-x-6 text-base mb-0">
           <li
-            className="hover:text-orange-500 cursor-pointer"
+            className="md:hover:text-orange-500 cursor-pointer"
             onClick={() => navigate("/")}
           >
             Home
           </li>
           <li
-            className="hover:text-orange-500 cursor-pointer"
+            className="md:hover:text-orange-500 cursor-pointer"
             onClick={() => navigate("/events")}
           >
             Events
           </li>
           <li
-            className="hover:text-orange-500 cursor-pointer"
+            className="md:hover:text-orange-500 cursor-pointer"
             onClick={() => navigate("/login")}
           >
             Login
           </li>
           <li
-            className="hover:text-orange-500 cursor-pointer"
+            className="md:hover:text-orange-500 cursor-pointer"
             onClick={() => navigate("/register")}
           >
             Sign up
