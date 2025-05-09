@@ -123,9 +123,13 @@ const NavigationBar = () => {
       {/* Mobile Menu */}
       {showMobileMenu && (
         <div className="md:hidden bg-slate-900 px-3">
-          <div className={`flex ${loggedInUser ? 'justify-between pb-2' : 'justify-center pb-3'}   items-center`}>
+          <div
+            className={`flex ${
+              loggedInUser ? "justify-between pb-2" : "justify-center pb-3"
+            }   items-center`}
+          >
             {/* Left side: Always-visible links */}
-            <div className='flex flex-row items-center gap-3'>
+            <div className="flex flex-row items-center gap-3">
               <span
                 className="text-cyan-50 text-sm md:text-base cursor-pointer"
                 onClick={() => navigate("/")}
@@ -141,14 +145,6 @@ const NavigationBar = () => {
 
               {loggedInUser ? (
                 <>
-                  {loggedInUser.is_organiser && (
-                    <span
-                      className="text-cyan-50 text-sm md:text-base cursor-pointer"
-                      onClick={() => navigate("/create-event")}
-                    >
-                      Create Event
-                    </span>
-                  )}
                   <span
                     className="text-cyan-50 text-sm md:text-base cursor-pointer"
                     onClick={handleLogout}
@@ -160,13 +156,13 @@ const NavigationBar = () => {
                 <>
                   <span
                     className="text-cyan-50 text-sm md:text-base cursor-pointer"
-                    onClick={() => navigate('/login')}
+                    onClick={() => navigate("/login")}
                   >
                     Login
                   </span>
                   <span
                     className="text-cyan-50 text-sm md:text-base cursor-pointer"
-                    onClick={() => navigate('/register')}
+                    onClick={() => navigate("/register")}
                   >
                     Sign Up
                   </span>

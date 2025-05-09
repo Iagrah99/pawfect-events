@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { UserContext } from "../contexts/UserContext";
 import Footer from "../components/Footer";
 import NavigationBar from "../components/NavigationBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -36,6 +37,8 @@ const features = [
 ];
 
 const Home = () => {
+  const { loggedInUser } = useContext(UserContext);
+
   const [categories, setCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -109,8 +112,16 @@ const Home = () => {
                 href="/events"
                 className="inline-block px-6 py-3 border-1 border-slate-800 hover:border-gray-400 text-white font-semibold no-underline rounded-full transition duration-200"
               >
-                Browse Events
+                Explore Events
               </a>
+              {loggedInUser && (
+                <a
+                  href="/create-event"
+                  className="inline-block px-6 py-3 border-1 border-slate-800 hover:border-gray-400 text-white font-semibold no-underline rounded-full transition duration-200"
+                >
+                  Create Event
+                </a>
+              )}
             </div>
           </div>
         </section>

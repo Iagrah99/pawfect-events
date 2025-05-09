@@ -17,8 +17,6 @@ const EventCard = ({ event }) => {
     navigate(`/events/${event_id}`);
   };
 
-  console.log(event);
-
   const startDate = new Date(event.start_date);
   const endDate = new Date(event.end_date);
 
