@@ -83,7 +83,7 @@ const Home = () => {
 
       <main className="flex-grow bg-slate-900 container">
         {/* Hero Section */}
-        <section className="bg-slate-900 text-center mt-5">
+        <section className="bg-slate-900 text-center mt-3 md:mt-5">
           <div className="relative flex flex-col items-center justify-center overflow-hidden rounded-xl min-h-fit px-4 py-16 sm:py-20">
             {/* Background Image */}
             <img
@@ -107,17 +107,17 @@ const Home = () => {
 
           {/* Buttons - below the image */}
           <div className="mt-4 pb-10">
-            <div className="space-x-4">
+            <div className="space-x-2 md:space-x-4">
               <a
                 href="/events"
-                className="inline-block px-6 py-3 border-1 border-slate-800 hover:border-gray-400 text-white font-semibold no-underline rounded-full transition duration-200"
+                className="inline-block px-6 py-3 border-1 mb-2 md:mb-0 border-slate-800 hover:border-gray-400 text-white text-sm md:text-base font-semibold no-underline rounded-full transition duration-200"
               >
                 Explore Events
               </a>
               {loggedInUser && (
                 <a
                   href="/create-event"
-                  className="inline-block px-6 py-3 border-1 border-slate-800 hover:border-gray-400 text-white font-semibold no-underline rounded-full transition duration-200"
+                  className="inline-block px-6 py-3 border-1 mt-2 md:mt-0 border-slate-800 hover:border-gray-400 text-white text-sm md:text-base font-semibold no-underline rounded-full transition duration-200"
                 >
                   Create Event
                 </a>
