@@ -147,6 +147,11 @@ export const deleteEvent = async (event_id) => {
   return res.status;
 };
 
+export const getCategories = async () => {
+  const res = await dogEventsApi.get('/categories')
+  return res.data.categories
+}
+
 export const generateGoogleCalendarEvent = async ({
   title,
   start_date,

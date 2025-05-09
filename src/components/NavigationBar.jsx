@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { UserContext } from "../contexts/UserContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
-import navIcon from "../images/de-nav-icon-transparent.png";
+import navIcon from "../images/pe-nav-logo.png";
 
 const NavigationBar = () => {
   const navigate = useNavigate();
@@ -35,14 +35,7 @@ const NavigationBar = () => {
             onClick={handleLink}
             className="flex items-center cursor-pointer select-none text-white"
           >
-            <img
-              src={navIcon}
-              alt="Logo"
-              className="w-8 h-8 md:w-10 md:h-10 mr-2"
-            />
-            <span className="text-lg md:text-xl font-semibold">
-              Pawfect Events
-            </span>
+            <img src={navIcon} alt="Logo" className="w-32 md:w-48" onContextMenu={(e) => e.preventDefault()} />
           </div>
 
           {/* Desktop Navigation */}
@@ -51,7 +44,7 @@ const NavigationBar = () => {
               <>
                 {loggedInUser.is_organiser && (
                   <span
-                    className="text-cyan-50 text-sm md:text-base hover:text-cyan-200 cursor-pointer"
+                    className="text-cyan-50 text-sm md:text-base hover:text-orange-500 cursor-pointer"
                     onClick={() => navigate("/create-event")}
                   >
                     Create Event
@@ -59,7 +52,7 @@ const NavigationBar = () => {
                 )}
 
                 <span
-                  className="text-cyan-50 text-sm md:text-base hover:text-cyan-200 cursor-pointer"
+                  className="text-cyan-50 text-sm md:text-base hover:text-orange-500 cursor-pointer"
                   onClick={handleLogout}
                 >
                   Logout
@@ -68,14 +61,14 @@ const NavigationBar = () => {
             ) : (
               <>
                 <span
-                  className="text-cyan-50 text-sm md:text-base hover:text-cyan-200 cursor-pointer"
+                  className="text-cyan-50 text-sm md:text-base hover:text-orange-500 cursor-pointer"
                   onClick={handleLink}
                   id="login"
                 >
                   Login
                 </span>
                 <span
-                  className="text-cyan-50 text-sm md:text-base hover:text-cyan-200 cursor-pointer"
+                  className="text-cyan-50 text-sm md:text-base hover:text-orange-500 cursor-pointer"
                   onClick={handleLink}
                   id="register"
                 >
@@ -115,7 +108,7 @@ const NavigationBar = () => {
               <div className="flex flex-row items-center gap-3">
                 {loggedInUser.is_organiser && (
                   <span
-                    className="text-cyan-50 hover:text-cyan-200 cursor-pointer"
+                    className="text-cyan-50 cursor-pointer"
                     onClick={() => navigate("/create-event")}
                   >
                     Create Event

@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import navIcon from "../images/de-nav-icon-transparent.png";
+import navIcon from "../images/pe-nav-logo.png";
 
-const Footer = () => {
+const Footer = ({ page }) => {
   const navigate = useNavigate();
 
   const handleLink = (e) => {
@@ -11,24 +11,52 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-slate-900 text-white py-6 md:mt-10">
-      <div className="container mx-auto px-4 h-10 flex flex-row justify-between items-center">
+    <footer
+      className={`${
+        page === "home" ? "bg-slate-900" : "bg-slate-900"
+      } text-white py-8`}
+    >
+      <div className="max-w-screen-xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-3">
         <div
           id="/"
           onClick={handleLink}
           className="flex items-center cursor-pointer select-none text-white"
         >
-          <img
-            src={navIcon}
-            alt="Logo"
-            className="w-6 h-6 md:w-8 md:h-8 mr-2"
-          />
-          <span className="text-base md:text-lg font-semibold">
-            Pawfect Events
-          </span>
+          <img src={navIcon} alt="Logo" className="w-40 mr-2" />
         </div>
 
-        <p className="text-sm mb-0">
+        <p className="hidden text-base mb-0">
+          &copy; {new Date().getFullYear()} Pawfect Events.
+        </p>
+
+        <ul className="flex space-x-6 text-base mb-0">
+          <li
+            className="hover:text-orange-500 cursor-pointer"
+            onClick={() => navigate("/")}
+          >
+            Home
+          </li>
+          <li
+            className="hover:text-orange-500 cursor-pointer"
+            onClick={() => navigate("/events")}
+          >
+            Events
+          </li>
+          <li
+            className="hover:text-orange-500 cursor-pointer"
+            onClick={() => navigate("/login")}
+          >
+            Login
+          </li>
+          <li
+            className="hover:text-orange-500 cursor-pointer"
+            onClick={() => navigate("/register")}
+          >
+            Sign up
+          </li>
+        </ul>
+
+        <p className="text-base mb-0">
           &copy; {new Date().getFullYear()} Pawfect Events.
         </p>
       </div>

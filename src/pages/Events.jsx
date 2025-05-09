@@ -68,6 +68,14 @@ const Events = () => {
     return <Error error={error} />;
   }
 
+    const eventCardSkeleton = () => (
+    <div className="bg-slate-800 rounded-xl p-6 animate-pulse border border-slate-700">
+      <div className="h-10 w-10 mx-auto mb-4 bg-slate-700 rounded-full"></div>
+      <div className="h-4 bg-slate-700 rounded w-3/4 mx-auto mb-2"></div>
+      <div className="h-3 bg-slate-700 rounded w-5/6 mx-auto"></div>
+    </div>
+  );
+
   return (
     <div className="bg-slate-900 min-h-screen">
       <NavigationBar />
