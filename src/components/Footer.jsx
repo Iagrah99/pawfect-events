@@ -53,7 +53,7 @@ const Footer = ({ page }) => {
             Events
           </li>
           <li
-            className={`md:hover:text-orange-500 ${
+            className={`md:hover:text-orange-500 hidden md:block ${
               loggedInUser?.is_organiser ? "block" : "hidden"
             } cursor-pointer`}
             onClick={() => navigate("/create-event")}

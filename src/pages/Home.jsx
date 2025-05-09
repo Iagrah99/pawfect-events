@@ -10,13 +10,14 @@ import {
   faTrophy,
   faDumbbell,
   faPaw,
-  faCheckCircle,
   faUsersBetweenLines,
   faSearchLocation,
   faUsers,
   faCalendarAlt,
+  faDog,
 } from "@fortawesome/free-solid-svg-icons";
 import { getCategories } from "../../utils/api";
+import { useNavigate } from "react-router-dom";
 
 const features = [
   {
@@ -37,6 +38,7 @@ const features = [
 ];
 
 const Home = () => {
+  const navigate = useNavigate();
   const { loggedInUser } = useContext(UserContext);
 
   const [categories, setCategories] = useState([]);
@@ -52,15 +54,20 @@ const Home = () => {
     fetchCategoryData();
   }, []);
 
+  const handleCategoryChoice = (cat) => {
+    console.log(cat.slug);
+    navigate(`/events?category=${cat.slug}`);
+  };
+
   const categoryIconMap = {
     "Dog-Training": faDumbbell,
     "Dog-Walking": faPersonWalking,
-    "Agility-Trials": faStopwatch,
-    "Dog-Shows": faStar,
-    "Dog-Competitions": faTrophy,
-    "Herding-Trials": faPaw,
-    "Obedience-Trials": faCheckCircle,
-    "Breed-Meetups": faUsersBetweenLines,
+    "Agility-Trial": faStopwatch,
+    "Dog-Show": faStar,
+    "Dog-Competition": faTrophy,
+    "Herding-Trial": faPaw,
+    "Obedience-Trial": faDog,
+    "Breed-Meetup": faUsersBetweenLines,
   };
 
   const CategorySkeleton = () => {
@@ -136,13 +143,17 @@ const Home = () => {
                 <div
                   key={index}
                   className="flex flex-col items-center justify-center w-full w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full bg-slate-900 text-sm sm:text-xs md:text-lg shadow-md md:hover:shadow-lg border-1 border-slate-800 transition-all md:hover:bg-slate-800 md:hover:border-slate-700 md:hover:scale-105 cursor-pointer"
+                  onClick={() => handleCategoryChoice(category)}
                 >
                   <FontAwesomeIcon
                     icon={categoryIconMap[category.slug] || faStar}
                     className="text-2xl mb-2 text-orange-700"
                   />
                   <p className="text-sm sm:text-xs text-slate-200">
-                    {category.slug.replace(/-/g, " ")}
+                    {(() => {
+                      const label = category.slug.replace(/-/g, " ");
+                      return label.endsWith("g") ? label : `${label}s`;
+                    })()}
                   </p>
                 </div>
               ))}

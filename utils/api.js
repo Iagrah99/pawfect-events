@@ -4,9 +4,9 @@ const dogEventsApi = axios.create({
   baseURL: "https://pawfect-events-api.fly.dev/api",
 });
 
-export const fetchEvents = async (sort_by, order_by) => {
+export const fetchEvents = async (sort_by, order_by, category) => {
   const res = await dogEventsApi.get(`/events`, {
-    params: { sort_by, order_by },
+    params: { sort_by, order_by, category },
   });
   return res.data.events;
 };

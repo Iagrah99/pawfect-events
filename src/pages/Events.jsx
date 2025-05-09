@@ -24,6 +24,7 @@ const Events = () => {
   const sortByQuery = searchParams.get("sort_by");
   const orderByQuery =
     searchParams.get("order_by") && searchParams.get("order_by").toUpperCase();
+  const categoryQuery = searchParams.get("category");
 
   useEffect(() => {
     if (userDeleted) {
@@ -40,7 +41,8 @@ const Events = () => {
     try {
       setIsError(false);
       const fetchData = async () => {
-        const fetchedEvents = await fetchEvents(sortByQuery, orderByQuery);
+        const fetchedEvents = await fetchEvents(sortByQuery, orderByQuery, categoryQuery);
+        console.log(fetchedEvents)
         setEvents(fetchedEvents);
         setIsLoading(false);
       };
@@ -50,7 +52,7 @@ const Events = () => {
       setIsError(true);
       setError(err.response);
     }
-  }, [sortByQuery, orderByQuery]);
+  }, [sortByQuery, orderByQuery, categoryQuery]);
 
   const handleSortBy = (e) => {
     const newParams = new URLSearchParams(searchParams);
@@ -68,7 +70,7 @@ const Events = () => {
     return <Error error={error} />;
   }
 
-    const eventCardSkeleton = () => (
+  const eventCardSkeleton = () => (
     <div className="bg-slate-800 rounded-xl p-6 animate-pulse border border-slate-700">
       <div className="h-10 w-10 mx-auto mb-4 bg-slate-700 rounded-full"></div>
       <div className="h-4 bg-slate-700 rounded w-3/4 mx-auto mb-2"></div>
