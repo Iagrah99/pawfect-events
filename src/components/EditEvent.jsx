@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { UpdateEvent } from "../../utils/api";
-import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
+import { faCalendarAlt, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export const EditEvent = ({
@@ -117,9 +117,10 @@ export const EditEvent = ({
   return (
     <>
       <button
-        className="px-4 py-2 text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-md"
+        className="px-4 py-2 text-white bg-slate-800 hover:bg-slate-700 rounded-lg shadow-md"
         onClick={() => setShow(true)}
       >
+        <FontAwesomeIcon icon={faPencilAlt} className="mr-2  text-orange-500"  />
         Edit
       </button>
 
@@ -214,8 +215,8 @@ export const EditEvent = ({
                     <option value="Dog-Walking">Dog Walking</option>
                     <option value="Dog-Show">Dog Show</option>
                     <option value="Dog-Competition">Dog Competition</option>
-                    <option value="Agility-Trials">Agility Trials</option>
-                    <option value="Herding-Trials">Herding Trials</option>
+                    <option value="Agility-Trial">Agility Trial</option>
+                    <option value="Herding-Trial">Herding Trial</option>
                   </select>
                 </div>
 
@@ -270,7 +271,7 @@ export const EditEvent = ({
               </button> */}
               <button
                 onClick={() => editEvent(event)}
-                className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
+                className="px-4 py-2 bg-orange-800 text-white rounded-md lg:hover:bg-orange-700"
               >
                 Save Changes
               </button>

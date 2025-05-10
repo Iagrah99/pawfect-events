@@ -60,15 +60,25 @@ const EventCard = ({ event }) => {
           </p>
         </div>
 
-        <div className="flex flex-col xl:flex-row xl:gap-3">
+        <div className="flex flex-col xl:flex-row xl:gap-2">
           <p className="flex items-center gap-2 text-sm">
-            <FontAwesomeIcon icon={faPlayCircle} className="text-orange-500 block xl:hidden" />
-            <FontAwesomeIcon icon={faCalendarAlt} className="text-orange-500 hidden xl:block" />
+            <FontAwesomeIcon
+              icon={faPlayCircle}
+              className="text-orange-500 block xl:hidden"
+            />
+            <FontAwesomeIcon
+              icon={faCalendarAlt}
+              className="text-orange-500 hidden xl:block"
+            />
             {format(startDate, "dd/MM/yyyy 'at' HH:mm")}
           </p>
+          <span className="hidden xl:block text-sm">To</span>
           <p className="flex items-center gap-2 text-sm">
-            <FontAwesomeIcon icon={faStopCircle} className="text-orange-500 block xl:hidden" />
-            <span className="hidden xl:block text-orange-500">—</span> 
+            <FontAwesomeIcon
+              icon={faStopCircle}
+              className="text-orange-500 block xl:hidden"
+            />
+
             {format(endDate, "dd/MM/yyyy 'at' HH:mm")}
           </p>
         </div>

@@ -9,15 +9,16 @@ import {
   deleteEvent,
   generateGoogleCalendarEvent,
 } from "../../utils/api";
-import Breadcrumb from "react-bootstrap/Breadcrumb";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faUserPlus,
   faUserMinus,
-  faUserAlt,
-  faClock,
   faTags,
-  faPoundSign,
+  faCrown,
+  faCalendarAlt,
+  faCreditCard,
+  faTrashAlt,
+  faLocationDot,
 } from "@fortawesome/free-solid-svg-icons";
 import { EditEvent } from "./EditEvent";
 
@@ -124,172 +125,147 @@ const EventPost = ({
   const isValidDate = (date) => !isNaN(date.getTime());
 
   return (
-    <>
-      <article className="max-w-5xl mx-auto md:my-10 p-6 bg-slate-900 shadow-md rounded-lg">
-        <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-4">
-          <Breadcrumb>
-            <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
-            <Breadcrumb.Item active className="text-white">
-              {event.title}
-            </Breadcrumb.Item>
-          </Breadcrumb>
+    <article className="max-w-4xl mx-auto mt-10 bg-slate-900 border-1 border-slate-800 rounded-lg shadow-md overflow-hidden text-white">
+      {/* Image */}
+      <div className="relative w-full h-[350px]">
+        <img
+          src={event.image}
+          alt={event.title}
+          className="w-full h-full object-cover object-center"
+        />
+      </div>
 
-          {organiser && loggedInUser
-            ? organiser.username === loggedInUser.username && (
-                <div className="space-x-3 flex items-center self-center md:self-auto">
-                  <EditEvent
-                    event={event}
-                    setIsUpdated={setIsUpdated}
-                    error={error}
-                    setError={setError}
-                    setIsError={setIsError}
-                  />
+      {/* Content */}
+      <div className="p-4 md:p-6 flex flex-col gap-2">
+        {/* Title and location */}
+        <h2 className="text-2xl md:text-3xl font-bold leading-tight">
+          {event.title}
+        </h2>
 
-                  <button
-                    onClick={handleDeleteEvent}
-                    className="text-white bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg shadow-md"
-                  >
-                    Delete
-                  </button>
-                </div>
-              )
-            : null}
+        <div className="flex gap-3 items-center">
+          <p className="flex items-center gap-2 text-base font-semibold cursor-pointer lg:hover:text-orange-500" onClick={handleLink}>
+            <FontAwesomeIcon icon={faCrown} className="text-orange-500" />{" "}
+            {event.organiser}
+          </p>
+
+          <p className="flex items-center gap-2 text-base">
+            <FontAwesomeIcon icon={faLocationDot} className="text-orange-500" />{" "}
+            {event.location}
+          </p>
+
+          <p className="flex items-center gap-2 text-base font-bold">
+            <FontAwesomeIcon icon={faCreditCard} className="text-orange-500" />{" "}
+            {event.price_in_pence === 0
+              ? "FREE"
+              : `£${formatCost(event.price_in_pence)}`}
+          </p>
         </div>
 
-        <div className="flex flex-col md:flex-row items-start">
-          <div className="w-full md:w-3/6">
-            <img
-              src={event.image}
-              alt={event.title}
-              className="w-full h-auto rounded-lg"
+        {/* Dates */}
+        <div className="flex flex-col md:flex-row gap-2 text-base">
+          <p className="text-white">
+            <FontAwesomeIcon
+              icon={faCalendarAlt}
+              className="mr-2 text-orange-500"
             />
-          </div>
+            {isValidDate(startDate) && isValidDate(endDate)
+              ? format(startDate, "EEEE, do MMMM yyyy 'from' h:mmaaa") +
+                " - " +
+                (isSameDay(startDate, endDate)
+                  ? format(endDate, "h:mmaaa")
+                  : format(endDate, "EEEE, do MMMM yyyy h:mmaaa"))
+              : "Invalid date"}
+          </p>
+        </div>
 
-          <div className="w-full md:w-3/6 md:pl-6 mt-4 md:mt-0">
-            <p className="text-2xl font-bold mb-3 text-white">
-              {event.title} - {event.location}
-            </p>
-            <p className="text-white mb-3">
-              {" "}
-              <FontAwesomeIcon
-                icon={faUserAlt}
-                className="mr-1 align-middle"
-              />{" "}
-              Organised by:{" "}
-              <span
-                className="cursor-pointer font-bold hover:text-cyan-200"
-                onClick={handleLink}
+        {/* Category & Cost */}
+        <div className="flex flex-col sm:flex-row gap-3 text-base">
+          <p className="flex items-center gap-2">
+            <FontAwesomeIcon icon={faTags} className="text-orange-500" />
+            {event.category?.replace(/-/g, " ")}
+          </p>
+        </div>
+
+        {/* Description */}
+        <div>
+          <p className="text-white whitespace-pre-line">{event.description}</p>
+        </div>
+
+        {/* Action Buttons */}
+        <div className="flex flex-col-reverse sm:flex-row items-start md:items-center gap-3">
+          {loggedInUser &&
+            organiser &&
+            loggedInUser.username !== organiser.username && (
+              <button
+                onClick={handleAttendEvent}
+                disabled={isSigningUp || isOptingOut}
+                title={isAttendee ? "Opt Out Of Event" : "Sign Up For Event"}
+                className={`px-3 h-10 flex items-center space-x-2 text-white font-semibold rounded-md transition duration-200 ${
+                  isSigningUp || isOptingOut
+                    ? "bg-gray-600 cursor-not-allowed opacity-50"
+                    : "bg-gray-800 lg:hover:bg-gray-700 cursor-pointer"
+                }`}
               >
-                {event.organiser}
-              </span>
-            </p>
-            <p className="text-white">
-              <FontAwesomeIcon icon={faClock} className="mr-2 align-middle" />
-              {isValidDate(startDate) && isValidDate(endDate)
-                ? format(startDate, "EEEE, do MMMM yyyy 'from' h:mmaaa") +
-                  " - " +
-                  (isSameDay(startDate, endDate)
-                    ? format(endDate, "h:mmaaa")
-                    : format(endDate, "EEEE, do MMMM yyyy h:mmaaa"))
-                : "Invalid date"}
-            </p>
-
-            <div className="flex flex-col mb-2">
-              <p className="text-sm text-white">
-                {" "}
                 <FontAwesomeIcon
-                  icon={faTags}
-                  className="mr-1 align-middle"
-                />{" "}
-                Category: {event.category?.split("-").join(" ")}
-              </p>
-              <p className="text-lg font-bold text-white">
-                <FontAwesomeIcon
-                  icon={faPoundSign}
-                  className="mr-2 align-middle"
-                />{" "}
-                Cost:{" "}
-                {event.price_in_pence === 0
-                  ? "FREE"
-                  : `£${formatCost(event.price_in_pence)}`}
-              </p>
-            </div>
-
-            <div className="flex items-center mt-2">
-              {loggedInUser &&
-                organiser &&
-                loggedInUser.username !== organiser.username &&
-                (() => {
-                  const isDisabled = isSigningUp || isOptingOut;
-                  const isUserLeaving = isAttendee && isOptingOut;
-                  const buttonTitle = isAttendee
-                    ? "Opt Out Of Event"
-                    : "Sign Up For Event";
-                  const buttonText = isUserLeaving
-                    ? "Opting Out"
-                    : isAttendee
-                    ? "Opt Out Of Event"
-                    : "Sign Up For Event";
-
-                  const buttonClasses = `
-                    mt-2 mr-2 px-6 py-2 text-white font-semibold rounded-md transition-colors duration-200
-                    ${
-                      isDisabled
-                        ? "bg-gray-600 cursor-not-allowed opacity-50"
-                        : "bg-gray-800 hover:bg-gray-700 cursor-pointer"
-                    }
-                  `;
-
-                  return (
-                    <button
-                      onClick={handleAttendEvent}
-                      className={buttonClasses}
-                      title={buttonTitle}
-                      disabled={isDisabled}
-                    >
-                      {isAttendee ? (
-                        <FontAwesomeIcon icon={faUserMinus} className="mr-2" />
-                      ) : (
-                        <FontAwesomeIcon icon={faUserPlus} className="mr-2" />
-                      )}
-                      {buttonText}
-                    </button>
-                  );
-                })()}
-
-              <a className="no-underline" href={calendarLink} target="_blank">
-                <button
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center space-x-2 bg-gray-800 px-3 py-2 mt-2 rounded-md hover:bg-gray-700 transition-colors duration-200"
-                  title="Add to Google Calendar"
-                  onClick={handleAddToCalendar}
-                >
-                  <span className="text-white text-sm font-semibold">
-                    Add to Google Calendar
-                  </span>
-                  <img
-                    src="https://i.ibb.co/qDSRS1J/google-calendar-512x512.png"
-                    alt="Add to Google Calendar"
-                    className="w-6 h-6"
-                  />
-                </button>
-              </a>
-            </div>
-
-            {isError && (
-              <p className="mt-3 text-red-500 font-semibold">
-                {error.data.msg}
-              </p>
+                  icon={isAttendee ? faUserMinus : faUserPlus}
+                  className="mr-2 w-5 h-5 text-orange-500"
+                />
+                {isSigningUp
+                  ? "Attending..."
+                  : isOptingOut
+                  ? "Opting Out..."
+                  : isAttendee
+                  ? "Opt Out"
+                  : "Attend Event"}
+              </button>
             )}
-          </div>
+
+          <a href={calendarLink} target="_blank" className="no-underline">
+            <button
+              onClick={handleAddToCalendar}
+              className="flex items-center space-x-2 bg-gray-800 lg:hover:bg-gray-700 px-3 h-10 rounded-md"
+            >
+              <img
+                src="https://i.ibb.co/qDSRS1J/google-calendar-512x512.png"
+                alt="Google Calendar"
+                className="w-7 h-7"
+              />
+              <span className="text-white text-sm font-semibold">
+                Add to Google Calendar
+              </span>
+            </button>
+          </a>
+
+          {loggedInUser?.username === organiser?.username && (
+            <div className="flex gap-3">
+              <EditEvent
+                event={event}
+                setIsUpdated={setIsUpdated}
+                error={error}
+                setError={setError}
+                setIsError={setIsError}
+              />
+              <button
+                onClick={handleDeleteEvent}
+                className="text-white bg-slate-800 lg:hover:bg-slate-700 px-4 py-2 rounded-md shadow-md"
+              >
+                <FontAwesomeIcon
+                  icon={faTrashAlt}
+                  className="mr-2 text-orange-500"
+                />
+                Delete
+              </button>
+            </div>
+          )}
         </div>
 
-        <div className="mt-4">
-          <p className="text-white mb-4">{event.description}</p>
-        </div>
-      </article>
-    </>
+        {/* Organiser-only Controls */}
+
+        {isError && (
+          <p className="mt-3 text-red-500 font-semibold">{error.data.msg}</p>
+        )}
+      </div>
+    </article>
   );
 };
 

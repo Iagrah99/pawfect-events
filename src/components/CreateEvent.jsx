@@ -235,8 +235,8 @@ const CreateEvent = () => {
                   <option value="Dog-Walking">Dog Walking</option>
                   <option value="Dog-Show">Dog Show</option>
                   <option value="Dog-Competition">Dog Competition</option>
-                  <option value="Agility-Trials">Agility Trials</option>
-                  <option value="Herding-Trials">Herding Trials</option>
+                  <option value="Agility-Trial">Agility Trial</option>
+                  <option value="Herding-Trial">Herding Trial</option>
                 </select>
               </div>
               <div>
@@ -308,7 +308,7 @@ const CreateEvent = () => {
               type="submit"
               className="w-full flex justify-center py-2 px-4 border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
-             {isPostingEvent ? "Posting Event" : "Create Event"}
+              {isPostingEvent ? "Posting Event" : "Create Event"}
             </button>
           </form>
         </div>
