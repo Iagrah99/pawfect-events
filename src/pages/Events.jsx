@@ -27,6 +27,10 @@ const Events = () => {
   const categoryQuery = searchParams.get("category");
 
   useEffect(() => {
+    window.scrollTo({ top: 0 });
+  }, []);
+
+  useEffect(() => {
     if (userDeleted) {
       setShowDeletedMessage(true);
       const timeoutId = setTimeout(() => {
@@ -41,8 +45,12 @@ const Events = () => {
     try {
       setIsError(false);
       const fetchData = async () => {
-        const fetchedEvents = await fetchEvents(sortByQuery, orderByQuery, categoryQuery);
-        console.log(fetchedEvents)
+        const fetchedEvents = await fetchEvents(
+          sortByQuery,
+          orderByQuery,
+          categoryQuery
+        );
+        console.log(fetchedEvents);
         setEvents(fetchedEvents);
         setIsLoading(false);
       };
@@ -70,23 +78,19 @@ const Events = () => {
     return <Error error={error} />;
   }
 
-  const eventCardSkeleton = () => (
-    <div className="bg-slate-800 rounded-xl p-6 animate-pulse border border-slate-700">
-      <div className="h-10 w-10 mx-auto mb-4 bg-slate-700 rounded-full"></div>
-      <div className="h-4 bg-slate-700 rounded w-3/4 mx-auto mb-2"></div>
-      <div className="h-3 bg-slate-700 rounded w-5/6 mx-auto"></div>
-    </div>
-  );
-
   return (
-    <div className="bg-slate-900 min-h-screen">
+    <div className="bg-slate-900 flex flex-col min-h-screen">
       <NavigationBar />
       {isLoading ? (
-        <Loading content="Events" />
+        <Loading />
       ) : (
         <>
           <header className="text-white text-5xl mt-5 text-center">
-            <h1>Available Events</h1>
+            <h1 className="text-3xl">
+              {categoryQuery
+                ? categoryQuery.split("-").join(" ") + " Events"
+                : "All Events"}
+            </h1>
           </header>
 
           {showDeletedMessage && (
@@ -100,11 +104,11 @@ const Events = () => {
             handleOrderBy={handleOrderBy}
           />
 
-          <div className="max-w-[1700px] mx-auto">
+          <div className="container flex-grow mx-auto">
             <main className="bg-slate-900 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 sm:gap-6 sm:px-3 md:pb-3">
-              {!events ? (
+              {!events.length ? (
                 <p className="text-center col-span-full text-white">
-                  No events found for the selected event type.
+                  No events found.
                 </p>
               ) : (
                 events.map((event) => (

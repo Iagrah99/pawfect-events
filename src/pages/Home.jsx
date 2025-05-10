@@ -45,6 +45,10 @@ const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    window.scrollTo({ top: 0 });
+  }, []);
+
+  useEffect(() => {
     const fetchCategoryData = async () => {
       const fetchedCategoryData = await getCategories();
       setCategories(fetchedCategoryData);
@@ -180,7 +184,9 @@ const Home = () => {
                     <h3 className="text-white text-xl font-semibold mb-2 ">
                       {feature.title}
                     </h3>
-                    <p className="text-white text-base">{feature.description}</p>
+                    <p className="text-white text-base">
+                      {feature.description}
+                    </p>
                   </div>
                 ))}
           </div>

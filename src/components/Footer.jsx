@@ -24,7 +24,7 @@ const Footer = ({ page }) => {
     <footer
       className={`${
         page === "home" ? "bg-slate-900" : "bg-slate-900"
-      } text-white py-8`}
+      } text-white py-8` } 
     >
       <div className="max-w-screen-xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-3">
         <div
