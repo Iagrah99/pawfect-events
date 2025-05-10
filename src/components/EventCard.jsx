@@ -35,7 +35,7 @@ const EventCard = ({ event }) => {
 
       <div className="p-3 flex flex-col text-white">
         <div className="flex gap-1 items-center">
-          <h2 className="text-lg sm:text-xl font-semibold mb-3 leading-snug line-clamp-2">
+          <h2 className="text-lg md:text-xl font-semibold mb-3 leading-snug line-clamp-2">
             {event.title}
           </h2>
         </div>
@@ -51,7 +51,7 @@ const EventCard = ({ event }) => {
             {event.location}
           </p>
 
-          <p className="flex items-center gap-2 text-sm font-bold">
+          <p className="hidden md:flex items-center gap-2 text-sm font-bold">
             <FontAwesomeIcon icon={faCreditCard} className="text-orange-500" />{" "}
             {event.price_in_pence === 0
               ? "FREE"
@@ -69,6 +69,13 @@ const EventCard = ({ event }) => {
             {format(endDate, "dd/MM/yyyy 'at' HH:mm")}
           </p>
         </div>
+
+        <p className="flex items-center md:hidden gap-2 text-sm font-bold">
+          <FontAwesomeIcon icon={faCreditCard} className="text-orange-500" />{" "}
+          {event.price_in_pence === 0
+            ? "FREE"
+            : `£${formatCost(event.price_in_pence)}`}
+        </p>
       </div>
     </article>
   );
