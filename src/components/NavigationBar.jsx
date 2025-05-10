@@ -154,7 +154,7 @@ const NavigationBar = () => {
                 <>
                   <span
                     className="text-cyan-50 text-sm md:text-base cursor-pointer"
-                    onClick={handleLogoutUser}
+                    onClick={toggleLogoutModal}
                   >
                     Logout
                   </span>
