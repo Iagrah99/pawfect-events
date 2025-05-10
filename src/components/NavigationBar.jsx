@@ -4,23 +4,30 @@ import { UserContext } from "../contexts/UserContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import navIcon from "../images/pe-nav-logo.png";
+import LogoutModal from "./LogoutModal";
 
 const NavigationBar = () => {
   const navigate = useNavigate();
   const { loggedInUser, setLoggedInUser } = useContext(UserContext);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
+  const toggleLogoutModal = () => {
+    setIsLogoutModalOpen((prev) => !prev);
+  };
+  // const [isLoggingOut, setIsLoggingOut] = useState(false);
+  // const [isError, setIsError] = useState(false);
+
+  const handleLogoutUser = () => {
+    setLoggedInUser(null);
+    localStorage.removeItem("loggedInUser");
+    navigate("/");
+  };
 
   const handleLink = (e) => {
     e.preventDefault();
     const target =
       e.target.id === "home" ? "/" : `/${e.target.id}`.toLowerCase();
     navigate(target);
-  };
-
-  const handleLogout = () => {
-    setLoggedInUser(null);
-    localStorage.removeItem("loggedInUser");
-    navigate("/");
   };
 
   return (
@@ -72,7 +79,7 @@ const NavigationBar = () => {
 
                 <span
                   className="text-cyan-50 text-sm md:text-base hover:text-orange-500 cursor-pointer"
-                  onClick={handleLogout}
+                  onClick={toggleLogoutModal}
                 >
                   Logout
                 </span>
@@ -147,7 +154,7 @@ const NavigationBar = () => {
                 <>
                   <span
                     className="text-cyan-50 text-sm md:text-base cursor-pointer"
-                    onClick={handleLogout}
+                    onClick={handleLogoutUser}
                   >
                     Logout
                   </span>
@@ -181,6 +188,13 @@ const NavigationBar = () => {
             )}
           </div>
         </div>
+      )}
+
+      {isLogoutModalOpen && (
+        <LogoutModal
+          toggleLogoutModal={toggleLogoutModal}
+          handleLogoutUser={handleLogoutUser}
+        />
       )}
     </nav>
   );

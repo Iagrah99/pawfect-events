@@ -1,12 +1,17 @@
 import { useNavigate } from "react-router-dom";
 import navIcon from "../images/pe-nav-logo.png";
-import { useContext } from "react";
+import { useState, useContext } from "react";
 import { UserContext } from "../contexts/UserContext";
+import LogoutModal from "./LogoutModal";
 
 const Footer = ({ page }) => {
   const navigate = useNavigate();
 
   const { loggedInUser, setLoggedInUser } = useContext(UserContext);
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
+  const toggleLogoutModal = () => {
+    setIsLogoutModalOpen((prev) => !prev);
+  };
 
   const handleLink = (e) => {
     e.preventDefault();
@@ -14,7 +19,7 @@ const Footer = ({ page }) => {
     navigate(target);
   };
 
-  const handleLogout = () => {
+  const handleLogoutUser = () => {
     setLoggedInUser(null);
     localStorage.removeItem("loggedInUser");
     navigate("/");
@@ -24,7 +29,7 @@ const Footer = ({ page }) => {
     <footer
       className={`${
         page === "home" ? "bg-slate-900" : "bg-slate-900"
-      } text-white py-8` } 
+      } text-white py-8`}
     >
       <div className="max-w-screen-xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-3">
         <div
@@ -52,44 +57,55 @@ const Footer = ({ page }) => {
           >
             Events
           </li>
-          <li
-            className={`md:hover:text-orange-500 hidden md:block ${
-              loggedInUser?.is_organiser ? "block" : "hidden"
-            } cursor-pointer`}
-            onClick={() => navigate("/create-event")}
-          >
-            Create Event
-          </li>
-          <li
-            className={`md:hover:text-orange-500 ${
-              loggedInUser ? "block" : "hidden"
-            } cursor-pointer`}
-            onClick={handleLogout}
-          >
-            Logout
-          </li>
-          <li
-            className={`md:hover:text-orange-500 ${
-              loggedInUser && "hidden"
-            } cursor-pointer`}
-            onClick={() => navigate("/login")}
-          >
-            Login
-          </li>
-          <li
-            className={`md:hover:text-orange-500 ${
-              loggedInUser && "hidden"
-            } cursor-pointer`}
-            onClick={() => navigate("/register")}
-          >
-            Sign up
-          </li>
+          {loggedInUser ? (
+            <>
+              {loggedInUser.is_organiser && (
+                <li
+                  className="text-cyan-50 text-sm md:text-base hover:text-orange-500 cursor-pointer"
+                  onClick={() => navigate("/create-event")}
+                >
+                  Create Event
+                </li>
+              )}
+
+              <li
+                className="text-cyan-50 text-sm md:text-base hover:text-orange-500 cursor-pointer"
+                onClick={toggleLogoutModal}
+              >
+                Logout
+              </li>
+            </>
+          ) : (
+            <>
+              <li
+                className="text-cyan-50 text-sm md:text-base hover:text-orange-500 cursor-pointer"
+                onClick={handleLink}
+                id="login"
+              >
+                Login
+              </li>
+              <li
+                className="text-cyan-50 text-sm md:text-base hover:text-orange-500 cursor-pointer"
+                onClick={handleLink}
+                id="register"
+              >
+                Sign Up
+              </li>
+            </>
+          )}
         </ul>
 
         <p className="text-sm md:text-base mb-0">
           &copy; {new Date().getFullYear()} Pawfect Events.
         </p>
       </div>
+
+      {isLogoutModalOpen && (
+        <LogoutModal
+          toggleLogoutModal={toggleLogoutModal}
+          handleLogoutUser={handleLogoutUser}
+        />
+      )}
     </footer>
   );
 };
