@@ -45,7 +45,7 @@ const NavigationBar = () => {
           </div>
 
           {/* Desktop Navigation */}
-          <div className="absolute left-1/2 transform -translate-x-1/2 hidden lg:flex lg:gap-0 space-x-6">
+          <div className="absolute left-1/2 transform -translate-x-1/2 hidden md:flex lg:gap-0 space-x-6">
             <span
               className="text-cyan-50 text-sm md:text-base hover:text-orange-500 cursor-pointer"
               onClick={() => navigate("/")}

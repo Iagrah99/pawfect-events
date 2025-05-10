@@ -9,7 +9,6 @@ import {
   faLocationDot,
   faCrown,
   faCreditCard,
-  faL,
   faCalendarAlt,
 } from "@fortawesome/free-solid-svg-icons";
 

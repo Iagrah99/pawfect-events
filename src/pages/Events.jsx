@@ -104,7 +104,7 @@ const Events = () => {
             handleOrderBy={handleOrderBy}
           />
 
-          <div className="md:container flex-grow md:mx-auto">
+          <div className="w-full px-2 sm:px-4 md:px-6 xl:px-0 max-w-7xl mx-auto">
             <main className="bg-slate-900 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 sm:gap-2 sm:px-1 md:gap-3 md:px-3 md:pb-3">
               {!events.length ? (
                 <p className="text-center col-span-full text-white">
