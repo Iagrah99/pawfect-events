@@ -92,10 +92,10 @@ const Home = () => {
     <div className="min-h-dvh flex flex-col text-gray-900 font-sans bg-slate-900">
       <NavigationBar />
 
-      <main className="flex-grow bg-slate-900 mx-2 sm:mx-6 xl:mx-auto xl:container">
+      <main className="flex-grow bg-slate-900 px-4 sm:px-6 xl:px-0 xl:container xl:mx-auto">
         {/* Hero Section */}
-        <section className="bg-slate-900 text-center mt-3 md:mt-5">
-          <div className="relative flex flex-col items-center justify-center overflow-hidden rounded-xl min-h-fit px-4 py-16 sm:py-20">
+        <section className="text-center mt-6 md:mt-10">
+          <div className="relative flex flex-col items-center justify-center overflow-hidden rounded-xl px-4 py-16 sm:py-20">
             {/* Background Image */}
             <img
               src="https://res.cloudinary.com/dafsdsmus/image/upload/v1746732902/pexels-helenalopes-1959054_np0fge.jpg"
@@ -106,39 +106,37 @@ const Home = () => {
 
             {/* Content */}
             <div className="relative z-20 w-full max-w-2xl text-left">
-              <h1 className="text-2xl md:text-5xl lg:text-6xl font-bold text-white max-w-xl lgmax-w-2xl">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight max-w-2xl">
                 Discover Experiences That Get Tails Wagging
               </h1>
-              <p className="text-base sm:text-lg text-white mt-4 max-w-md lg:max-w-2xl">
+              <p className="text-base sm:text-lg lg:text-xl text-white mt-4 max-w-xl">
                 Explore local dog events, connect with like-minded people, and
                 create memories that last a lifetime.
               </p>
             </div>
           </div>
 
-          {/* Buttons - below the image */}
-          <div className="mt-4 pb-10">
-            <div className="space-x-2 md:space-x-4">
+          {/* Buttons */}
+          <div className="mt-6 pb-10 flex flex-wrap gap-3 justify-center">
+            <a
+              href="/events"
+              className="px-6 py-3 border-1 border-slate-800 lg:hover:border-gray-400 text-white text-sm md:text-base font-semibold no-underline rounded-full transition duration-200"
+            >
+              Explore Events
+            </a>
+            {loggedInUser && (
               <a
-                href="/events"
-                className="inline-block px-6 py-3 border-1 mb-2 md:mb-0 border-slate-800 md:hover:border-gray-400 text-white text-sm md:text-base font-semibold no-underline rounded-full transition duration-200"
+                href="/create-event"
+                className="px-6 py-3 border-1 border-slate-800 lg:hover:border-gray-400 text-white text-sm md:text-base font-semibold no-underline rounded-full transition duration-200"
               >
-                Explore Events
+                Create Event
               </a>
-              {loggedInUser && (
-                <a
-                  href="/create-event"
-                  className="inline-block px-6 py-3 border-1 mt-2 md:mt-0 border-slate-800 md:hover:border-gray-400 text-white text-sm md:text-base font-semibold no-underline rounded-full transition duration-200"
-                >
-                  Create Event
-                </a>
-              )}
-            </div>
+            )}
           </div>
         </section>
 
         {/* Category Icons */}
-        <section className="py-16 bg-slate-900 text-white grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 px-6 sm:px-0 gap-3 sm:gap-3 lg:gap-7 max-w-3xl mx-auto text-center">
+        <section className="py-16 text-white max-w-5xl mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-5 text-center">
           {isLoading
             ? Array.from({ length: 8 }).map((_, index) => (
                 <CategorySkeleton key={index} />
@@ -146,14 +144,14 @@ const Home = () => {
             : categories.map((category, index) => (
                 <div
                   key={index}
-                  className="flex flex-col items-center justify-center w-full w-24 h-24 sm:w-28 sm:h-28 md:w-36 md:h-36 rounded-full bg-slate-900 text-sm sm:text-xs md:text-lg shadow-md md:hover:shadow-lg border-1 border-slate-800 transition-all md:hover:bg-slate-800 md:hover:border-slate-700 md:hover:scale-105 cursor-pointer"
+                  className="flex flex-col items-center justify-center w-full w-24 h-24 sm:h-28 md:h-36 rounded-full bg-slate-900 shadow-md lg:hover:shadow-lg border-1 border-slate-800 lg:hover:bg-slate-800 lg:hover:border-slate-700 transition-all lg:hover:scale-105 cursor-pointer"
                   onClick={() => handleCategoryChoice(category)}
                 >
                   <FontAwesomeIcon
                     icon={categoryIconMap[category.slug] || faStar}
                     className="text-xl md:text-2xl mb-2 text-orange-700"
                   />
-                  <p className="text-xs md:text-sm  text-slate-200">
+                  <p className="text-xs md:text-sm text-slate-200">
                     {(() => {
                       const label = category.slug.replace(/-/g, " ");
                       return label.endsWith("g") ? label : `${label}s`;
@@ -164,8 +162,8 @@ const Home = () => {
         </section>
 
         {/* Feature Cards */}
-        <section className="py-16 bg-slate-900 px-6">
-          <div className="max-w-5xl mx-auto grid gap-12 md:grid-cols-3">
+        <section className="py-16">
+          <div className="max-w-6xl mx-auto grid gap-10 sm:gap-12 md:grid-cols-3 px-4 sm:px-0">
             {isLoading
               ? Array.from({ length: 3 }).map((_, index) => (
                   <FeatureSkeleton key={index} />
@@ -175,16 +173,16 @@ const Home = () => {
                     key={index}
                     className="bg-slate-900 rounded-xl shadow p-6 text-center border-1 border-slate-800"
                   >
-                    <div className="text-3xl mb-3">
+                    <div className="text-3xl mb-4">
                       <FontAwesomeIcon
                         icon={feature.icon}
-                        className="text-orange-700 shadow"
+                        className="text-orange-700"
                       />
                     </div>
-                    <h3 className="text-white text-xl font-semibold mb-2 ">
+                    <h3 className="text-white text-lg font-semibold mb-2">
                       {feature.title}
                     </h3>
-                    <p className="text-white text-base">
+                    <p className="text-white text-sm sm:text-base">
                       {feature.description}
                     </p>
                   </div>
