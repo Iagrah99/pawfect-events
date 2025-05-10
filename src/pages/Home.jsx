@@ -89,10 +89,10 @@ const Home = () => {
   );
 
   return (
-    <div className="min-h-screen flex flex-col text-gray-900 font-sans bg-slate-900">
+    <div className="min-h-dvh flex flex-col text-gray-900 font-sans bg-slate-900">
       <NavigationBar />
 
-      <main className="flex-grow bg-slate-900 container">
+      <main className="flex-grow bg-slate-900 mx-2 sm:mx-6 xl:mx-auto xl:container">
         {/* Hero Section */}
         <section className="bg-slate-900 text-center mt-3 md:mt-5">
           <div className="relative flex flex-col items-center justify-center overflow-hidden rounded-xl min-h-fit px-4 py-16 sm:py-20">
@@ -106,10 +106,10 @@ const Home = () => {
 
             {/* Content */}
             <div className="relative z-20 w-full max-w-2xl text-left">
-              <h1 className="text-2xl md:text-5xl lg:text-6xl font-bold text-white max-w-2xl">
+              <h1 className="text-2xl md:text-5xl lg:text-6xl font-bold text-white max-w-xl lgmax-w-2xl">
                 Discover Experiences That Get Tails Wagging
               </h1>
-              <p className="text-base sm:text-lg text-white mt-4">
+              <p className="text-base sm:text-lg text-white mt-4 max-w-md lg:max-w-2xl">
                 Explore local dog events, connect with like-minded people, and
                 create memories that last a lifetime.
               </p>
@@ -138,7 +138,7 @@ const Home = () => {
         </section>
 
         {/* Category Icons */}
-        <section className="py-16 bg-slate-900 text-white px-10 grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 gap-7 max-w-3xl mx-auto text-center">
+        <section className="py-16 bg-slate-900 text-white grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 px-6 sm:px-0 gap-3 sm:gap-3 lg:gap-7 max-w-3xl mx-auto text-center">
           {isLoading
             ? Array.from({ length: 8 }).map((_, index) => (
                 <CategorySkeleton key={index} />
@@ -151,9 +151,9 @@ const Home = () => {
                 >
                   <FontAwesomeIcon
                     icon={categoryIconMap[category.slug] || faStar}
-                    className="text-2xl mb-2 text-orange-700"
+                    className="text-xl md:text-2xl mb-2 text-orange-700"
                   />
-                  <p className="text-xs sm:text-sm  text-slate-200">
+                  <p className="text-xs md:text-sm  text-slate-200">
                     {(() => {
                       const label = category.slug.replace(/-/g, " ");
                       return label.endsWith("g") ? label : `${label}s`;

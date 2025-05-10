@@ -105,7 +105,7 @@ const Events = () => {
           />
 
           <div className="md:container flex-grow md:mx-auto">
-            <main className="bg-slate-900 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 sm:gap-6 sm:px-3 md:pb-3">
+            <main className="bg-slate-900 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 sm:gap-2 sm:px-1 md:gap-3 md:px-3 md:pb-3">
               {!events.length ? (
                 <p className="text-center col-span-full text-white">
                   No events found.
