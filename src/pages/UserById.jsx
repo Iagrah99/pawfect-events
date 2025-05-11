@@ -10,6 +10,7 @@ import Loading from "../components/Loading";
 import Error from "../components/Error";
 import UserCard from "../components/UserCard";
 import { UserContext } from "../contexts/UserContext";
+import Footer from "../components/Footer";
 
 const UserById = () => {
   const navigate = useNavigate();
@@ -84,28 +85,33 @@ const UserById = () => {
   );
 
   return (
-    <>
+    <div className="flex flex-col min-h-dvh bg-slate-900">
       <NavigationBar />
+
       {isLoading ? (
-        <Loading content={"User Details"} />
+        <Loading content="User Details" />
       ) : (
-        <article className="min-h-screen w-full bg-slate-900 text-white sm:py-12 sm:px-4 lg:px-8">
-          <UserCard
-            navigate={navigate}
-            user={user}
-            setIsUpdated={setIsUpdated}
-            events={events}
-            showDeletedMessage={showDeletedMessage}
-            organiserEvents={organiserEvents}
-            eventsAttending={eventsAttending}
-            error={error}
-            setError={setError}
-            setIsError={setIsError}
-            showSuccessMessage={showSuccessMessage}
-          />
-        </article>
+        <main className="flex flex-col flex-grow items-center px-4 py-12">
+          <div className=" w-full max-w-4xl border-1 border-slate-800 bg-slate-900 rounded-lg lg:shadow p-6 sm:p-8 text-white">
+            <UserCard
+              navigate={navigate}
+              user={user}
+              setIsUpdated={setIsUpdated}
+              events={events}
+              showDeletedMessage={showDeletedMessage}
+              organiserEvents={organiserEvents}
+              eventsAttending={eventsAttending}
+              error={error}
+              setError={setError}
+              setIsError={setIsError}
+              showSuccessMessage={showSuccessMessage}
+            />
+          </div>
+        </main>
       )}
-    </>
+
+      <Footer />
+    </div>
   );
 };
 

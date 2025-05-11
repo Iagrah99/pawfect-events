@@ -1,5 +1,6 @@
 import { useState, useContext } from "react";
 import NavigationBar from "./NavigationBar";
+import Footer from "./Footer"
 import { UserContext } from "../contexts/UserContext";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -119,32 +120,33 @@ const CreateEvent = () => {
   }
 
   return (
-    <>
+    <div className="flex flex-col min-h-dvh">
       <NavigationBar />
 
-      <div className="flex justify-center items-center py-8 bg-gray-900 min-h-screen md:pb-96">
-        <div className="w-full max-w-lg md:bg-gray-800 rounded-lg shadow-md p-8">
+      <main className="flex justify-center items-center flex-grow bg-slate-900 py-8">
+        <div className="w-full max-w-lg border-1 border-slate-800 md:bg-slate-900 rounded-lg lg:shadow p-8">
           <h2 className="text-2xl font-semibold text-center text-gray-100 mb-6">
             Create Your <em>Pawfect</em> Event!
           </h2>
+
           <form className="space-y-6" onSubmit={handleSubmit}>
-            <p className="text-center text-gray-300">
-              Input fields marked with an{" "}
-              <span className="text-indigo-400">*</span> indicate a required
-              field.
+            <p className="text-center text-gray-300 text-sm">
+              Fields marked with <span className="text-orange-400">*</span> are
+              required.
             </p>
+
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label
                   htmlFor="title"
                   className="block text-sm font-medium mb-1 text-gray-300"
                 >
-                  Title <span className="text-indigo-400">*</span>
+                  Title <span className="text-orange-400">*</span>
                 </label>
                 <input
                   type="text"
                   id="title"
-                  className="mt-1 block w-full p-2 bg-gray-700 border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-gray-100 placeholder-gray-400"
+                  className="mt-1 block w-full p-2 bg-slate-800 border-1 border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 text-gray-100 placeholder-gray-400"
                   placeholder="Enter event title"
                   required
                   onChange={(e) => setTitle(e.target.value)}
@@ -156,14 +158,12 @@ const CreateEvent = () => {
                   htmlFor="organiser"
                   className="block text-sm font-medium mb-1 text-gray-300"
                 >
-                  Organiser <span className="text-indigo-400">*</span>
+                  Organiser <span className="text-orange-400">*</span>
                 </label>
                 <input
                   type="text"
                   id="organiser"
-                  className="mt-1 block w-full p-2 bg-gray-700 border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-gray-100 placeholder-gray-400 hover:cursor-not-allowed"
-                  placeholder="Enter organiser name"
-                  required
+                  className="mt-1 block w-full p-2 bg-slate-800 border-1 border-gray-600 rounded-md shadow-sm text-gray-400 cursor-not-allowed"
                   value={loggedInUser.username}
                   disabled
                 />
@@ -175,11 +175,11 @@ const CreateEvent = () => {
                 htmlFor="description"
                 className="block text-sm font-medium mb-1 text-gray-300"
               >
-                Description <span className="text-indigo-400">*</span>
+                Description <span className="text-orange-400">*</span>
               </label>
               <textarea
                 id="description"
-                className="resize-none mt-1 block w-full p-2 bg-gray-700 border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-gray-100 placeholder-gray-400"
+                className="resize-none mt-1 block w-full p-2 bg-slate-800 border-1 border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 text-gray-100 placeholder-gray-400"
                 placeholder="Describe the event"
                 required
                 onChange={(e) => setDescription(e.target.value)}
@@ -192,12 +192,12 @@ const CreateEvent = () => {
                   htmlFor="startDate"
                   className="block text-sm font-medium mb-1 text-gray-300"
                 >
-                  Start Date <span className="text-indigo-400">*</span>
+                  Start Date <span className="text-orange-400">*</span>
                 </label>
                 <input
                   type="datetime-local"
                   id="startDate"
-                  className="mt-1 block w-full p-2 bg-gray-700 border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-gray-100 placeholder-gray-400"
+                  className="mt-1 block w-full p-2 bg-slate-800 border-1 border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 text-gray-100"
                   required
                   onChange={(e) => setEventStart(e.target.value)}
                 />
@@ -207,12 +207,12 @@ const CreateEvent = () => {
                   htmlFor="endDate"
                   className="block text-sm font-medium mb-1 text-gray-300"
                 >
-                  End Date <span className="text-indigo-400">*</span>
+                  End Date <span className="text-orange-400">*</span>
                 </label>
                 <input
                   type="datetime-local"
                   id="endDate"
-                  className="mt-1 block w-full p-2 bg-gray-700 border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-gray-100 placeholder-gray-400"
+                  className="mt-1 block w-full p-2 bg-slate-800 border-1 border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 text-gray-100"
                   required
                   onChange={(e) => setEventEnd(e.target.value)}
                 />
@@ -225,10 +225,11 @@ const CreateEvent = () => {
                   htmlFor="eventCategory"
                   className="block text-sm font-medium mb-1 text-gray-300"
                 >
-                  Event Category <span className="text-indigo-400">*</span>
+                  Event Category <span className="text-orange-400">*</span>
                 </label>
                 <select
-                  className="mt-1 p-2 block w-full md:w-52 bg-gray-700 border-gray-300 text-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 cursor-pointer"
+                  id="eventCategory"
+                  className="mt-1 block w-full p-2 bg-slate-800 border-1 border-gray-600 text-gray-100 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"
                   onChange={(e) => setEventCategory(e.target.value)}
                 >
                   <option value="Dog-Training">Dog Training</option>
@@ -239,22 +240,22 @@ const CreateEvent = () => {
                   <option value="Herding-Trial">Herding Trial</option>
                 </select>
               </div>
+
               <div>
                 <label
                   htmlFor="priceInPence"
                   className="block text-sm font-medium mb-1 text-gray-300"
                 >
                   Price Per Ticket (£){" "}
-                  <span className="text-indigo-400">*</span>
+                  <span className="text-orange-400">*</span>
                 </label>
-
                 <input
                   type="number"
                   step="0.01"
                   min="0"
                   id="priceInPence"
-                  className="pl-14 w-full p-2 bg-gray-700 border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-gray-100 placeholder-gray-400"
                   placeholder="Enter price"
+                  className="pl-14 block w-full p-2 bg-slate-800 border-1 border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 text-gray-100 placeholder-gray-400"
                   required
                   onChange={(e) =>
                     setPriceInPence(Math.round(e.target.value * 100))
@@ -263,23 +264,21 @@ const CreateEvent = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-1 gap-4">
-              <div>
-                <label
-                  htmlFor="location"
-                  className="block text-sm font-medium mb-1 text-gray-300"
-                >
-                  Location <span className="text-indigo-400">*</span>
-                </label>
-                <input
-                  type="text"
-                  id="location"
-                  className="mt-1 block w-full p-2 bg-gray-700 border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-gray-100 placeholder-gray-400"
-                  placeholder="Enter location"
-                  required
-                  onChange={(e) => setLocation(e.target.value)}
-                />
-              </div>
+            <div>
+              <label
+                htmlFor="location"
+                className="block text-sm font-medium mb-1 text-gray-300"
+              >
+                Location <span className="text-orange-400">*</span>
+              </label>
+              <input
+                type="text"
+                id="location"
+                className="mt-1 block w-full p-2 bg-slate-800 border-1 border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 text-gray-100 placeholder-gray-400"
+                placeholder="Enter location"
+                required
+                onChange={(e) => setLocation(e.target.value)}
+              />
             </div>
 
             <div>
@@ -293,27 +292,28 @@ const CreateEvent = () => {
                 type="file"
                 accept="image/*"
                 id="image"
-                className="mt-1 block w-full p-2 bg-gray-700 border-gray-600 rounded-md shadow-sm text-gray-100 placeholder-gray-400 hover:cursor-pointer"
+                className="mt-1 block w-full p-2 bg-slate-800 border-1 border-gray-600 rounded-md shadow-sm text-gray-100 hover:cursor-pointer"
                 onChange={(e) => {
                   const file = e.target.files[0];
                   setImageFile(file);
-                  if (file) {
-                    handleImageUpload(file);
-                  }
+                  if (file) handleImageUpload(file);
                 }}
               />
             </div>
 
             <button
               type="submit"
-              className="w-full flex justify-center py-2 px-4 border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className="text-sm sm:text-base w-full flex items-center justify-center gap-2 py-2 px-4 rounded-lg border-1 border-orange-600 bg-orange-800 text-white font-medium shadow transition
+              hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-100 focus:ring-offset-2 focus:ring-offset-slate-900 focus:border-orange-100"
             >
-              {isPostingEvent ? "Posting Event" : "Create Event"}
+              {isPostingEvent ? "Posting Event..." : "Create Event"}
             </button>
           </form>
         </div>
-      </div>
-    </>
+      </main>
+
+      <Footer />
+    </div>
   );
 };
 

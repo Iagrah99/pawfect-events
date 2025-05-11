@@ -4,6 +4,7 @@ import EditUser from "./EditUser";
 import { deleteUser } from "../../utils/api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
+import DeleteUser from "./DeleteUser";
 
 const UserCard = ({
   navigate,
@@ -18,6 +19,10 @@ const UserCard = ({
   setIsError,
 }) => {
   const { loggedInUser, setLoggedInUser } = useContext(UserContext);
+  const [isDeleteUserModalOpen, setIsDeleteUserModalOpen] = useState(false);
+  const toggleDeleteUserModal = () => {
+    setIsDeleteUserModalOpen((prev) => !prev);
+  };
   const [isDeletingUser, setIsDeletingUser] = useState(false);
   const handleDeleteUser = async () => {
     try {
@@ -35,129 +40,99 @@ const UserCard = ({
   };
 
   return (
-    <>
-      <div className="max-w-3xl mx-auto bg-slate-800 min-h-screen sm:min-h-fit shadow-lg sm:rounded-xl p-4 relative text-white">
-        <nav className="text-md text-slate-400" aria-label="Breadcrumb">
-          <ol className="list-none p-0 inline-flex space-x-1 sm:space-x-3">
-            <li className="flex items-center">
-              <a href="/" className="hover:text-white transition-colors">
-                Home
-              </a>
-            </li>
-            <li>/</li>
-            <li>
-              <div className="flex items-center text-white">
-                <span>{user?.username}</span>
-              </div>
-            </li>
-          </ol>
-        </nav>
-
-        {user.username === loggedInUser?.username && (
-          <div className="absolute flex sm:gap-3 top-0 right-0 sm:top-1 sm:right-2">
-            <EditUser
-              user={user}
-              setIsUpdated={setIsUpdated}
-              error={error}
-              setError={setError}
-              isError={isError}
-              setIsError={setIsError}
-            />
-            <button
-              className="text-red-500 hover:text-red-600 transition text-xl scale-75 sm:scale-110 cursor-pointer shadow-md p-4"
-              onClick={handleDeleteUser}
-            >
-              <FontAwesomeIcon icon={faTrash} />
-            </button>
-          </div>
-        )}
-
-        {user && (
-          <>
-            <div className="flex items-center gap-6 py-2">
-              <img
-                src={user.avatar_url}
-                alt={`${user.username}'s profile avatar`}
-                className="w-24 h-24 sm:w-32 sm:h-32 rounded-full border-2 shadow border-gray-900"
-              />
-
-              <div>
-                <p className="text-base sm:text-2xl mt-2 md:mt-0 font-bold mb-2 text-white">
-                  {user.username}{" "}
-                  <span>
-                    ({user.is_organiser ? "Event Organiser" : "Member"})
-                  </span>
-                </p>
-              </div>
-            </div>
-
-            <section>
-              <h2 className="text-lg font-semibold text-slate-300 my-3">
-                {user.is_organiser ? (
-                  <span>
-                    <FontAwesomeIcon icon={faCalendarAlt} className="mr-2" />
-                    Events Organising
-                  </span>
-                ) : (
-                  <span>
-                    <FontAwesomeIcon icon={faCalendarAlt} className="mr-2" />
-                    Events Attending
-                  </span>
-                )}
-              </h2>
-
-              {user.is_organiser ? (
-                organiserEvents.length ? (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    {organiserEvents.map((event) => (
-                      <div
-                        key={event.event_id}
-                        className="bg-slate-700 rounded-lg p-4 text-center shadow-inner border-1 border-slate-600 cursor-pointer hover:bg-slate-600 transition"
-                        onClick={() => navigate(`/events/${event.event_id}`)}
-                      >
-                        <p className="text-lg font-semibold text-white">
-                          {event.title}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <p className="text-slate-400">
-                    User has not organised any events
-                  </p>
-                )
-              ) : eventsAttending.length ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {eventsAttending.map((eventTitle) => {
-                    const matchedEvent = events.find(
-                      (e) => e.title === eventTitle
-                    );
-                    return (
-                      <div
-                        key={eventTitle}
-                        className="bg-slate-800 rounded-lg p-4 text-center shadow-inner border-1 border-slate-600 cursor-pointer hover:bg-slate-600 transition"
-                        onClick={() =>
-                          matchedEvent &&
-                          navigate(`/events/${matchedEvent.event_id}`)
-                        }
-                      >
-                        <p className="text-lg font-semibold text-white">
-                          {eventTitle}
-                        </p>
-                      </div>
-                    );
-                  })}
-                </div>
-              ) : (
-                <p className="text-slate-400">
-                  User is not attending any events
-                </p>
-              )}
-            </section>
-          </>
-        )}
+    <article className="max-w-4xl mx-auto bg-slate-900 overflow-hidden text-white">
+      <div className="flex flex-col md:flex-row  gap-6 mb-6">
+        <img
+          src={user.avatar_url}
+          alt={`${user.username}'s profile avatar`}
+          className="w-24 h-24 sm:w-32 sm:h-32 rounded-full border-1 border-slate-800"
+        />
+        <div className="flex flex-col md:items-center md:flex-row">
+          <h2 className="text-2xl font-bold text-white mr-2 mb-0">
+            {user.username}{" "}
+          </h2>
+          <span className="text-lg lg:text-2xl font-medium text-slate-300">
+            ({user.is_organiser ? "Event Organiser" : "Member"})
+          </span>
+        </div>
       </div>
-    </>
+
+      <section className="flex flex-col items-start">
+        <h3 className="text-xl font-semibold text-slate-300 mb-4">
+          <FontAwesomeIcon
+            icon={faCalendarAlt}
+            className="mr-2 text-orange-500"
+          />
+          {user.is_organiser ? "Events Organising" : "Events Attending"}
+        </h3>
+
+        {user.is_organiser ? (
+          organiserEvents.length ? (
+            <ul className="list-disc pl-5 space-y-2">
+              {organiserEvents.map((event) => (
+                <li
+                  key={event.event_id}
+                  className="text-white cursor-pointer w-fit"
+                  onClick={() => navigate(`/events/${event.event_id}`)}
+                >
+                  <span className="lg:hover:text-orange-400 transition">
+                    {event.title}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="text-slate-400">User has not organised any events</p>
+          )
+        ) : eventsAttending.length ? (
+          <ul className="list-disc pl-5 space-y-2">
+            {eventsAttending.map((eventTitle) => {
+              const matchedEvent = events.find((e) => e.title === eventTitle);
+              return (
+                <li
+                  key={eventTitle}
+                  className="text-white lg:hover:text-orange-400 transition cursor-pointer w-fit"
+                  onClick={() =>
+                    matchedEvent && navigate(`/events/${matchedEvent.event_id}`)
+                  }
+                >
+                  {eventTitle}
+                </li>
+              );
+            })}
+          </ul>
+        ) : (
+          <p className="text-slate-400">User is not attending any events</p>
+        )}
+      </section>
+
+      {user.username === loggedInUser?.username && (
+        <div className="flex w-fit md:w-full justify-start gap-3">
+          <EditUser
+            user={user}
+            setIsUpdated={setIsUpdated}
+            error={error}
+            setError={setError}
+            isError={isError}
+            setIsError={setIsError}
+          />
+          <button
+            onClick={toggleDeleteUserModal}
+            className="flex items-center gap-2 border-1 border-slate-800 lg:hover:border-slate-700 text-white bg-slate-900 px-2 py-2 rounded-md shadow-md text-sm lg:text-base"
+          >
+            <FontAwesomeIcon icon={faTrash} className="text-orange-500" />
+            <span>Delete Account</span>
+          </button>
+        </div>
+      )}
+
+      {isDeleteUserModalOpen && (
+        <DeleteUser
+          toggleDeleteUserModal={toggleDeleteUserModal}
+          handleDeleteUser={handleDeleteUser}
+        />
+      )}
+    </article>
   );
 };
 
