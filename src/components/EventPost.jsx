@@ -19,6 +19,7 @@ import {
   faCreditCard,
   faTrashAlt,
   faLocationDot,
+  faUsers,
 } from "@fortawesome/free-solid-svg-icons";
 import { EditEvent } from "./EditEvent";
 import DeleteEvent from "./DeleteEvent";
@@ -62,7 +63,7 @@ const EventPost = ({
     try {
       e.preventDefault();
       setIsDeletingEvent(true);
-      console.log(eventId)
+      console.log(eventId);
       const deletedEvent = await deleteEvent(eventId);
       setIsDeletingEvent(false);
       navigate(`/users/${organiser.user_id}`, { state: { deletedEvent } });
@@ -194,11 +195,17 @@ const EventPost = ({
             <FontAwesomeIcon icon={faTags} className="text-orange-500" />
             {event.category?.replace(/-/g, " ")}
           </p>
+          <p className="flex items-center gap-2">
+            <FontAwesomeIcon icon={faUsers} className="text-orange-500" />
+            {attendees.length} Attendees
+          </p>
         </div>
 
         {/* Description */}
         <div>
-          <p className="text-white whitespace-pre-line text-sm sm:text-base">{event.description}</p>
+          <p className="text-white whitespace-pre-line text-sm sm:text-base">
+            {event.description}
+          </p>
         </div>
 
         {/* Action Buttons */}
