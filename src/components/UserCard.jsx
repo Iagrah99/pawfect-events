@@ -41,7 +41,7 @@ const UserCard = ({
 
   return (
     <article className="max-w-4xl mx-auto bg-slate-900 overflow-hidden text-white">
-      <div className="flex flex-col md:flex-row gap-6 mb-6 p-4">
+      <div className="flex flex-col md:flex-row gap-6 p-4">
         <img
           src={user.avatar_url}
           alt={`${user.username}'s profile avatar`}
@@ -57,7 +57,7 @@ const UserCard = ({
         </div>
       </div>
 
-      <section className="flex flex-col items-start lg:border-y-2 border-slate-800 mb-3 p-4 ">
+      <section className="flex flex-col items-start lg:border-y-2 border-slate-800 lg:mb-3 p-4 ">
         <h3 className="text-xl font-semibold text-slate-300 mb-4">
           <FontAwesomeIcon
             icon={faCalendarAlt}
@@ -147,7 +147,7 @@ const UserCard = ({
       </section>
 
       {user.username === loggedInUser?.username && (
-        <div className="flex w-fit md:w-full justify-start gap-3 p-4 pt-2">
+        <div className="flex w-fit md:w-full justify-start gap-2 p-2 mb-2 lg:p-4 lg:pt-2">
           <EditUser
             user={user}
             setIsUpdated={setIsUpdated}
