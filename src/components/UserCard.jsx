@@ -147,7 +147,7 @@ const UserCard = ({
       </section>
 
       {user.username === loggedInUser?.username && (
-        <div className="flex w-fit md:w-full justify-start gap-2 p-2 mb-2 lg:p-4 lg:pt-2">
+        <div className="flex w-fit md:w-full justify-start gap-2 mx-auto p-2 mb-2 lg:p-4 lg:pt-2">
           <EditUser
             user={user}
             setIsUpdated={setIsUpdated}
