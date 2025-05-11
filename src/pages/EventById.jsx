@@ -53,7 +53,9 @@ const ViewEvent = () => {
     <div className="bg-slate-900 flex flex-col min-h-dvh">
       <NavigationBar />
       {isLoading ? (
-        <Loading />
+        <div className="flex-grow flex items-center justify-center">
+          <Loading />
+        </div>
       ) : (
         <main className="flex-grow">
           <EventPost

@@ -23,7 +23,7 @@ export const EditEvent = ({
     event.category
   );
   const [editedPriceInPence, setEditedPriceInPence] = useState(
-    event.price_in_pence
+    event.price_in_pence / 100
   );
   const [editedLocation, setEditedLocation] = useState(event.location);
   const [editedImageUrl, setEditedImageUrl] = useState(event.image);
@@ -36,7 +36,7 @@ export const EditEvent = ({
       setEditedStartDate(formatDateForInput(event.start_date));
       setEditedEndDate(formatDateForInput(event.end_date));
       setEditedEventCategory(event.category);
-      setEditedPriceInPence(event.price_in_pence);
+      setEditedPriceInPence(event.price_in_pence / 100);
       setEditedLocation(event.location);
       setEditedImageUrl(event.image);
     }
@@ -99,7 +99,7 @@ export const EditEvent = ({
         start_date: new Date(editedStartDate).toISOString(),
         end_date: new Date(editedEndDate).toISOString(),
         category: editedEventCategory,
-        price_in_pence: editedPriceInPence,
+        price_in_pence: Math.round(editedPriceInPence * 100),
         location: editedLocation,
         image: editedImageUrl,
       };

@@ -21,6 +21,7 @@ import {
   faLocationDot,
 } from "@fortawesome/free-solid-svg-icons";
 import { EditEvent } from "./EditEvent";
+import DeleteEvent from "./DeleteEvent";
 
 const EventPost = ({
   event,
@@ -42,6 +43,10 @@ const EventPost = ({
 
   const organiser = users.find((user) => user.username === event.organiser);
 
+  const [isDeleteEventModalOpen, setIsDeleteEventModalOpen] = useState(false);
+  const toggleDeleteEventModal = () => {
+    setIsDeleteEventModalOpen((prev) => !prev);
+  };
   const [isSigningUp, setIsSigningUp] = useState(false);
   const [isOptingOut, setIsOptingOut] = useState(false);
   const [isDeletingEvent, setIsDeletingEvent] = useState(false);
@@ -53,10 +58,12 @@ const EventPost = ({
     navigate(`/users/${organiser.user_id}`);
   };
 
-  const handleDeleteEvent = async () => {
+  const handleDeleteEvent = async (e, eventId) => {
     try {
+      e.preventDefault();
       setIsDeletingEvent(true);
-      const deletedEvent = await deleteEvent(event.event_id);
+      console.log(eventId)
+      const deletedEvent = await deleteEvent(eventId);
       setIsDeletingEvent(false);
       navigate(`/users/${organiser.user_id}`, { state: { deletedEvent } });
     } catch (err) {
@@ -143,7 +150,10 @@ const EventPost = ({
         </h2>
 
         <div className="flex gap-3 items-center">
-          <p className="flex items-center gap-2 text-base font-semibold cursor-pointer lg:hover:text-orange-500" onClick={handleLink}>
+          <p
+            className="flex items-center gap-2 text-base font-semibold cursor-pointer lg:hover:text-orange-500"
+            onClick={handleLink}
+          >
             <FontAwesomeIcon icon={faCrown} className="text-orange-500" />{" "}
             {event.organiser}
           </p>
@@ -246,7 +256,7 @@ const EventPost = ({
                 setIsError={setIsError}
               />
               <button
-                onClick={handleDeleteEvent}
+                onClick={toggleDeleteEventModal}
                 className="text-white bg-slate-800 lg:hover:bg-slate-700 px-4 py-2 rounded-md shadow-md"
               >
                 <FontAwesomeIcon
@@ -265,6 +275,14 @@ const EventPost = ({
           <p className="mt-3 text-red-500 font-semibold">{error.data.msg}</p>
         )}
       </div>
+
+      {isDeleteEventModalOpen && (
+        <DeleteEvent
+          toggleDeleteEventModal={toggleDeleteEventModal}
+          handleDeleteEvent={handleDeleteEvent}
+          event={event}
+        />
+      )}
     </article>
   );
 };
