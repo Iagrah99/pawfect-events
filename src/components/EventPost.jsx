@@ -134,7 +134,7 @@ const EventPost = ({
   return (
     <article className="max-w-4xl mx-auto mt-10 bg-slate-900 border-1 border-slate-800 rounded-lg shadow-md overflow-hidden text-white">
       {/* Image */}
-      <div className="relative w-full h-[350px]">
+      <div className="relative w-full h-[200px] sm:h-[250px] md:h-[350px]">
         <img
           src={event.image}
           alt={event.title}
@@ -151,19 +151,19 @@ const EventPost = ({
 
         <div className="flex gap-3 items-center">
           <p
-            className="flex items-center gap-2 text-base font-semibold cursor-pointer lg:hover:text-orange-500"
+            className="flex items-center gap-2 text-sm sm:text-base font-semibold cursor-pointer lg:hover:text-orange-500"
             onClick={handleLink}
           >
             <FontAwesomeIcon icon={faCrown} className="text-orange-500" />{" "}
             {event.organiser}
           </p>
 
-          <p className="flex items-center gap-2 text-base">
+          <p className="flex items-center gap-2 text-sm sm:text-base">
             <FontAwesomeIcon icon={faLocationDot} className="text-orange-500" />{" "}
             {event.location}
           </p>
 
-          <p className="flex items-center gap-2 text-base font-bold">
+          <p className="flex items-center gap-2 text-sm sm:text-base font-bold">
             <FontAwesomeIcon icon={faCreditCard} className="text-orange-500" />{" "}
             {event.price_in_pence === 0
               ? "FREE"
@@ -172,7 +172,7 @@ const EventPost = ({
         </div>
 
         {/* Dates */}
-        <div className="flex flex-col md:flex-row gap-2 text-base">
+        <div className="flex flex-col md:flex-row gap-2 text-sm sm:text-base">
           <p className="text-white">
             <FontAwesomeIcon
               icon={faCalendarAlt}
@@ -189,7 +189,7 @@ const EventPost = ({
         </div>
 
         {/* Category & Cost */}
-        <div className="flex flex-col sm:flex-row gap-3 text-base">
+        <div className="flex flex-col sm:flex-row gap-3 text-sm sm:text-base">
           <p className="flex items-center gap-2">
             <FontAwesomeIcon icon={faTags} className="text-orange-500" />
             {event.category?.replace(/-/g, " ")}
@@ -198,7 +198,7 @@ const EventPost = ({
 
         {/* Description */}
         <div>
-          <p className="text-white whitespace-pre-line">{event.description}</p>
+          <p className="text-white whitespace-pre-line text-sm sm:text-base">{event.description}</p>
         </div>
 
         {/* Action Buttons */}
@@ -210,7 +210,7 @@ const EventPost = ({
                 onClick={handleAttendEvent}
                 disabled={isSigningUp || isOptingOut}
                 title={isAttendee ? "Opt Out Of Event" : "Sign Up For Event"}
-                className={`px-3 h-10 flex items-center space-x-2 text-white font-semibold rounded-md transition duration-200 ${
+                className={`px-3 h-10 flex items-center space-x-2 text-white text-sm sm:text-base font-semibold rounded-md transition duration-200 ${
                   isSigningUp || isOptingOut
                     ? "bg-gray-600 cursor-not-allowed opacity-50"
                     : "bg-gray-800 lg:hover:bg-gray-700 cursor-pointer"
@@ -233,7 +233,7 @@ const EventPost = ({
           <a href={calendarLink} target="_blank" className="no-underline">
             <button
               onClick={handleAddToCalendar}
-              className="flex items-center space-x-2 bg-gray-800 lg:hover:bg-gray-700 px-3 h-10 rounded-md"
+              className="flex items-center space-x-2 text-sm sm:text-base bg-gray-800 lg:hover:bg-gray-700 px-3 h-10 rounded-md"
             >
               <img
                 src="https://i.ibb.co/qDSRS1J/google-calendar-512x512.png"

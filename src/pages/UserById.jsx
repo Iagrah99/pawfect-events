@@ -92,7 +92,7 @@ const UserById = () => {
         <Loading content="User Details" />
       ) : (
         <main className="flex flex-col flex-grow items-center px-4 py-12">
-          <div className=" w-full max-w-4xl border-1 border-slate-800 bg-slate-900 rounded-lg lg:shadow p-6 sm:p-8 text-white">
+          <div className=" w-full max-w-4xl border-1 border-slate-800 bg-slate-900 lg:shadow text-white">
             <UserCard
               navigate={navigate}
               user={user}

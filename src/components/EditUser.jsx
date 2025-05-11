@@ -41,7 +41,7 @@ const EditUser = ({ user, setIsUpdated, setError, setIsError }) => {
   return (
     <>
       <button
-        className="flex items-center gap-2 border-1 border-slate-800 lg:hover:border-slate-700 text-white bg-slate-900 px-2 py-2 rounded-md shadow-md text-sm lg:text-base"
+        className="flex items-center gap-2 border-1 border-slate-800 lg:hover:border-slate-700 text-white bg-slate-900 px-3 py-2 rounded-md shadow-md text-sm lg:text-base"
         onClick={() => setShow(true)}
       >
         <FontAwesomeIcon icon={faPencil} className="text-orange-500" /> Edit
