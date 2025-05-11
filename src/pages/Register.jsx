@@ -1,6 +1,7 @@
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import NavigationBar from "../components/NavigationBar";
+import Footer from "../components/Footer";
 import { registerUser } from "../../utils/api";
 import { UserContext } from "../contexts/UserContext";
 
@@ -74,41 +75,38 @@ const Register = () => {
   };
 
   return (
-    <>
+    <div className="flex flex-col min-h-dvh">
       <NavigationBar />
-      <div className="flex justify-center items-center h-[calc(100vh-70px)] bg-gray-900">
-        <div className="w-full max-w-lg md:bg-gray-800 rounded-lg shadow-md p-8">
+      <main className="flex justify-center items-center flex-grow bg-slate-900">
+        <div className="w-full max-w-lg border-1 border-slate-800 md:bg-slate-900 rounded-lg lg:shadow p-8">
           <h2 className="text-2xl font-semibold text-center text-gray-100 mb-6">
             Sign Up
           </h2>
 
-          <form
-            className="space-y-6"
-            onSubmit={(e) => handleUserRegistration(e)}
-          >
-            <p className="text-center text-gray-300">
-              Input fields marked with an{" "}
-              <span className="text-indigo-400">*</span> indicate a required
-              field.
+          <form className="space-y-6" onSubmit={handleUserRegistration}>
+            <p className="text-center text-gray-300 text-sm">
+              Fields marked with <span className="text-orange-400">*</span> are
+              required.
             </p>
+
             <div>
               <label
                 htmlFor="email"
                 className="block text-sm font-medium text-gray-300"
               >
-                Email <span className="text-indigo-400">*</span>
+                Email <span className="text-orange-400">*</span>
               </label>
               <input
                 type="email"
                 id="email"
-                className="mt-1 block w-full p-2 bg-gray-700 border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-gray-100 placeholder-gray-400"
-                placeholder="Enter your email"
-                autoComplete="off"
                 required
+                autoComplete="off"
+                placeholder="Enter your email"
                 onChange={(e) => {
                   setEmail(e.target.value);
                   setIsError(false);
                 }}
+                className="mt-1 block w-full p-2 bg-slate-800 border-1 border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 text-gray-100 placeholder-gray-400"
               />
             </div>
 
@@ -117,19 +115,19 @@ const Register = () => {
                 htmlFor="username"
                 className="block text-sm font-medium text-gray-300"
               >
-                Username <span className="text-indigo-400">*</span>
+                Username <span className="text-orange-400">*</span>
               </label>
               <input
-                type="username"
+                type="text"
                 id="username"
-                className="mt-1 block w-full p-2 bg-gray-700 border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-gray-100 placeholder-gray-400"
-                placeholder="Enter your username"
-                autoComplete="off"
                 required
+                autoComplete="off"
+                placeholder="Enter your username"
                 onChange={(e) => {
                   setUsername(e.target.value);
                   setIsError(false);
                 }}
+                className="mt-1 block w-full p-2 bg-slate-800 border-1 border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 text-gray-100 placeholder-gray-400"
               />
             </div>
 
@@ -138,19 +136,19 @@ const Register = () => {
                 htmlFor="password"
                 className="block text-sm font-medium text-gray-300"
               >
-                Password <span className="text-indigo-400">*</span>
+                Password <span className="text-orange-400">*</span>
               </label>
               <input
                 type="password"
                 id="password"
-                className="mt-1 block w-full p-2 bg-gray-700 border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-gray-100 placeholder-gray-400"
-                placeholder="Enter your password"
-                autoComplete="off"
                 required
+                autoComplete="off"
+                placeholder="Enter your password"
                 onChange={(e) => {
                   setPassword(e.target.value);
                   setIsError(false);
                 }}
+                className="mt-1 block w-full p-2 bg-slate-800 border-1 border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 text-gray-100 placeholder-gray-400"
               />
             </div>
 
@@ -165,7 +163,7 @@ const Register = () => {
                 type="file"
                 accept="image/*"
                 id="image"
-                className="block w-56 text-sm text-white file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-base file:font-semibold file:bg-gray-700 file:text-white hover:file:bg-slate-600 file:cursor-pointer rounded-lg pointer-events-none file:pointer-events-auto"
+                className="block w-56 text-sm text-white file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-base file:font-semibold file:bg-slate-800 file:text-white hover:file:bg-slate-700 file:cursor-pointer rounded-lg pointer-events-none file:pointer-events-auto"
                 onChange={(e) => {
                   const file = e.target.files[0];
                   setAvatarFile(file);
@@ -178,32 +176,31 @@ const Register = () => {
               />
             </div>
 
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <input
-                  id="is_organiser"
-                  name="is_organiser"
-                  type="checkbox"
-                  checked={isOrganiser}
-                  className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-500 bg-gray-700 rounded cursor-pointer"
-                  onChange={handleSetOrganiser}
-                />
-                <label
-                  htmlFor="is_organiser"
-                  className="ml-2 block text-sm text-gray-300"
-                >
-                  Select for Event Organiser role
-                </label>
-              </div>
+            <div className="flex items-center">
+              <input
+                id="is_organiser"
+                name="is_organiser"
+                type="checkbox"
+                checked={isOrganiser}
+                onChange={handleSetOrganiser}
+                className="h-4 w-4 text-orange-600 focus:ring-orange-500 border-gray-500 bg-slate-700 rounded cursor-pointer"
+              />
+              <label
+                htmlFor="is_organiser"
+                className="ml-2 block text-sm text-gray-300"
+              >
+                Select for Event Organiser role
+              </label>
             </div>
 
             <button
               type="submit"
-              className="text-sm sm:text-base w-full flex items-center justify-center gap-2 py-2 px-4 rounded-lg shadow transition font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className="text-sm sm:text-base w-full flex items-center justify-center gap-2 py-2 px-4 rounded-lg border-1 border-orange-600 bg-orange-800 text-white font-medium shadow transition
+              hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-100 focus:ring-offset-2 focus:ring-offset-slate-900 focus:border-orange-100"
             >
               {isRegistering ? (
                 <>
-                  <span className="inline-block w-4 h-4 border-2 border-t-indigo-600 rounded-full animate-spin"></span>
+                  <span className="inline-block w-4 h-4 border-2 border-t-orange-800 rounded-full animate-spin"></span>
                   Registering Account...
                 </>
               ) : (
@@ -220,14 +217,16 @@ const Register = () => {
             Already have an account?{" "}
             <a
               href="/login"
-              className="font-medium text-indigo-500 hover:text-indigo-400"
+              className="font-medium text-orange-500 hover:text-orange-400 focus:outline-none focus:text-orange-400"
             >
               Login
             </a>
           </p>
         </div>
-      </div>
-    </>
+      </main>
+
+      <Footer />
+    </div>
   );
 };
 

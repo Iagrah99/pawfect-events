@@ -86,6 +86,7 @@ const Login = () => {
                 required
                 value={email}
                 onChange={(e) => updateLoginInfo(e)}
+                onFocus={() => setIsError(false)}
               />
             </div>
 
@@ -104,6 +105,7 @@ const Login = () => {
                 autoComplete="off"
                 required
                 onChange={(e) => updateLoginInfo(e)}
+                onFocus={() => setIsError(false)}
               />
             </div>
 
