@@ -197,7 +197,7 @@ const EventPost = ({
           </p>
           <p className="flex items-center gap-2">
             <FontAwesomeIcon icon={faUsers} className="text-orange-500" />
-            {attendees.length} Attendees
+            {attendees.length === 1 ? `${attendees.length} Attendee` : `${attendees.length} Attendees` } 
           </p>
         </div>
 
