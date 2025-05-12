@@ -63,7 +63,7 @@ const UserCard = ({
             icon={faCalendarAlt}
             className="mr-2 text-orange-500"
           />
-          {user.is_organiser ? "Events Organising" : "Events Attending"}
+          {user.is_organiser ? "User Events" : "Events Attending"}
         </h3>
 
         {user.is_organiser ? (
