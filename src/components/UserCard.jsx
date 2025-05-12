@@ -24,14 +24,16 @@ const UserCard = ({
     setIsDeleteUserModalOpen((prev) => !prev);
   };
   const [isDeletingUser, setIsDeletingUser] = useState(false);
-  const handleDeleteUser = async () => {
+
+  const handleDeleteUser = async (e, userId) => {
+    e.preventDefault();
     try {
       setIsDeletingUser(true);
-      await deleteUser(user.user_id);
+      await deleteUser(userId);
       setLoggedInUser(null);
       localStorage.removeItem("loggedInUser");
       setIsDeletingUser(false);
-      navigate(`/`, { state: { userDeleted: true } });
+      navigate(`/events`, { state: { userDeleted: true } });
     } catch (err) {
       setIsDeletingUser(false);
       setIsError(true);
@@ -170,6 +172,7 @@ const UserCard = ({
         <DeleteUser
           toggleDeleteUserModal={toggleDeleteUserModal}
           handleDeleteUser={handleDeleteUser}
+          userId={user.user_id}
         />
       )}
     </article>

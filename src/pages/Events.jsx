@@ -50,7 +50,6 @@ const Events = () => {
           orderByQuery,
           categoryQuery
         );
-        console.log(fetchedEvents);
         setEvents(fetchedEvents);
         setIsLoading(false);
       };

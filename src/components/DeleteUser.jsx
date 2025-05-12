@@ -1,4 +1,4 @@
-const DeleteUser = ({toggleDeleteUserModal, handleDeleteUser}) => {
+const DeleteUser = ({toggleDeleteUserModal, handleDeleteUser, userId}) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center px-1 sm:px-0">
       {/* Backdrop */}
@@ -13,7 +13,7 @@ const DeleteUser = ({toggleDeleteUserModal, handleDeleteUser}) => {
           Are you sure you want to delete your account? This cannot be undone.
         </p>
 
-        <form className="space-y-6" onSubmit={handleDeleteUser}>
+        <form className="space-y-6" onSubmit={(e) => handleDeleteUser(e, userId)}>
           <div className="flex justify-end gap-4 items-center mt-6">
             <button
               type="button"
