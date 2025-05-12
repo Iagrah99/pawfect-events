@@ -45,10 +45,6 @@ const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    window.scrollTo({ top: 0 });
-  }, []);
-
-  useEffect(() => {
     const fetchCategoryData = async () => {
       const fetchedCategoryData = await getCategories();
       setCategories(fetchedCategoryData);

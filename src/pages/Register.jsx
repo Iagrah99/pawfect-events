@@ -123,6 +123,8 @@ const Register = () => {
                 required
                 autoComplete="off"
                 placeholder="Enter your username"
+                maxLength={15}
+                minLength={3}
                 onChange={(e) => {
                   setUsername(e.target.value);
                   setIsError(false);

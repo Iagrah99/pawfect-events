@@ -27,10 +27,6 @@ const Events = () => {
   const categoryQuery = searchParams.get("category");
 
   useEffect(() => {
-    window.scrollTo({ top: 0 });
-  }, []);
-
-  useEffect(() => {
     if (userDeleted) {
       setShowDeletedMessage(true);
       const timeoutId = setTimeout(() => {
