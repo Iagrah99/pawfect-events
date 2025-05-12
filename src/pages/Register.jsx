@@ -11,7 +11,6 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [isOrganiser, setIsOrganiser] = useState(false);
   const [avatarFile, setAvatarFile] = useState(null);
-  const [avatarUrl, setAvatarUrl] = useState("");
 
   const navigate = useNavigate();
 
@@ -21,30 +20,6 @@ const Register = () => {
   const [error, setError] = useState(null);
   const [isRegistering, setIsRegistering] = useState(false);
 
-  const handleImageUpload = async (file) => {
-    const apiKey = import.meta.env.VITE_IMGBB_API_KEY;
-    const formData = new FormData();
-    formData.append("image", file);
-
-    try {
-      const response = await fetch(
-        `https://api.imgbb.com/1/upload?key=${apiKey}`,
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
-      const data = await response.json();
-      if (data.success) {
-        setAvatarUrl(data.data.url);
-      } else {
-        console.error("Image upload failed:", data.message);
-      }
-    } catch (error) {
-      console.error("Error uploading image:", error);
-    }
-  };
-
   const handleSetOrganiser = (e) => {
     setIsOrganiser(e.target.checked);
   };
@@ -52,25 +27,26 @@ const Register = () => {
   const handleUserRegistration = async (e) => {
     e.preventDefault();
     setIsRegistering(true);
+    setIsError(false);
+    setError(null);
+
     try {
-      setIsError(false);
-      setError(null);
-      const userData = {
+      const newUser = await registerUser({
         email,
         username,
         password,
         isOrganiser,
-        avatarUrl,
-      };
-      const newUser = await registerUser(userData);
-      setIsRegistering(false);
+        avatarFile,
+      });
+
       setLoggedInUser(newUser);
       localStorage.setItem("loggedInUser", JSON.stringify(newUser));
       navigate(`/users/${newUser.user_id}`);
     } catch (err) {
-      setIsRegistering(false);
       setIsError(true);
-      setError(err.response.data.msg);
+      setError(err.response?.data?.msg || "Something went wrong.");
+    } finally {
+      setIsRegistering(false);
     }
   };
 
@@ -170,10 +146,6 @@ const Register = () => {
                   const file = e.target.files[0];
                   setAvatarFile(file);
                   setIsError(false);
-                  if (file) {
-                    handleImageUpload(file);
-                    console.log(avatarUrl);
-                  }
                 }}
               />
             </div>

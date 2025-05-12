@@ -104,15 +104,25 @@ export const registerUser = async ({
   username,
   password,
   isOrganiser,
-  avatarUrl,
+  avatarFile,
 }) => {
-  const res = await dogEventsApi.post("/users", {
-    email,
-    username,
-    password,
-    isOrganiser,
-    avatarUrl,
+  const formData = new FormData();
+  formData.append("email", email);
+  formData.append("username", username);
+  formData.append("password", password);
+  formData.append("isOrganiser", isOrganiser);
+  if (avatarFile) {
+    formData.append("avatar", avatarFile); // matches backend field name
+  }
+
+  console.log(avatarFile)
+
+  const res = await dogEventsApi.post("/users", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
   });
+
   return res.data.newUser;
 };
 
@@ -148,9 +158,9 @@ export const deleteEvent = async (event_id) => {
 };
 
 export const getCategories = async () => {
-  const res = await dogEventsApi.get('/categories')
-  return res.data.categories
-}
+  const res = await dogEventsApi.get("/categories");
+  return res.data.categories;
+};
 
 export const generateGoogleCalendarEvent = async ({
   title,
