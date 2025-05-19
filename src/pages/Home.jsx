@@ -2,40 +2,56 @@ import { useState, useEffect, useContext } from "react";
 import { UserContext } from "../contexts/UserContext";
 import Footer from "../components/Footer";
 import NavigationBar from "../components/NavigationBar";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faPersonWalking,
-  faStopwatch,
-  faStar,
-  faTrophy,
-  faDumbbell,
-  faPaw,
-  faUsersBetweenLines,
-  faSearchLocation,
-  faUsers,
-  faCalendarAlt,
-  faDog,
-} from "@fortawesome/free-solid-svg-icons";
 import { getCategories } from "../../utils/api";
 import { useNavigate } from "react-router-dom";
+import {
+  Calendar,
+  Search,
+  Users,
+  Dumbbell,
+  Timer,
+  Star,
+  Trophy,
+  PawPrint,
+  Dog,
+  Footprints,
+} from "lucide-react";
 
 const features = [
   {
     title: "Discover",
     description: "Find dog events that match your interests in your area.",
-    icon: faSearchLocation,
+    icon: Search,
+    backgroundColor: "blue",
   },
   {
     title: "Connect",
     description: "Meet other dog lovers and build lasting friendships.",
-    icon: faUsers,
+    icon: Users,
+    backgroundColor: "green",
   },
   {
     title: "Organise",
     description: "Host and manage your own dog events with ease.",
-    icon: faCalendarAlt,
+    icon: Calendar,
+    backgroundColor: "purple",
   },
 ];
+
+const colorClasses = {
+  blue: {
+    bg: "bg-blue-500/5",
+    text: "text-blue-500",
+  },
+  green: {
+    bg: "bg-green-500/5",
+    text: "text-green-500",
+  },
+  purple: {
+    bg: "bg-purple-500/5",
+    text: "text-purple-500",
+  },
+};
 
 const Home = () => {
   const navigate = useNavigate();
@@ -60,14 +76,14 @@ const Home = () => {
   };
 
   const categoryIconMap = {
-    "Dog-Training": faDumbbell,
-    "Dog-Walking": faPersonWalking,
-    "Agility-Trial": faStopwatch,
-    "Dog-Show": faStar,
-    "Dog-Competition": faTrophy,
-    "Herding-Trial": faPaw,
-    "Obedience-Trial": faDog,
-    "Breed-Meetup": faUsersBetweenLines,
+    "Dog-Training": Dumbbell,
+    "Dog-Walking": Footprints,
+    "Agility-Trial": Timer,
+    "Dog-Show": Star,
+    "Dog-Competition": Trophy,
+    "Herding-Trial": PawPrint,
+    "Obedience-Trial": Dog,
+    "Breed-Meetup": Users,
   };
 
   const CategorySkeleton = () => {
@@ -137,24 +153,25 @@ const Home = () => {
             ? Array.from({ length: 8 }).map((_, index) => (
                 <CategorySkeleton key={index} />
               ))
-            : categories.map((category, index) => (
-                <div
-                  key={index}
-                  className="flex flex-col items-center justify-center w-full w-24 h-24 sm:h-28 md:h-36 rounded-full bg-slate-900 shadow-md lg:hover:shadow-lg border-1 border-slate-800 lg:hover:bg-slate-800 lg:hover:border-slate-700 transition-all lg:hover:scale-105 cursor-pointer"
-                  onClick={() => handleCategoryChoice(category)}
-                >
-                  <FontAwesomeIcon
-                    icon={categoryIconMap[category.slug] || faStar}
-                    className="text-xl md:text-2xl mb-2 text-orange-700"
-                  />
-                  <p className="text-xs md:text-sm text-slate-200">
-                    {(() => {
-                      const label = category.slug.replace(/-/g, " ");
-                      return label.endsWith("g") ? label : `${label}s`;
-                    })()}
-                  </p>
-                </div>
-              ))}
+            : categories.map((category, index) => {
+                const Icon = categoryIconMap[category.slug] || Star;
+
+                return (
+                  <div
+                    key={index}
+                    className="flex flex-col items-center justify-center w-full w-24 h-24 sm:h-28 md:w-36 md:h-36 rounded-full bg-slate-900 shadow-md lg:hover:shadow-lg border-1 border-slate-800 lg:hover:bg-slate-800 lg:hover:border-slate-700 transition-all lg:hover:scale-105 cursor-pointer"
+                    onClick={() => handleCategoryChoice(category)}
+                  >
+                    <Icon className="w-6 h-6 md:w-8 md:h-8 mb-2 text-orange-500" />
+                    <p className="text-xs md:text-sm text-slate-200">
+                      {(() => {
+                        const label = category.slug.replace(/-/g, " ");
+                        return label.endsWith("g") ? label : `${label}s`;
+                      })()}
+                    </p>
+                  </div>
+                );
+              })}
         </section>
 
         {/* Feature Cards */}
@@ -164,25 +181,35 @@ const Home = () => {
               ? Array.from({ length: 3 }).map((_, index) => (
                   <FeatureSkeleton key={index} />
                 ))
-              : features.map((feature, index) => (
-                  <div
-                    key={index}
-                    className="bg-slate-900 rounded-xl shadow p-6 text-center border-1 border-slate-800"
-                  >
-                    <div className="text-3xl mb-4">
-                      <FontAwesomeIcon
-                        icon={feature.icon}
-                        className="text-orange-700"
-                      />
+              : features.map((feature, index) => {
+                  const Icon = feature.icon;
+                  console.log(feature.icon); // Should log the icon component function
+                  return (
+                    <div
+                      key={index}
+                      className="bg-slate-900 rounded-xl shadow p-6 border-1 border-slate-800"
+                    >
+                      <div
+                        className={`p-3 mb-3 rounded-full ${
+                          colorClasses[feature.backgroundColor].bg
+                        } backdrop-blur-sm shadow-sm w-fit`}
+                      >
+                        <Icon
+                          className={`h-6 w-6 ${
+                            colorClasses[feature.backgroundColor].text
+                          }`}
+                        />
+                      </div>
+
+                      <h3 className="text-white text-lg font-semibold mb-2">
+                        {feature.title}
+                      </h3>
+                      <p className="text-white text-sm sm:text-base">
+                        {feature.description}
+                      </p>
                     </div>
-                    <h3 className="text-white text-lg font-semibold mb-2">
-                      {feature.title}
-                    </h3>
-                    <p className="text-white text-sm sm:text-base">
-                      {feature.description}
-                    </p>
-                  </div>
-                ))}
+                  );
+                })}
           </div>
         </section>
       </main>
