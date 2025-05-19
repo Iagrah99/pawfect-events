@@ -12,13 +12,11 @@ Welcome to **Pawfect Events**, a fullstack web application designed for individu
 
 ## Project Overview
 
-**Pawfect Events** serves as a centralised platform for users to discover, organise, and participate in various dog-related events. The app provides organisers with the tools to create and manage events, while users can browse available events, sign up, and keep track of their upcoming events.
+**Pawfect Events** serves as a dog events platform for users to discover, organise, and participate in various events. The platform provides organisers with the tools to create and manage events, while members can browse available events, sign up, and keep track of their upcoming events.
 
 Whether it's a dog-walking meetup, a dog agility competition, or a dog training workshop, Pawfect Events allows users to explore different types of events tailored to their interests.
 
 The hosted version can be found <a href="https://pawfect-events.vercel.app/">here</a>.
-
-**Please note that this Web App is hosted using Render as a free instance type which will spin-down after 15 minutes of inactivity, and then will spin back up when the next request is made. This process of spinning back up may take a couple of minutes to complete, so please be patient.**
 
 ### Core Functionality
 - Event organisers can create, update, and delete events.
@@ -55,9 +53,9 @@ The hosted version can be found <a href="https://pawfect-events.vercel.app/">her
 
 ### Front End
 - **React**: The web app is built using React for a responsive, dynamic user interface.
-- **Tailwind CSS**: Used for styling and creating a sleek, modern UI.
-- **React Bootstrap**: Additional UI components such as modals, forms, and buttons.
-- **Axios**: For more ease of use when handling API requests between the front end and back end server.
+- **Tailwind CSS**: for styling and creating a sleek, modern UI.
+- **Lucide React**: for flexible, customisable icons
+- **Axios**: For handling API requests between the frontend and backend server.
 
 ### Back End
 - **Node.js**: JavaScript runtime used to build the back-end server.
@@ -71,7 +69,6 @@ The hosted version can be found <a href="https://pawfect-events.vercel.app/">her
 - **Supertest**: For testing HTTP requests and API endpoints.
 
 ## API Integrations
-- **The Dog API**: Provides random dog images for event pages to give the app a fun and personalised touch.
 - **ImgBB API**: Allows users and event organisers to upload and store their images for their events or profiles via a permanent web address.
 
 ## Installation & Setup
@@ -80,7 +77,7 @@ The hosted version can be found <a href="https://pawfect-events.vercel.app/">her
 
 ### Prerequisites
 - Node.js (v21.2.0^)
-- Sign Up for a free account on <a href="https://api.imgbb.com/" target="_blank">IMGBB</a> and <a href="https://www.thedogapi.com/" target="_blank">The Dog API</a> in order to get an API Key.
+- Sign Up for a free account on <a href="https://api.imgbb.com/" target="_blank">IMGBB</a> in order to get an API Key.
 
 1. Start by forking the project repository, and open up a terminal. Then do the following steps:
 
@@ -111,11 +108,10 @@ The hosted version can be found <a href="https://pawfect-events.vercel.app/">her
    npm install
    ```
 
-   2b. Create a .env file and inside store the API keys for both IMGBB and The Dog API that you signed up for earlier.
+   2b. Create a .env file and inside store the API key for IMGBB that you signed up for earlier.
 
    ```
    VITE_IMGBB_API_KEY="Your key here"
-   VITE_DOGIMG_API_KEY="Your key here"
    ```
    2c. Now you should be good to go by running `npm run dev` into the terminal.
 
